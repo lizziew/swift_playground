@@ -12,7 +12,7 @@ var numberList = [10, 1, 5, 1, 10, 13, 100, 4, 1, 3, 10]
 
 var sortTest = Sorting()
 
-numberList = sortTest.mergeSort(numberList)
+numberList = sortTest.quickSort(numberList)
 
 for item in numberList {
     println(item)

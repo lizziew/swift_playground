@@ -57,8 +57,6 @@ public class Sorting {
     }
 
     func recursiveMergeSort(inout numberList: [Int], var copyOfNumberList: [Int], lowIndex: Int, highIndex: Int) {
-        //println("\(lowIndex) \(highIndex)")
-        
         if(highIndex <= lowIndex) {
             return
         }
@@ -90,5 +88,45 @@ public class Sorting {
                 numberList[k] = copyOfNumberList[i++]
             }
         }
+    }
+    
+    func quickSort(var numberList: [Int]) -> [Int] {
+        recursiveQuickSort(&numberList, lowIndex: 0, highIndex: numberList.count-1)
+        
+        return numberList
+    }
+    
+    func recursiveQuickSort(inout numberList: [Int], lowIndex: Int, highIndex: Int) {
+        if(highIndex <= lowIndex) {
+            return
+        }
+        
+        var i = lowIndex
+        var j = highIndex+1
+        
+        while true {
+            while(numberList[++i] < numberList[lowIndex]) {
+                if(i == highIndex) {
+                    break
+                }
+            }
+            
+            while(numberList[--j] > numberList[lowIndex]) {
+                if(j == lowIndex) {
+                    break
+                }
+            }
+            
+            if(i >= j) { //pointers have crossed
+                break
+            }
+            
+            swap(&numberList[i], &numberList[j])
+        }
+        
+        swap(&numberList[j], &numberList[lowIndex])
+        
+        recursiveQuickSort(&numberList, lowIndex: lowIndex, highIndex: j-1)
+        recursiveQuickSort(&numberList, lowIndex: j+1, highIndex: highIndex)
     }
 }
