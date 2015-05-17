@@ -57,7 +57,9 @@ public class Sorting {
     }
 
     func recursiveMergeSort(inout numberList: [Int], var copyOfNumberList: [Int], lowIndex: Int, highIndex: Int) {
-        if(lowIndex > highIndex) {
+        //println("\(lowIndex) \(highIndex)")
+        
+        if(highIndex <= lowIndex) {
             return
         }
         var midIndex = (lowIndex + highIndex)/2
@@ -74,14 +76,14 @@ public class Sorting {
         var i = lowIndex
         var j = midIndex+1
         
-        for k in 0..<numberList.count {
+        for k in lowIndex...highIndex {
             if(i > midIndex) {
                 numberList[k] = copyOfNumberList[j++]
             }
             else if(j > highIndex) {
                 numberList[k] = copyOfNumberList[i++]
             }
-            else if(copyOfNumberList[j] > copyOfNumberList[i]) {
+            else if(copyOfNumberList[j] < copyOfNumberList[i]) {
                 numberList[k] = copyOfNumberList[j++]
             }
             else {
