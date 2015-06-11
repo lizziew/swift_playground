@@ -8,16 +8,47 @@
 
 import SpriteKit
 
-struct Route {
+var prevDot = SKShapeNode()
+var dots = [SKShapeNode]()
+var shape = Shape(lines: [])
+var dotPositions = [CGPoint]()
+
+struct Edge {
     var sourceDotIndex = -1
     var destinationDotIndex = -1
     var hasBeenDrawnByUser = false
+    
+    func getEdgeFrame() -> CGRect {
+        let sourceDot = dots[self.sourceDotIndex].position
+        let destinationDot = dots[self.destinationDotIndex].position
+        
+        let originX = min(sourceDot.x, destinationDot.x)
+        let originY = min(sourceDot.y, destinationDot.y)
+        
+        let width = max(sourceDot.x, destinationDot.x) - originX
+        let height = max(sourceDot.y, destinationDot.y) - originY
+        
+        return CGRectMake(originX, originY, width, height)
+    }
+    
+    func makeEdgeNode(color: UIColor) -> SKShapeNode {
+        var bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(dotPositions[self.sourceDotIndex])
+        bezierPath.addLineToPoint(dotPositions[self.destinationDotIndex])
+        
+        var line = SKShapeNode(path: bezierPath.CGPath)
+        line.lineWidth = 5.0
+        line.strokeColor = color
+        line.name = "line"
+        
+        return line
+    }
 }
 
 struct Shape {
-    var lines: [Route]
+    var lines: [Edge]
     
-    init(lines:[Route]) {
+    init(lines:[Edge]) {
         self.lines = lines
     }
     
@@ -29,13 +60,22 @@ struct Shape {
         }
         return true
     }
+    
+    func makeShapeNode() -> SKShapeNode {
+        var bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(dotPositions[lines[0].sourceDotIndex])
+        for i in 1..<lines.count {
+            bezierPath.addLineToPoint(dotPositions[lines[i].sourceDotIndex])
+        }
+        bezierPath.addLineToPoint(dotPositions[lines[0].sourceDotIndex])
+        
+        var shape = SKShapeNode(path: bezierPath.CGPath)
+        shape.fillColor = UIColor.redColor()
+        return shape
+    }
 }
 
 class GameScene: SKScene {
-    var prevDot = SKShapeNode()
-    var dots = [SKShapeNode]()
-    var shape = Shape(lines: [])
-    
     override func didMoveToView(view: SKView) {
         UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
         drawBackground()
@@ -45,10 +85,10 @@ class GameScene: SKScene {
         backgroundColor = SKColor.whiteColor()
         
         //make dots
-        var dotPositions = [CGPoint(x: size.width * 0.5, y: size.height * 0.2),
-                            CGPoint(x: size.width * 0.5, y: size.height * 0.8),
-                            CGPoint(x: size.width * 0.2, y: size.height * 0.5),
-                            CGPoint(x: size.width * 0.8, y: size.height * 0.5)]
+        dotPositions = [CGPoint(x: size.width * 0.5, y: size.height * 0.2),
+                        CGPoint(x: size.width * 0.2, y: size.height * 0.5),
+                        CGPoint(x: size.width * 0.5, y: size.height * 0.8),
+                        CGPoint(x: size.width * 0.8, y: size.height * 0.5)]
       
         for position in dotPositions {
             var dot = SKShapeNode(circleOfRadius: 20.0)
@@ -59,26 +99,18 @@ class GameScene: SKScene {
         }
         
         //make lines
-        var routes:[Route] = []
-        routes += [ Route(sourceDotIndex: 0, destinationDotIndex: 3, hasBeenDrawnByUser: false),
-                    Route(sourceDotIndex: 0, destinationDotIndex: 2, hasBeenDrawnByUser: false),
-                    Route(sourceDotIndex: 1, destinationDotIndex: 2, hasBeenDrawnByUser: false),
-                    Route(sourceDotIndex: 1, destinationDotIndex: 3, hasBeenDrawnByUser: false)]
+        var edges:[Edge] = []
+        edges += [ Edge(sourceDotIndex: 0, destinationDotIndex: 1, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 1, destinationDotIndex: 2, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 2, destinationDotIndex: 3, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 3, destinationDotIndex: 0, hasBeenDrawnByUser: false)]
         
         //make shape
-        shape = Shape(lines: routes)
+        shape = Shape(lines: edges)
         
         //draw lines
-        for route in shape.lines {
-            var bezierPath = UIBezierPath()
-            bezierPath.moveToPoint(dotPositions[route.sourceDotIndex])
-            bezierPath.addLineToPoint(dotPositions[route.destinationDotIndex])
-            
-            var line = SKShapeNode(path: bezierPath.CGPath)
-            line.lineWidth = 5.0
-            line.strokeColor = UIColor.grayColor()
-            line.name = "line"
-            addChild(line)
+        for edge in shape.lines {
+            addChild(edge.makeEdgeNode(UIColor.grayColor()))
         }
         
         //draw dots
@@ -86,37 +118,21 @@ class GameScene: SKScene {
             addChild(dot)
         }
     }
-
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
-        let touchLocation = touch.locationInNode(self)
-        
-        let node = self.nodeAtPoint(touchLocation)
-        if(node.name == "dot") {
-            prevDot = node as! SKShapeNode
-            println("touched first dot!")
-        }
-    }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
-        let touchLocation = touch.locationInNode(self)
-        
-        let node = self.nodeAtPoint(touchLocation)
-        if(node.name == "dot") {
-            drawLine(prevDot, destDot: node as! SKShapeNode)
-            println("touched second dot!")
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            
+            for lineIndex in 0..<shape.lines.count {
+                let line = shape.lines[lineIndex]
+                if CGRectContainsPoint(line.getEdgeFrame(), location) {
+                    shape.lines[lineIndex].hasBeenDrawnByUser = true
+                    addChild(line.makeEdgeNode(UIColor.blackColor()))
+                    if shape.hasBeenCompleted() {
+                        addChild(shape.makeShapeNode())
+                    }
+                }
+            }
         }
-    }
-
-    func drawLine(srcDot: SKShapeNode, destDot: SKShapeNode) {
-        /*var route = UIBezierPath()
-        route.moveToPoint(srcDot)
-        route.addLineToPoint(destDot)
-        
-        var line = SKShapeNode(path: route.CGPath)
-        line.lineWidth = 5.0
-        line.strokeColor = UIColor.blackColor()
-        addChild(line)*/
     }
 }
