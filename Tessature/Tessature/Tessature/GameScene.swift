@@ -8,9 +8,11 @@
 
 import SpriteKit
 
+let dotRadius = CGFloat(10.0)
 var prevDot = SKShapeNode()
 var dots = [SKShapeNode]()
-var shape = Shape(lines: [])
+var edges = [Edge]()
+var shapes = [Shape]()
 var dotPositions = [CGPoint]()
 
 struct Edge {
@@ -22,11 +24,20 @@ struct Edge {
         let sourceDot = dots[self.sourceDotIndex].position
         let destinationDot = dots[self.destinationDotIndex].position
         
-        let originX = min(sourceDot.x, destinationDot.x)
-        let originY = min(sourceDot.y, destinationDot.y)
+        var originX = min(sourceDot.x, destinationDot.x)
+        var originY = min(sourceDot.y, destinationDot.y)
         
-        let width = max(sourceDot.x, destinationDot.x) - originX
-        let height = max(sourceDot.y, destinationDot.y) - originY
+        var width = max(sourceDot.x, destinationDot.x) - originX
+        var height = max(sourceDot.y, destinationDot.y) - originY
+        
+        if(width == 0) {
+            width = dotRadius*2
+            originX -= dotRadius
+        }
+        if(height == 0) {
+            height = dotRadius*2
+            originY -= dotRadius
+        }
         
         return CGRectMake(originX, originY, width, height)
     }
@@ -46,15 +57,15 @@ struct Edge {
 }
 
 struct Shape {
-    var lines: [Edge]
+    var edgeIndexArray: [Int]
     
-    init(lines:[Edge]) {
-        self.lines = lines
+    init(edgeIndexArray:[Int]) {
+        self.edgeIndexArray = edgeIndexArray
     }
     
     func hasBeenCompleted() -> Bool {
-        for line in lines {
-            if line.hasBeenDrawnByUser == false {
+        for i in 0..<edgeIndexArray.count {
+            if edges[edgeIndexArray[i]].hasBeenDrawnByUser == false {
                 return false
             }
         }
@@ -63,11 +74,11 @@ struct Shape {
     
     func makeShapeNode() -> SKShapeNode {
         var bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(dotPositions[lines[0].sourceDotIndex])
-        for i in 1..<lines.count {
-            bezierPath.addLineToPoint(dotPositions[lines[i].sourceDotIndex])
+        bezierPath.moveToPoint(dotPositions[edges[edgeIndexArray[0]].sourceDotIndex])
+        for i in 1..<edgeIndexArray.count {
+            bezierPath.addLineToPoint(dotPositions[edges[edgeIndexArray[i]].sourceDotIndex])
         }
-        bezierPath.addLineToPoint(dotPositions[lines[0].sourceDotIndex])
+        bezierPath.addLineToPoint(dotPositions[edges[edgeIndexArray[0]].sourceDotIndex])
         
         var shape = SKShapeNode(path: bezierPath.CGPath)
         shape.fillColor = UIColor.redColor()
@@ -88,28 +99,35 @@ class GameScene: SKScene {
         dotPositions = [CGPoint(x: size.width * 0.5, y: size.height * 0.2),
                         CGPoint(x: size.width * 0.2, y: size.height * 0.5),
                         CGPoint(x: size.width * 0.5, y: size.height * 0.8),
-                        CGPoint(x: size.width * 0.8, y: size.height * 0.5)]
-      
+                        CGPoint(x: size.width * 0.8, y: size.height * 0.5),
+                        CGPoint(x: size.width - dotRadius, y: dotRadius),
+                        CGPoint(x: size.width * 0.5, y: dotRadius),
+                        CGPoint(x: size.width - dotRadius, y: size.height * 0.5)]
+        
         for position in dotPositions {
-            var dot = SKShapeNode(circleOfRadius: 20.0)
+            var dot = SKShapeNode(circleOfRadius: dotRadius)
             dot.name = "dot"
             dot.fillColor = UIColor.blackColor()
             dot.position = position
             dots += [(dot)]
         }
         
-        //make lines
-        var edges:[Edge] = []
-        edges += [ Edge(sourceDotIndex: 0, destinationDotIndex: 1, hasBeenDrawnByUser: false),
+        //make edges
+        edges += [  Edge(sourceDotIndex: 0, destinationDotIndex: 1, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 1, destinationDotIndex: 2, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 2, destinationDotIndex: 3, hasBeenDrawnByUser: false),
-                    Edge(sourceDotIndex: 3, destinationDotIndex: 0, hasBeenDrawnByUser: false)]
+                    Edge(sourceDotIndex: 3, destinationDotIndex: 0, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 0, destinationDotIndex: 5, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 5, destinationDotIndex: 4, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 4, destinationDotIndex: 6, hasBeenDrawnByUser: false),
+                    Edge(sourceDotIndex: 6, destinationDotIndex: 3, hasBeenDrawnByUser: false)]
         
-        //make shape
-        shape = Shape(lines: edges)
+        //make shapes
+        shapes += [ Shape(edgeIndexArray: [0,1,2,3]),
+                    Shape(edgeIndexArray: [3,4,5,6,7])]
         
-        //draw lines
-        for edge in shape.lines {
+        //draw edges
+        for edge in edges {
             addChild(edge.makeEdgeNode(UIColor.grayColor()))
         }
         
@@ -123,13 +141,19 @@ class GameScene: SKScene {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
-            for lineIndex in 0..<shape.lines.count {
-                let line = shape.lines[lineIndex]
-                if CGRectContainsPoint(line.getEdgeFrame(), location) {
-                    shape.lines[lineIndex].hasBeenDrawnByUser = true
-                    addChild(line.makeEdgeNode(UIColor.blackColor()))
-                    if shape.hasBeenCompleted() {
-                        addChild(shape.makeShapeNode())
+            for edgeIndex in 0..<edges.count {
+                if(CGRectContainsPoint(edges[edgeIndex].getEdgeFrame(), location)) {
+                    edges[edgeIndex].hasBeenDrawnByUser = true
+                    
+                    /*let rect = SKShapeNode(rect: edges[edgeIndex].getEdgeFrame())
+                    rect.strokeColor = UIColor.redColor()
+                    addChild(rect)*/
+                    
+                    addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
+                    for shape in shapes {
+                        if shape.hasBeenCompleted() {
+                            addChild(shape.makeShapeNode())
+                        }
                     }
                 }
             }
