@@ -9,10 +9,11 @@
 import SpriteKit
 
 let dotRadius = CGFloat(10.0)
-var prevDot = SKShapeNode()
+
 var dots = [SKShapeNode]()
 var edges = [Edge]()
 var shapes = [Shape]()
+
 var dotPositions = [CGPoint]()
 
 struct Edge {
@@ -54,6 +55,36 @@ struct Edge {
         
         return line
     }
+    
+    func dotProduct(vector1: CGPoint, vector2: CGPoint) -> CGFloat {
+        return vector1.x * vector2.x + vector1.y * vector2.y
+    }
+    
+    func vectorLength(vector: CGPoint) -> CGFloat {
+        return sqrt(vector.x * vector.x + vector.y * vector.y)
+    }
+    
+    func distanceToEdge(point: CGPoint) -> CGFloat {
+        let sourceDot = dotPositions[self.sourceDotIndex]
+        let destinationDot = dotPositions[self.destinationDotIndex]
+        
+        var vector1 = CGPointMake(sourceDot.x - destinationDot.x, sourceDot.y - destinationDot.y)
+        let vector1Length = vectorLength(vector1)
+        vector1.x /= vector1Length
+        vector1.y /= vector1Length
+        
+        let vector2 = CGPointMake(point.x - destinationDot.x, point.y - destinationDot.y)
+        
+        let dot1 = dotProduct(vector1, vector2: vector2)
+        
+        if(dot1 < 0 || dot1 > vector1Length) {
+            return CGFloat.max
+        }
+        
+        let closestPoint = CGPointMake(destinationDot.x + dot1 * vector1.x, destinationDot.y + dot1 * vector1.y)
+        
+        return vectorLength(CGPointMake(point.x - closestPoint.x, point.y - closestPoint.y))
+    }
 }
 
 struct Shape {
@@ -93,10 +124,6 @@ struct Shape {
         }
         shapeOutline += [dotPositions[edges[edgeIndexArray[0]].sourceDotIndex]]
         
-        for i in 0..<shapeOutline.count {
-            println(shapeOutline[i])
-        }
-        
         bezierPath.moveToPoint(shapeOutline[0])
         for i in 1..<shapeOutline.count {
             bezierPath.addLineToPoint(shapeOutline[i])
@@ -115,31 +142,37 @@ class GameScene: SKScene {
     }
     
     func drawBackground(){
+        removeAllChildren()
+        deleteStartOverButton()
+        
         backgroundColor = SKColor.whiteColor()
         
+        let diagramHeight = 0.8 * size.height
+        let labelHeight = size.height - diagramHeight
+        
         //make dots
-        dotPositions = [CGPoint(x: size.width * 0.5, y: size.height * 0.5),
-                        CGPoint(x: size.width * 0.5, y: size.height * 0.75),
-                        CGPoint(x: size.width * 0.65, y: size.height * 0.95),
-                        CGPoint(x: size.width * 0.65, y: size.height * 0.7),
-                        CGPoint(x: size.width * 0.9, y: size.height * 0.7),
-                        CGPoint(x: size.width * 0.75, y: size.height * 0.5),
-                        CGPoint(x: size.width * 0.9, y: size.height * 0.3),
-                        CGPoint(x: size.width * 0.65, y: size.height * 0.3),
-                        CGPoint(x: size.width * 0.65, y: size.height * 0.05),
-                        CGPoint(x: size.width * 0.5, y: size.height * 0.25),
-                        CGPoint(x: size.width * 0.35, y: size.height * 0.05),
-                        CGPoint(x: size.width * 0.35, y: size.height * 0.3),
-                        CGPoint(x: size.width * 0.1, y: size.height * 0.3),
-                        CGPoint(x: size.width * 0.25, y: size.height * 0.5),
-                        CGPoint(x: size.width * 0.1, y: size.height * 0.7),
-                        CGPoint(x: size.width * 0.35, y: size.height * 0.7),
-                        CGPoint(x: size.width * 0.35, y: size.height * 0.95),
-                        CGPoint(x: size.width * 0.5, y: size.height - dotRadius),
-                        CGPoint(x: size.width - dotRadius, y: size.height - dotRadius),
-                        CGPoint(x: size.width - dotRadius, y: dotRadius),
-                        CGPoint(x: dotRadius, y: dotRadius),
-                        CGPoint(x: dotRadius, y: size.height - dotRadius)]
+        dotPositions = [CGPoint(x: size.width * 0.5, y: diagramHeight * 0.5 + labelHeight),
+                        CGPoint(x: size.width * 0.5, y: diagramHeight * 0.75 + labelHeight),
+                        CGPoint(x: size.width * 0.65, y: diagramHeight * 0.95 + labelHeight),
+                        CGPoint(x: size.width * 0.65, y: diagramHeight * 0.7 + labelHeight),
+                        CGPoint(x: size.width * 0.9, y: diagramHeight * 0.7 + labelHeight),
+                        CGPoint(x: size.width * 0.75, y: diagramHeight * 0.5 + labelHeight),
+                        CGPoint(x: size.width * 0.9, y: diagramHeight * 0.3 + labelHeight),
+                        CGPoint(x: size.width * 0.65, y: diagramHeight * 0.3 + labelHeight),
+                        CGPoint(x: size.width * 0.65, y: diagramHeight * 0.1 + labelHeight),
+                        CGPoint(x: size.width * 0.5, y: diagramHeight * 0.25 + labelHeight),
+                        CGPoint(x: size.width * 0.35, y: diagramHeight * 0.1 + labelHeight),
+                        CGPoint(x: size.width * 0.35, y: diagramHeight * 0.3 + labelHeight),
+                        CGPoint(x: size.width * 0.1, y: diagramHeight * 0.3 + labelHeight),
+                        CGPoint(x: size.width * 0.25, y: diagramHeight * 0.5 + labelHeight),
+                        CGPoint(x: size.width * 0.1, y: diagramHeight * 0.7 + labelHeight),
+                        CGPoint(x: size.width * 0.35, y: diagramHeight * 0.7 + labelHeight),
+                        CGPoint(x: size.width * 0.35, y: diagramHeight * 0.95 + labelHeight),
+                        CGPoint(x: size.width * 0.5, y: diagramHeight - dotRadius + labelHeight),
+                        CGPoint(x: size.width - dotRadius, y: diagramHeight - dotRadius + labelHeight),
+                        CGPoint(x: size.width - dotRadius, y: dotRadius*2 + labelHeight),
+                        CGPoint(x: dotRadius, y: dotRadius*2 + labelHeight),
+                        CGPoint(x: dotRadius, y: diagramHeight - dotRadius + labelHeight)]
         
         for position in dotPositions {
             var dot = SKShapeNode(circleOfRadius: dotRadius)
@@ -168,7 +201,7 @@ class GameScene: SKScene {
                     Edge(sourceDotIndex: 11, destinationDotIndex: 0, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 0, destinationDotIndex: 13, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 13, destinationDotIndex: 12, hasBeenDrawnByUser: false),
-                    Edge(sourceDotIndex: 12, destinationDotIndex: 11, hasBeenDrawnByUser: false),//18
+                    Edge(sourceDotIndex: 12, destinationDotIndex: 11, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 13, destinationDotIndex: 14, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 14, destinationDotIndex: 15, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 15, destinationDotIndex: 0, hasBeenDrawnByUser: false),
@@ -179,10 +212,10 @@ class GameScene: SKScene {
                     Edge(sourceDotIndex: 18, destinationDotIndex: 19, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 19, destinationDotIndex: 7, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 19, destinationDotIndex: 20, hasBeenDrawnByUser: false),
-                    Edge(sourceDotIndex: 20, destinationDotIndex: 11, hasBeenDrawnByUser: false),//29
+                    Edge(sourceDotIndex: 20, destinationDotIndex: 11, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 20, destinationDotIndex: 21, hasBeenDrawnByUser: false),
                     Edge(sourceDotIndex: 21, destinationDotIndex: 17, hasBeenDrawnByUser: false)]
-        
+
         //make shapes
         shapes += [ Shape(edgeIndexArray: [0,1,2,3]),
                     Shape(edgeIndexArray: [3,4,5,6]),
@@ -207,26 +240,50 @@ class GameScene: SKScene {
         }
     }
     
+    func deleteStartOverButton() {
+        let subviews = self.view!.subviews as! [UIView]
+        for v in subviews {
+            if let button = v as? UIButton {
+                if button.currentTitle == "Start Over" {
+                    button.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
-            /*let node = self.nodeAtPoint(location)
-            println(node.name)*/
-            
             for edgeIndex in 0..<edges.count {
-                if(CGRectContainsPoint(edges[edgeIndex].getEdgeFrame(), location)) {
+                if(edges[edgeIndex].distanceToEdge(location) < 16) {
                     edges[edgeIndex].hasBeenDrawnByUser = true
-                    
-                    let rect = SKShapeNode(rect: edges[edgeIndex].getEdgeFrame())
-                    rect.strokeColor = UIColor.yellowColor()
-                    addChild(rect)
-                    
                     addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
-                    for shape in shapes {
-                        if shape.hasBeenCompleted() {
-                            addChild(shape.makeShapeNode())
+                    
+                    for shapeIndex in 0..<shapes.count {
+                        if shapes[shapeIndex].hasBeenCompleted() {
+                            addChild(shapes[shapeIndex].makeShapeNode())
+                            shapes.removeAtIndex(shapeIndex)
+                            break
                         }
+                    }
+                    
+                    if shapes.count == 0 {
+                        removeAllChildren()
+                        println("Round over")
+                        
+                        var gameOverText = SKLabelNode(text: "Round over!")
+                        gameOverText.position = CGPointMake(size.width/2, size.height/2)
+                        gameOverText.fontColor = UIColor.blackColor()
+                        addChild(gameOverText)
+                    
+                        let button = UIButton(frame: CGRectMake(size.width * 0.5 - 100, size.height * 0.8 - 25, 200, 50))
+                        button.backgroundColor = UIColor.greenColor()
+                        button.setTitle("Start Over", forState: UIControlState.Normal)
+                        button.addTarget(self, action: "drawBackground", forControlEvents: UIControlEvents.TouchUpInside)
+                        
+                    
+                        self.view!.addSubview(button)
                     }
                     
                     break

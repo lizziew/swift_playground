@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E7EB6DDC-8653-4462-954C-E998F9698290</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Tessature</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>B73659E971B6047DEF680F099B7E1942A58B665F</key>
 		<string>https://github.com/lizziew/swift_playground</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Tessature/Tessature/Tessature.xcodeproj</string>
+	<string>Tessature/Tessature/Tessature.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>B73659E971B6047DEF680F099B7E1942A58B665F</key>
