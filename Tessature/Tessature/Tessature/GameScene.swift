@@ -10,7 +10,6 @@ import SpriteKit
 
 let dotRadius = CGFloat(10.0)
 
-var dots = [SKShapeNode]()
 var edges = [Edge]()
 var shapes = [Shape]()
 
@@ -22,8 +21,8 @@ struct Edge {
     var hasBeenDrawnByUser = false
     
     func getEdgeFrame() -> CGRect {
-        let sourceDot = dots[self.sourceDotIndex].position
-        let destinationDot = dots[self.destinationDotIndex].position
+        let sourceDot = dotPositions[self.sourceDotIndex]
+        let destinationDot = dotPositions[self.destinationDotIndex]
         
         var originX = min(sourceDot.x, destinationDot.x)
         var originY = min(sourceDot.y, destinationDot.y)
@@ -89,6 +88,7 @@ struct Edge {
 
 struct Shape {
     var edgeIndexArray: [Int]
+    var isComplete = false
     
     init(edgeIndexArray:[Int]) {
         self.edgeIndexArray = edgeIndexArray
@@ -122,30 +122,35 @@ struct Shape {
         for edgeIndex in 1..<edgeIndexArray.count {
             shapeOutline += [getOtherPoint(shapeOutline[shapeOutline.count-1], currentEdge: edges[edgeIndexArray[edgeIndex]])]
         }
-        shapeOutline += [dotPositions[edges[edgeIndexArray[0]].sourceDotIndex]]
         
         bezierPath.moveToPoint(shapeOutline[0])
         for i in 1..<shapeOutline.count {
             bezierPath.addLineToPoint(shapeOutline[i])
         }
+        bezierPath.closePath()
         
         var shape = SKShapeNode(path: bezierPath.CGPath)
         shape.fillColor = UIColor.redColor()
+        shape.alpha = 0.5
         return shape
     }
 }
 
 class GameScene: SKScene {
+    var contentCreated = false
+    var numberOfCompletedShapes = 0
+    
     override func didMoveToView(view: SKView) {
-        UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
-        drawBackground()
+        if self.contentCreated == false {
+            drawBackground()
+            self.contentCreated = true
+        }
     }
     
     func drawBackground(){
-        removeAllChildren()
-        deleteStartOverButton()
-        
         backgroundColor = SKColor.whiteColor()
+        
+        scaleMode = SKSceneScaleMode.Fill 
         
         let diagramHeight = 0.8 * size.height
         let labelHeight = size.height - diagramHeight
@@ -174,10 +179,12 @@ class GameScene: SKScene {
                         CGPoint(x: dotRadius, y: dotRadius*2 + labelHeight),
                         CGPoint(x: dotRadius, y: diagramHeight - dotRadius + labelHeight)]
         
+        var dots = [SKShapeNode]()
         for position in dotPositions {
             var dot = SKShapeNode(circleOfRadius: dotRadius)
             dot.name = "dot"
             dot.fillColor = UIColor.blackColor()
+            dot.strokeColor = UIColor.blackColor()
             dot.position = position
             dots += [(dot)]
         }
@@ -229,6 +236,8 @@ class GameScene: SKScene {
                     Shape(edgeIndexArray: [24,22,23,20,19,17,18,29,30,31]),
                     Shape(edgeIndexArray: [27,28,29,14,13,11,12])]
         
+        //shapes = []
+        
         //draw edges
         for edge in edges {
             addChild(edge.makeEdgeNode(UIColor.grayColor()))
@@ -240,50 +249,31 @@ class GameScene: SKScene {
         }
     }
     
-    func deleteStartOverButton() {
-        let subviews = self.view!.subviews as! [UIView]
-        for v in subviews {
-            if let button = v as? UIButton {
-                if button.currentTitle == "Start Over" {
-                    button.removeFromSuperview()
-                }
-            }
-        }
-    }
-    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
             for edgeIndex in 0..<edges.count {
-                if(edges[edgeIndex].distanceToEdge(location) < 16) {
+                if(edges[edgeIndex].distanceToEdge(location) < 16 && !edges[edgeIndex].hasBeenDrawnByUser) {
                     edges[edgeIndex].hasBeenDrawnByUser = true
                     addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
                     
                     for shapeIndex in 0..<shapes.count {
-                        if shapes[shapeIndex].hasBeenCompleted() {
+                        if shapes[shapeIndex].isComplete == false && shapes[shapeIndex].hasBeenCompleted() {
                             addChild(shapes[shapeIndex].makeShapeNode())
-                            shapes.removeAtIndex(shapeIndex)
-                            break
+                            numberOfCompletedShapes++
+                            shapes[shapeIndex].isComplete = true
                         }
                     }
                     
-                    if shapes.count == 0 {
-                        removeAllChildren()
+                    if shapes.count == numberOfCompletedShapes {
                         println("Round over")
                         
-                        var gameOverText = SKLabelNode(text: "Round over!")
-                        gameOverText.position = CGPointMake(size.width/2, size.height/2)
-                        gameOverText.fontColor = UIColor.blackColor()
-                        addChild(gameOverText)
+                        let crossFade = SKTransition.crossFadeWithDuration(2.0)
                     
-                        let button = UIButton(frame: CGRectMake(size.width * 0.5 - 100, size.height * 0.8 - 25, 200, 50))
-                        button.backgroundColor = UIColor.greenColor()
-                        button.setTitle("Start Over", forState: UIControlState.Normal)
-                        button.addTarget(self, action: "drawBackground", forControlEvents: UIControlEvents.TouchUpInside)
-                        
-                    
-                        self.view!.addSubview(button)
+                        let endScene = EndScene()
+                        endScene.size = self.size
+                        self.view?.presentScene(endScene, transition: crossFade)
                     }
                     
                     break

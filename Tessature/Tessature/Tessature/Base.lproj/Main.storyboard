@@ -16,17 +16,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THx-UW-aEb">
-                                <rect key="frame" x="280" y="393" width="40" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THx-UW-aEb">
+                                <rect key="frame" x="280" y="269" width="40" height="30"/>
                                 <state key="normal" title="Begin">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="LVB-YS-i5n" kind="show" identifier="ToGameScreen" id="GmL-Q1-z7H"/>
+                                    <segue destination="LVB-YS-i5n" kind="presentation" id="2d6-fb-our"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="THx-UW-aEb" secondAttribute="centerY" constant="16" id="fNq-uF-v7l"/>
+                            <constraint firstAttribute="centerX" secondItem="THx-UW-aEb" secondAttribute="centerX" id="moX-Cy-Vd7"/>
+                            <constraint firstAttribute="centerX" secondItem="THx-UW-aEb" secondAttribute="centerX" id="ro2-d5-zHA"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yzj-H0-Yre" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -44,11 +49,28 @@
                     <view key="view" contentMode="scaleToFill" id="bdc-N1-crn" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QT6-ch-KaY">
+                                <rect key="frame" x="280" y="562" width="41" height="30"/>
+                                <state key="normal" title="Home">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="O6G-Wf-jtJ" kind="unwind" unwindAction="backToStartScreen:" id="To5-DE-mc9"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="QT6-ch-KaY" secondAttribute="bottom" constant="8" id="7yS-HN-sjA"/>
+                            <constraint firstAttribute="centerX" secondItem="QT6-ch-KaY" secondAttribute="centerX" constant="-0.5" id="bb5-Y3-WUS"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
+                <exit id="O6G-Wf-jtJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
+            <point key="canvasLocation" x="346" y="353"/>
         </scene>
     </scenes>
 </document>
