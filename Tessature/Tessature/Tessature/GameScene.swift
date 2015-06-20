@@ -147,7 +147,15 @@ class GameScene: SKScene {
         }
     }
     
+    func clearRound() {
+        dotPositions = []
+        shapes = []
+        edges = []
+    }
+    
     func drawBackground(){
+        clearRound()
+        
         backgroundColor = SKColor.whiteColor()
         
         scaleMode = SKSceneScaleMode.Fill 
