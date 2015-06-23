@@ -18,6 +18,12 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        if(!self.gcEnabled) {
+//            authenticatePlayer()
+//        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         if(!self.gcEnabled) {
             authenticatePlayer()
         }

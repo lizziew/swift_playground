@@ -11,28 +11,40 @@ import SpriteKit
 import GameKit
 
 class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate, GKLocalPlayerListener {
-    var currentMatch = GKTurnBasedMatch()
-    
-    @IBOutlet var TurnLabel: UILabel!
+    let scene = GameScene()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        findOtherPlayer()
+        matchWithOtherPlayer()
     }
     
-    func beginRound() {
-        let player = GKLocalPlayer.localPlayer()
-        self.TurnLabel.text = player.alias + "'s turn"
-        
-        let scene = GameScene()
+    func beginRound(match: GKTurnBasedMatch, isTurnOfPlayer: Bool) {
         scene.size = self.view.bounds.size
+        scene.match = match
+        scene.otherPlayer = getOtherPlayer(match)!
+        scene.otherPlayerName = scene.otherPlayer.player.alias
+        
+        scene.thisPlayerColor = UIColor.redColor()
+        scene.otherPlayerColor = UIColor.blueColor()
+        
         if let skView = self.view as? SKView{
             skView.presentScene(scene)
         }
     }
     
-    func findOtherPlayer() {
+    func getOtherPlayer(match: GKTurnBasedMatch) -> GKTurnBasedParticipant? {
+            for participant in match.participants {
+                let participant = participant as! GKTurnBasedParticipant
+                if(participant != match.currentParticipant) {
+                    return participant
+                }
+            }
+        println("ERROR: COULDN'T FIND OTHER PLAYER")
+        return nil
+    }
+
+    func matchWithOtherPlayer() {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = 2
         matchRequest.maxPlayers = 2
@@ -45,16 +57,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTu
     func turnBasedMatchmakerViewController(viewController: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        currentMatch = match
+        let isTurnOfPlayer = match.currentParticipant.player.playerID == GKLocalPlayer.localPlayer().playerID
         
-        if match.currentParticipant.player.playerID == GKLocalPlayer.localPlayer().playerID {
-            println("we are the current player")
-            beginRound()
-        } else {
-            println("we are not current player")
-            // Someone else is the current player.
-        }
-        
+        beginRound(match, isTurnOfPlayer: isTurnOfPlayer)
+    }
+    
+    func player(player: GKPlayer!, receivedTurnEventForMatch match: GKTurnBasedMatch!, didBecomeActive: Bool) {
+        println("our turn!")
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
@@ -85,28 +94,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTu
                 nextParticipants: match.participants, turnTimeout: 2000.0, matchData: matchData) { (error) in
                     // We've now finished telling Game Center that we've quit
             }
-    }
-    
-    func player(player: GKPlayer!, receivedTurnEventForMatch match: GKTurnBasedMatch!, didBecomeActive: Bool) {
-        //turn based match has updated. we may now be the current player.
-    }
-    
-    func player(player: GKPlayer!, matchEnded match: GKTurnBasedMatch!) {
-        //match has ended
-        for participant in match.participants as! [GKTurnBasedParticipant] {
-            println("\(participant.player.alias)'s outcome: \(participant.matchOutcome)")
-        }
-    }
-    
-    func endTurn(match: GKTurnBasedMatch, gameData: NSData, nextParticipants: [GKTurnBasedParticipant]) {
-        match.endTurnWithNextParticipants(nextParticipants, turnTimeout: 2000.0, matchData: gameData) { (error) in
-        }
-    }
-    
-    func endMatch(match: GKTurnBasedMatch, finalGameData: NSData) {
-        match.endMatchInTurnWithMatchData(finalGameData, completionHandler: {
-            (error) in
-        })
     }
     
     override func prefersStatusBarHidden() -> Bool {

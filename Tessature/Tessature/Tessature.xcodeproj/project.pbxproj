@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		83AC0FEF1B3292A2002D1AC6 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC0FEE1B3292A2002D1AC6 /* EndScene.swift */; };
+		83AC0FFD1B390439002D1AC6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC0FFC1B390439002D1AC6 /* GameScene.swift */; };
 		83AC6DEB1B2A603B003233FA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AC6DEA1B2A603B003233FA /* GameKit.framework */; };
 		83AC6DED1B2B62D0003233FA /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC6DEC1B2B62D0003233FA /* StartViewController.swift */; };
 		83FD341D1B29508200CDC0EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD341C1B29508200CDC0EF /* AppDelegate.swift */; };
-		83FD34211B29508200CDC0EF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD34201B29508200CDC0EF /* GameScene.swift */; };
 		83FD34231B29508200CDC0EF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD34221B29508200CDC0EF /* GameViewController.swift */; };
 		83FD34261B29508200CDC0EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83FD34241B29508200CDC0EF /* Main.storyboard */; };
 		83FD34281B29508200CDC0EF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83FD34271B29508200CDC0EF /* Images.xcassets */; };
@@ -31,12 +31,12 @@
 
 /* Begin PBXFileReference section */
 		83AC0FEE1B3292A2002D1AC6 /* EndScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
+		83AC0FFC1B390439002D1AC6 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = ../../../../../.Trash/GameScene.swift; sourceTree = "<group>"; };
 		83AC6DEA1B2A603B003233FA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		83AC6DEC1B2B62D0003233FA /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		83FD34171B29508200CDC0EF /* Tessature.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tessature.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83FD341B1B29508200CDC0EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83FD341C1B29508200CDC0EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		83FD34201B29508200CDC0EF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		83FD34221B29508200CDC0EF /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		83FD34251B29508200CDC0EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		83FD34271B29508200CDC0EF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -90,8 +90,8 @@
 				83FD341C1B29508200CDC0EF /* AppDelegate.swift */,
 				83FD34241B29508200CDC0EF /* Main.storyboard */,
 				83AC6DEC1B2B62D0003233FA /* StartViewController.swift */,
+				83AC0FFC1B390439002D1AC6 /* GameScene.swift */,
 				83FD34221B29508200CDC0EF /* GameViewController.swift */,
-				83FD34201B29508200CDC0EF /* GameScene.swift */,
 				83AC0FEE1B3292A2002D1AC6 /* EndScene.swift */,
 				83FD34271B29508200CDC0EF /* Images.xcassets */,
 				83FD34291B29508200CDC0EF /* LaunchScreen.xib */,
@@ -231,8 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AC0FFD1B390439002D1AC6 /* GameScene.swift in Sources */,
 				83AC0FEF1B3292A2002D1AC6 /* EndScene.swift in Sources */,
-				83FD34211B29508200CDC0EF /* GameScene.swift in Sources */,
 				83AC6DED1B2B62D0003233FA /* StartViewController.swift in Sources */,
 				83FD34231B29508200CDC0EF /* GameViewController.swift in Sources */,
 				83FD341D1B29508200CDC0EF /* AppDelegate.swift in Sources */,
