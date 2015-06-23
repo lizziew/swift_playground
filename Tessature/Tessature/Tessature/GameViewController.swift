@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameKit
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate, GKLocalPlayerListener {
+class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate {
     let scene = GameScene()
     
     override func viewDidLoad() {
@@ -60,10 +60,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTu
         let isTurnOfPlayer = match.currentParticipant.player.playerID == GKLocalPlayer.localPlayer().playerID
         
         beginRound(match, isTurnOfPlayer: isTurnOfPlayer)
-    }
-    
-    func player(player: GKPlayer!, receivedTurnEventForMatch match: GKTurnBasedMatch!, didBecomeActive: Bool) {
-        println("our turn!")
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
