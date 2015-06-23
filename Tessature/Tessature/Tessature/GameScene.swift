@@ -140,14 +140,14 @@ struct Shape {
 class GameScene: SKScene, GKLocalPlayerListener {
     var contentCreated = false
     var numberOfCompletedShapes = 0
-    var match = GKTurnBasedMatch()
+    var match = GKMatch()
     
     var thisPlayerName = GKLocalPlayer.localPlayer().alias
     var thisPlayerColor = UIColor.whiteColor()
     var thisPlayerLabel = UILabel()
     var thisPlayerScore = 0
     
-    var otherPlayer = GKTurnBasedParticipant() 
+    var otherPlayer = GKPlayer()
     var otherPlayerName = "" 
     var otherPlayerColor = UIColor.whiteColor() 
     var otherPlayerLabel = UILabel()
@@ -267,45 +267,11 @@ class GameScene: SKScene, GKLocalPlayerListener {
             addChild(edge.makeEdgeNode(UIColor.grayColor()))
         }
         
-        loadUpdatedMatchData()
+        //loadUpdatedMatchData()
         
         //draw dots
         for dot in dots{
             addChild(dot)
-        }
-    }
-    
-    func player(player: GKPlayer!, receivedTurnEventForMatch match: GKTurnBasedMatch!, didBecomeActive: Bool) {
-        println("update info")
-        loadUpdatedMatchData()
-    }
-    
-    func loadUpdatedMatchData() {
-        match.loadMatchDataWithCompletionHandler { (matchData: NSData?, error: NSError?) -> Void in
-            if (matchData != nil && matchData!.bytes != nil) {
-                var error: NSError?
-                var updatedMatchData: [NSString : [Int]] = NSJSONSerialization.JSONObjectWithData(matchData!, options: NSJSONReadingOptions.AllowFragments, error: &error) as! [NSString: [Int]]
-                
-                if(updatedMatchData["edges"] != nil) {
-                    var edgeData = updatedMatchData["edges"]!
-                    for edgeIndex in 0..<edgeData.count {
-                        if(edgeData[edgeIndex] == 1) {
-                            edges[edgeIndex].hasBeenDrawnByUser = true
-                            self.addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
-                        }
-                    }
-                }
-                
-                if(updatedMatchData["shapes"] != nil) {
-                    var shapeData = updatedMatchData["shapes"]!
-                    for shapeIndex in 0..<shapeData.count {
-                        if(shapeData[shapeIndex] == 1) {
-                            shapes[shapeIndex].isComplete = true
-                            self.addChild(shapes[shapeIndex].makeShapeNode(self.thisPlayerColor))
-                        }
-                    }
-                }
-            }
         }
     }
     
@@ -326,12 +292,14 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         turnLabel = UILabel(frame: CGRectMake(0, size.height * 0.9 - 70, size.width, 20))
         turnLabel.textAlignment = NSTextAlignment.Center
-        if isThisPlayerTurn {
-            turnLabel.text = "Your Turn"
-        }
-        else {
-            turnLabel.text = "Their Turn"
-        }
+        
+        turnLabel.text = "TBD"
+//        if isThisPlayerTurn {
+//            turnLabel.text = "Your Turn"
+//        }
+//        else {
+//            turnLabel.text = "Their Turn"
+//        }
         
         self.view!.addSubview(thisPlayerLabel)
         self.view!.addSubview(otherPlayerLabel)
@@ -339,9 +307,9 @@ class GameScene: SKScene, GKLocalPlayerListener {
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if !isThisPlayerTurn {
-            return
-        }
+//        if !isThisPlayerTurn {
+//            return
+//        }
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
@@ -399,12 +367,12 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         var error: NSError?
         let jsonData = NSJSONSerialization.dataWithJSONObject(dictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
-        match.saveCurrentTurnWithMatchData(jsonData, completionHandler: nil)
+        match.sendDataToAllPlayers(jsonData, withDataMode: GKMatchSendDataMode.Unreliable, error: &error)
     }
     
     func advanceTurn() {
         println("advance turn")
-        updateMatchData()
+        updateMatchData() 
         
         if turnLabel.text == "Your Turn" {
             turnLabel.text = "Their Turn"
@@ -412,15 +380,37 @@ class GameScene: SKScene, GKLocalPlayerListener {
         else {
             turnLabel.text = "Your Turn"
         }
-        
-        let updatedMatchData = self.match.matchData
-        self.match.endTurnWithNextParticipants([(otherPlayer)], turnTimeout: 2000, matchData: updatedMatchData, completionHandler: nil)
-        println(match.currentParticipant.player.alias)
     }
     
-    var isThisPlayerTurn: Bool {
-        get {
-            return GKLocalPlayer.localPlayer().playerID == match.currentParticipant.player.playerID
+    func dataReceived(data: NSData) {
+        println("dealing with data")
+        var error: NSError?
+        var updatedMatchData: [NSString : [Int]] = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &error) as! [NSString: [Int]]
+        
+        if(updatedMatchData["edges"] != nil) {
+            var edgeData = updatedMatchData["edges"]!
+            for edgeIndex in 0..<edgeData.count {
+                if(edgeData[edgeIndex] == 1) {
+                    edges[edgeIndex].hasBeenDrawnByUser = true
+                    self.addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
+                }
+            }
+        }
+        
+        if(updatedMatchData["shapes"] != nil) {
+            var shapeData = updatedMatchData["shapes"]!
+            for shapeIndex in 0..<shapeData.count {
+                if(shapeData[shapeIndex] == 1) {
+                    shapes[shapeIndex].isComplete = true
+                    self.addChild(shapes[shapeIndex].makeShapeNode(self.thisPlayerColor))
+                }
+            }
         }
     }
+    
+//    var isThisPlayerTurn: Bool {
+//        get {
+//            return GKLocalPlayer.localPlayer().playerID == match.currentParticipant.player.playerID
+//        }
+//    }
 }

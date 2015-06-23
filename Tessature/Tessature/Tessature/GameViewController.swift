@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameKit
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate {
+class GameViewController: UIViewController, GKMatchmakerViewControllerDelegate, GKMatchDelegate {
     let scene = GameScene()
     
     override func viewDidLoad() {
@@ -18,79 +18,83 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GKTu
         
         matchWithOtherPlayer()
     }
-    
-    func beginRound(match: GKTurnBasedMatch, isTurnOfPlayer: Bool) {
-        scene.size = self.view.bounds.size
-        scene.match = match
-        scene.otherPlayer = getOtherPlayer(match)!
-        scene.otherPlayerName = scene.otherPlayer.player.alias
-        
-        scene.thisPlayerColor = UIColor.redColor()
-        scene.otherPlayerColor = UIColor.blueColor()
-        
-        if let skView = self.view as? SKView{
-            skView.presentScene(scene)
-        }
-    }
-    
-    func getOtherPlayer(match: GKTurnBasedMatch) -> GKTurnBasedParticipant? {
-            for participant in match.participants {
-                let participant = participant as! GKTurnBasedParticipant
-                if(participant != match.currentParticipant) {
-                    return participant
-                }
-            }
-        println("ERROR: COULDN'T FIND OTHER PLAYER")
-        return nil
-    }
 
     func matchWithOtherPlayer() {
+        println("trying to match")
+        self.dismissViewControllerAnimated(false, completion: nil)
+        
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = 2
         matchRequest.maxPlayers = 2
+        matchRequest.defaultNumberOfPlayers = 2
         
-        let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: matchRequest)
-        matchmakerViewController.turnBasedMatchmakerDelegate = self
+        let matchmakerViewController = GKMatchmakerViewController(matchRequest: matchRequest)
+        matchmakerViewController.matchmakerDelegate = self
         self.presentViewController(matchmakerViewController, animated: true, completion: nil)
     }
     
-    func turnBasedMatchmakerViewController(viewController: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
+    //GKMatchDelegate
+    
+    func match(match: GKMatch!, didReceiveData data: NSData!, fromRemotePlayer player: GKPlayer!) {
+        println("received data")
+        scene.dataReceived(data) 
+    }
+    
+    //GKMatchmakerViewControllerDelegate
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFindMatch match: GKMatch!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        let isTurnOfPlayer = match.currentParticipant.player.playerID == GKLocalPlayer.localPlayer().playerID
+        scene.match = match
+        match.delegate = self
         
-        beginRound(match, isTurnOfPlayer: isTurnOfPlayer)
-    }
-    
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
-            self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func turnBasedMatchmakerViewControllerWasCancelled(viewController: GKTurnBasedMatchmakerViewController!) {
-            // The user closed the matchmaker without creating a match
-            self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func turnBasedMatchmakerViewController(viewController: GKTurnBasedMatchmakerViewController!, didFailWithError error: NSError!) {
-        //failed to find a match
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func turnBasedMatchmakerViewController(viewController: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {
-            // We're quitting this game.
+        println("making match")
+        
+        if(match.expectedPlayerCount == 0) {
+            scene.size = self.view.bounds.size
+            scene.otherPlayer = getOtherPlayer(match)!
+            scene.otherPlayerName = scene.otherPlayer.alias
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            scene.thisPlayerColor = UIColor.redColor()
+            scene.otherPlayerColor = UIColor.blueColor()
             
-            let matchData = match.matchData
-            // Do something with the match data to reflect the fact that we're
-            // quitting (e.g., give all of our buildings to someone else,
-            // or remove them from the game)
-            
-            match.participantQuitInTurnWithOutcome(GKTurnBasedMatchOutcome.Quit,
-                nextParticipants: match.participants, turnTimeout: 2000.0, matchData: matchData) { (error) in
-                    // We've now finished telling Game Center that we've quit
+            if let skView = self.view as? SKView {
+                skView.presentScene(scene)
             }
+        }
     }
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFindHostedPlayers players: [AnyObject]!) {
+        println("got here")
+    }
+    
+    func getOtherPlayer(match: GKMatch) -> GKPlayer? {
+        for player in match.players {
+            let player = player as! GKPlayer
+            if(player.playerID != GKLocalPlayer.localPlayer().playerID) {
+                return player
+            }
+        }
+        println("ERROR: COULDN'T FIND OTHER PLAYER")
+        return nil
+    }
+    
+    func matchmakerViewControllerWasCancelled(viewController: GKMatchmakerViewController!) {
+        println("Cancelled")
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func matchmakerViewController(viewController: GKMatchmakerViewController!, didFailWithError error: NSError!) {
+        println("Error!")
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //GKGameCenterControllerDelegate
+//    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+//        println("got here")
+//        
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
