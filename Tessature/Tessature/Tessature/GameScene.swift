@@ -168,10 +168,6 @@ class GameScene: SKScene, GKLocalPlayerListener {
         dotPositions = []
         shapes = []
         edges = []
-        
-        enumerateChildNodesWithName("line", usingBlock: { (node: SKNode!, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
-            
-        })
     }
     
     func drawBackground(){
@@ -179,7 +175,6 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         backgroundColor = SKColor.whiteColor()
         scaleMode = SKSceneScaleMode.Fill
-        drawLabels()
         
         let diagramHeight = 0.8 * size.height
         let labelHeight = size.height - diagramHeight
@@ -275,6 +270,8 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         loadUpdatedMatchData() //TBD: replace with getSavedMatchData
         
+        drawLabels()
+        
         //draw dots
         for dot in dots{
             addChild(dot)
@@ -317,6 +314,18 @@ class GameScene: SKScene, GKLocalPlayerListener {
                             self.addChild(shapes[shapeIndex].makeShapeNode(self.otherPlayerColor))
                         }
                     }
+                }
+                
+                if(updatedMatchData[GKLocalPlayer.localPlayer().alias] != nil) {
+                    var thisScoreData = updatedMatchData[GKLocalPlayer.localPlayer().alias]!
+                    self.thisPlayerScore = thisScoreData[0]
+                    self.thisPlayerLabel.text = "\(self.thisPlayerName)\n\(self.thisPlayerScore)"
+                }
+                
+                if(updatedMatchData[self.otherPlayerName] != nil) {
+                    var otherScoreData = updatedMatchData[self.otherPlayerName]!
+                    self.otherPlayerScore = otherScoreData[0]
+                    self.otherPlayerLabel.text = "\(self.otherPlayerName)\n\(self.otherPlayerScore)"
                 }
             }
         }
@@ -372,6 +381,8 @@ class GameScene: SKScene, GKLocalPlayerListener {
                             addChild(shapes[shapeIndex].makeShapeNode(thisPlayerColor))
                             numberOfCompletedShapes++
                             shapes[shapeIndex].isComplete = 1
+                            thisPlayerScore++
+                            thisPlayerLabel.text = "\(thisPlayerName)\n\(thisPlayerScore)"
                         }
                     }
                     
@@ -417,6 +428,8 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         dictionary["shapes"] = shapeData
         dictionary["edges"] = edgeData
+        dictionary[GKLocalPlayer.localPlayer().alias] = [(thisPlayerScore)]
+        dictionary[otherPlayerName] = [(otherPlayerScore)]
         
         var error: NSError?
         let jsonData = NSJSONSerialization.dataWithJSONObject(dictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
