@@ -89,7 +89,7 @@ struct Edge {
 
 struct Shape {
     var edgeIndexArray: [Int]
-    var isComplete = false
+    var isComplete = 0
     
     init(edgeIndexArray:[Int]) {
         self.edgeIndexArray = edgeIndexArray
@@ -273,7 +273,7 @@ class GameScene: SKScene, GKLocalPlayerListener {
             addChild(edge.makeEdgeNode(UIColor.grayColor()))
         }
         
-        loadUpdatedMatchData()
+        loadUpdatedMatchData() //TBD: replace with getSavedMatchData
         
         //draw dots
         for dot in dots{
@@ -297,8 +297,8 @@ class GameScene: SKScene, GKLocalPlayerListener {
                 
                 if(updatedMatchData["edges"] != nil) {
                     var edgeData = updatedMatchData["edges"]!
-                    for edgeIndex in 0..<edgeData.count {
-                        if(edgeData[edgeIndex] == 1 && edges[edgeIndex].hasBeenDrawnByUser == false) {
+                    for edgeIndex in 0..<edges.count {
+                        if (edgeData[edgeIndex] == 1 && edges[edgeIndex].hasBeenDrawnByUser == false) {
                             edges[edgeIndex].hasBeenDrawnByUser = true
                             self.addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
                         }
@@ -307,10 +307,14 @@ class GameScene: SKScene, GKLocalPlayerListener {
                 
                 if(updatedMatchData["shapes"] != nil) {
                     var shapeData = updatedMatchData["shapes"]!
-                    for shapeIndex in 0..<shapeData.count {
-                        if(shapeData[shapeIndex] == 1 && shapes[shapeIndex].isComplete == false) {
-                            shapes[shapeIndex].isComplete = true
+                    for shapeIndex in 0..<shapes.count {
+                        if(shapeData[shapeIndex] == 1 && shapes[shapeIndex].isComplete == 0) {
+                            shapes[shapeIndex].isComplete = 1
                             self.addChild(shapes[shapeIndex].makeShapeNode(self.thisPlayerColor))
+                        }
+                        else if(shapeData[shapeIndex] == 2 && shapes[shapeIndex].isComplete == 0) {
+                            shapes[shapeIndex].isComplete = 2
+                            self.addChild(shapes[shapeIndex].makeShapeNode(self.otherPlayerColor))
                         }
                     }
                 }
@@ -364,10 +368,10 @@ class GameScene: SKScene, GKLocalPlayerListener {
                     addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
                     
                     for shapeIndex in 0..<shapes.count {
-                        if shapes[shapeIndex].isComplete == false && shapes[shapeIndex].hasBeenCompleted() {
+                        if shapes[shapeIndex].isComplete == 0 && shapes[shapeIndex].hasBeenCompleted() {
                             addChild(shapes[shapeIndex].makeShapeNode(thisPlayerColor))
                             numberOfCompletedShapes++
-                            shapes[shapeIndex].isComplete = true
+                            shapes[shapeIndex].isComplete = 1
                         }
                     }
                     
@@ -396,14 +400,17 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         var shapeData = [Int](count: shapes.count, repeatedValue: 0)
         for shapeIndex in 0..<shapes.count {
-            if(shapes[shapeIndex].isComplete) {
+            if shapes[shapeIndex].isComplete == 1 {
+                shapeData[shapeIndex] = 2
+            }
+            else if shapes[shapeIndex].isComplete == 2 {
                 shapeData[shapeIndex] = 1
             }
         }
         
         var edgeData = [Int](count: edges.count, repeatedValue: 0)
         for edgeIndex in 0..<edges.count {
-            if(edges[edgeIndex].hasBeenDrawnByUser) {
+            if edges[edgeIndex].hasBeenDrawnByUser {
                 edgeData[edgeIndex] = 1
             }
         }
