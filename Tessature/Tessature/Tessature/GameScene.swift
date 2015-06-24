@@ -51,7 +51,7 @@ struct Edge {
         var line = SKShapeNode(path: bezierPath.CGPath)
         line.lineWidth = 5.0
         line.strokeColor = color
-        line.name = "line"
+        line.name = "edge"
         
         return line
     }
@@ -133,6 +133,7 @@ struct Shape {
         var shape = SKShapeNode(path: bezierPath.CGPath)
         shape.fillColor = playerColor
         shape.alpha = 0.5
+        shape.name = "shape"
         return shape
     }
 }
@@ -157,6 +158,7 @@ class GameScene: SKScene, GKLocalPlayerListener {
     
     override func didMoveToView(view: SKView) {
         if self.contentCreated == false {
+            GKLocalPlayer.localPlayer().registerListener(self)
             drawBackground()
             self.contentCreated = true
         }
@@ -166,6 +168,10 @@ class GameScene: SKScene, GKLocalPlayerListener {
         dotPositions = []
         shapes = []
         edges = []
+        
+        enumerateChildNodesWithName("line", usingBlock: { (node: SKNode!, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
+            
+        })
     }
     
     func drawBackground(){
@@ -277,10 +283,13 @@ class GameScene: SKScene, GKLocalPlayerListener {
     
     func player(player: GKPlayer!, receivedTurnEventForMatch match: GKTurnBasedMatch!, didBecomeActive: Bool) {
         println("update info")
+        println("current player is now \(match.currentParticipant.player.alias)")
         loadUpdatedMatchData()
+        toThisPlayerTurn()
     }
     
     func loadUpdatedMatchData() {
+        println("load updated match data")
         match.loadMatchDataWithCompletionHandler { (matchData: NSData?, error: NSError?) -> Void in
             if (matchData != nil && matchData!.bytes != nil) {
                 var error: NSError?
@@ -289,7 +298,7 @@ class GameScene: SKScene, GKLocalPlayerListener {
                 if(updatedMatchData["edges"] != nil) {
                     var edgeData = updatedMatchData["edges"]!
                     for edgeIndex in 0..<edgeData.count {
-                        if(edgeData[edgeIndex] == 1) {
+                        if(edgeData[edgeIndex] == 1 && edges[edgeIndex].hasBeenDrawnByUser == false) {
                             edges[edgeIndex].hasBeenDrawnByUser = true
                             self.addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
                         }
@@ -299,7 +308,7 @@ class GameScene: SKScene, GKLocalPlayerListener {
                 if(updatedMatchData["shapes"] != nil) {
                     var shapeData = updatedMatchData["shapes"]!
                     for shapeIndex in 0..<shapeData.count {
-                        if(shapeData[shapeIndex] == 1) {
+                        if(shapeData[shapeIndex] == 1 && shapes[shapeIndex].isComplete == false) {
                             shapes[shapeIndex].isComplete = true
                             self.addChild(shapes[shapeIndex].makeShapeNode(self.thisPlayerColor))
                         }
@@ -326,7 +335,7 @@ class GameScene: SKScene, GKLocalPlayerListener {
         
         turnLabel = UILabel(frame: CGRectMake(0, size.height * 0.9 - 70, size.width, 20))
         turnLabel.textAlignment = NSTextAlignment.Center
-        if isThisPlayerTurn {
+        if isThisPlayerTurn() {
             turnLabel.text = "Your Turn"
         }
         else {
@@ -339,15 +348,18 @@ class GameScene: SKScene, GKLocalPlayerListener {
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if !isThisPlayerTurn {
+        if !isThisPlayerTurn() {
             return
         }
+        
+        var touchedEdge = false
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
             for edgeIndex in 0..<edges.count {
                 if(edges[edgeIndex].distanceToEdge(location) < 16 && !edges[edgeIndex].hasBeenDrawnByUser) {
+                    touchedEdge = true
                     edges[edgeIndex].hasBeenDrawnByUser = true
                     addChild(edges[edgeIndex].makeEdgeNode(UIColor.blackColor()))
                     
@@ -374,7 +386,9 @@ class GameScene: SKScene, GKLocalPlayerListener {
             }
         }
         
-        advanceTurn()
+        if touchedEdge {
+            toOtherPlayerTurn()
+        }
     }
     
     func updateMatchData() {
@@ -402,25 +416,24 @@ class GameScene: SKScene, GKLocalPlayerListener {
         match.saveCurrentTurnWithMatchData(jsonData, completionHandler: nil)
     }
     
-    func advanceTurn() {
-        println("advance turn")
+    func toOtherPlayerTurn() {
+        println("other player's turn")
         updateMatchData()
         
-        if turnLabel.text == "Your Turn" {
-            turnLabel.text = "Their Turn"
-        }
-        else {
-            turnLabel.text = "Your Turn"
-        }
+        turnLabel.text = "Their Turn"
         
         let updatedMatchData = self.match.matchData
         self.match.endTurnWithNextParticipants([(otherPlayer)], turnTimeout: 2000, matchData: updatedMatchData, completionHandler: nil)
-        println(match.currentParticipant.player.alias)
+        println("current player is now \(match.currentParticipant.player.alias)")
     }
     
-    var isThisPlayerTurn: Bool {
-        get {
-            return GKLocalPlayer.localPlayer().playerID == match.currentParticipant.player.playerID
-        }
+    func toThisPlayerTurn() {
+        println("this player's turn")
+        
+        turnLabel.text = "Your Turn"
+    }
+    
+    func isThisPlayerTurn() -> Bool {
+        return GKLocalPlayer.localPlayer().playerID == match.currentParticipant.player.playerID
     }
 }
