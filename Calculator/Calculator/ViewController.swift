@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var display: UILabel!
     @IBOutlet weak var prevDisplay: UILabel!
+    @IBOutlet weak var display: UILabel!
     
     var userTypingANum = false //type inference
     var decPoint = false

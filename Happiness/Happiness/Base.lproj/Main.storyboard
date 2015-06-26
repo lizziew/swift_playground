@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fHg-Fk-cT0">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <scenes>
+        <!--Happiness View Controller-->
+        <scene sceneID="Ogc-FE-QHU">
+            <objects>
+                <viewController id="fHg-Fk-cT0" customClass="HappinessViewController" customModule="Happiness" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="L6r-uh-ITf"/>
+                        <viewControllerLayoutGuide type="bottom" id="mpS-e0-iWn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eGd-3D-fdP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="cTr-Pv-5d1" customClass="FaceView" customModule="Happiness" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="gis-fB-vBp" appends="YES" id="QWv-VZ-50l"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cTr-Pv-5d1" secondAttribute="trailing" id="0Na-xY-FM2"/>
+                            <constraint firstItem="cTr-Pv-5d1" firstAttribute="top" secondItem="eGd-3D-fdP" secondAttribute="top" id="7rW-IM-tUU"/>
+                            <constraint firstItem="cTr-Pv-5d1" firstAttribute="bottom" secondItem="mpS-e0-iWn" secondAttribute="top" id="dS3-Cf-uhK"/>
+                            <constraint firstItem="cTr-Pv-5d1" firstAttribute="leading" secondItem="eGd-3D-fdP" secondAttribute="leading" id="iyO-wo-adn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="faceView" destination="cTr-Pv-5d1" id="sOc-cl-ARn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cwd-Zw-7DA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="gis-fB-vBp">
+                    <connections>
+                        <action selector="changeHappiness:" destination="fHg-Fk-cT0" id="P9s-Ol-EdW"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="549" y="420"/>
+        </scene>
+    </scenes>
+</document>
