@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A20EF4CC-8C4E-458C-83FA-A4B4152F0FB7</string>
+	<string>5DF70ABF-905B-4CD7-9B31-169C4F31FDFF</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Pyschologist</string>
+	<string>Autolayout</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>B73659E971B6047DEF680F099B7E1942A58B665F</key>
 		<string>https://github.com/lizziew/swift_playground</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Pyschologist/Pyschologist.xcodeproj</string>
+	<string>Autolayout/Autolayout.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>B73659E971B6047DEF680F099B7E1942A58B665F</key>
