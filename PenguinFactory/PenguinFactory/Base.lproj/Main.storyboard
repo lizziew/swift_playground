@@ -211,12 +211,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Acq-M2-7av">
-                                <rect key="frame" x="277" y="289" width="46" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-uF-qRB">
                                 <rect key="frame" x="16" y="20" width="30" height="30"/>
                                 <state key="normal" title="Quit">
@@ -228,12 +222,9 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="Acq-M2-7av" secondAttribute="centerX" id="6RU-B5-PhO"/>
-                            <constraint firstAttribute="centerY" secondItem="Acq-M2-7av" secondAttribute="centerY" id="d93-S9-eB4"/>
-                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="gameView" destination="LE8-VY-O4G" id="zOt-XX-A5g"/>
                         <segue destination="8FD-ed-png" kind="unwind" identifier="unwindToMenu" unwindAction="goBack:" id="JlE-mB-UyH"/>
                     </connections>
                 </viewController>
