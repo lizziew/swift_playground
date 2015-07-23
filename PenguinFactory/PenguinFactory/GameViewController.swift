@@ -57,6 +57,10 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         eggBehavior.addEgg(eggLabel)
     }
     
+    func chooseColor(button: UIButton) {
+        println(button.backgroundColor)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         animator.addBehavior(eggBehavior)
@@ -98,18 +102,18 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         let buttonHeight = gameView.bounds.size.width / 10
         let buttonWidth = gameView.bounds.size.width / 10
         let buttonSize = CGSize(width: buttonWidth, height: buttonHeight)
-        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth * 1.1, y: gameView.bounds.size.height/2 - consoleHeight * 0.75)
+        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth * 1.1, y: gameView.bounds.size.height/2 - consoleHeight * 0.3)
         
-        var buttons = [UIButton](count: 5, repeatedValue: UIButton())
+        var buttons = [UIButton]()
         for i in 0..<colors.count {
-            println("\(i) \(buttonOrigin.y) \(colors[i].description)")
-            buttons[i].frame = CGRect(origin: buttonOrigin, size: buttonSize)
-            buttons[i].backgroundColor = colors[i].value
-            buttons[i].alpha = 0.5
-            buttonOrigin.y += buttonHeight
+            var button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
+            button.backgroundColor = colors[i].value
+            button.addTarget(self, action: "chooseColor:", forControlEvents: UIControlEvents.TouchUpInside)
+            buttons.append(button)
+            gameView.addSubview(button)
+            
+            buttonOrigin.y += (1.1 * buttonHeight)
         }
-        
-        gameView.addSubview(buttons[0])
     }
     
     override func viewWillDisappear(animated: Bool) {
