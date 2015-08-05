@@ -237,15 +237,16 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-uF-qRB">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-uF-qRB">
                                 <rect key="frame" x="0.0" y="0.0" width="47" height="28"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="5tU-qE-30y"/>
                                     <constraint firstAttribute="width" constant="47" id="GII-IE-gdp"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Quit">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                <state key="normal" title="| |">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -280,6 +281,7 @@
                     <connections>
                         <outlet property="colorLabel" destination="Pqw-ox-cmH" id="ldE-x3-IEa"/>
                         <outlet property="gameView" destination="LE8-VY-O4G" id="zOt-XX-A5g"/>
+                        <outlet property="quitRoundButton" destination="vTN-uF-qRB" id="NOZ-zo-anv"/>
                         <outlet property="scoreLabel" destination="i44-0J-FUS" id="lJT-vj-lae"/>
                         <outlet property="timerLabel" destination="B9g-Pf-mqM" id="Mkc-PB-Zga"/>
                         <segue destination="8FD-ed-png" kind="unwind" identifier="unwindToMenu" unwindAction="goBack:" id="JlE-mB-UyH"/>

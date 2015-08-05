@@ -13,6 +13,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     @IBOutlet weak var colorLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var quitRoundButton: UIButton!
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
@@ -116,6 +117,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         super.viewDidLoad()
         timerLabel.text = timeString(timeRemaining)
         addWord()
+        quitRoundButton.layer.cornerRadius = 10
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -166,10 +168,11 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     }
     
     @IBAction func quitRound() {
-        var alert = UIAlertController(title: "Quit Round?", message: "Current score...", preferredStyle: UIAlertControllerStyle.Alert)
+        var alert = UIAlertController(title: "Game Paused", message: "Current score...", preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Resume", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
             //go back to game
+            //TBD pause 
         }))
         
         alert.addAction(UIAlertAction(title: "Quit", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction!) -> Void in
