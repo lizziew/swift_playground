@@ -9,17 +9,48 @@
 import UIKit
 
 class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
-    var timer: NSTimer?
-    
     @IBOutlet weak var gameView: UIView!
+    @IBOutlet weak var colorLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
     
-    lazy var animator: UIDynamicAnimator = {
-        let lazilyCreatedAnimator = UIDynamicAnimator(referenceView: self.gameView)
-        lazilyCreatedAnimator.delegate = self
-        return lazilyCreatedAnimator
-    }()
+    var timer: NSTimer?
+    let timeInterval:NSTimeInterval = 0.05
+    var timeRemaining:NSTimeInterval = 30.0
     
-    let eggBehavior = PenguinBehavior()
+    func startTimer() {
+        timer = NSTimer()
+        timerLabel.text = timeString(timeRemaining)
+        timer = NSTimer.scheduledTimerWithTimeInterval(timeInterval, target: self, selector: "endTimer:", userInfo: nil, repeats: true)
+    }
+    
+    func endTimer(timer: NSTimer) {
+        timeRemaining = timeRemaining - timeInterval
+        if(timeRemaining <= 0) {
+            timerLabel.textColor = UIColor.redColor()
+            timerLabel.text = "TIME'S UP!"
+            println("round over!")
+            //segue to next screen
+            timer.invalidate()
+        }
+        else {
+            timerLabel.text = timeString(timeRemaining)
+        }
+    }
+    
+    func timeString(time:NSTimeInterval) -> String {
+        let seconds = Int(time) % 60
+        let secondFraction = Int((time - Double(seconds)) * 10.0)
+        return String(format:"%02i.%01i sec left",  seconds, secondFraction)
+    }
+    
+    var score = 0.0 {
+        didSet {
+            scoreLabel.text = "\(score)"
+        }
+    }
+    
+    var currentColor = ""
     
     var colors = [Color(description: "Red", value: UIColor.redColor()), Color(description: "Orange", value: UIColor.orangeColor()), Color(description: "Blue", value: UIColor.blueColor()), Color(description: "Green", value: UIColor.greenColor()), Color(description: "Purple", value: UIColor.purpleColor())]
     
@@ -37,89 +68,93 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         return colors[Int(arc4random()%5)].description
     }
     
-    func addEgg(timer: NSTimer) {
-        println("add egg!")
+    func getRandomColor() -> UIColor {
+        var c = colors[Int(arc4random()%5)]
+        currentColor = c.description
+        return c.value
+    }
+    
+    func addWord() {
+        colorLabel.text = getRandomColorName()
+        colorLabel.textColor = getRandomColor()
+    }
+    
+    func addAnimation(isCorrect: Bool) {
+        let imageHeight = gameView.bounds.size.height / 5
+        let imageWidth = gameView.bounds.size.width / 5
+        let imageSize = CGSize(width: imageWidth, height: imageHeight)
+        let imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight/2)
         
-        let eggSize = gameView.bounds.size.width / 5
-        let eggFrame = CGRect(origin: CGPoint(x: gameView.bounds.size.width/2 - eggSize/2, y: 0.0), size: CGSize(width: eggSize, height: eggSize))
-        let eggView = UIImageView(frame: eggFrame)
-        eggView.image = UIImage(named: "egg")!
-        eggView.contentMode = UIViewContentMode.ScaleAspectFit
+        var correctImageView = UIImageView(frame: CGRect(origin: imageOrigin, size: imageSize))
         
-        let eggLabelFrame = CGRect(origin: CGPoint(x: gameView.bounds.size.width/2 - eggSize/2, y: 0.0), size: CGSize(width: eggSize, height: eggSize))
-        let eggLabel = UILabel(frame: eggLabelFrame)
-        eggLabel.textColor = UIColor.random
-        eggLabel.backgroundColor = UIColor.clearColor()
-        eggLabel.text = getRandomColorName()
-        eggLabel.textAlignment = NSTextAlignment.Center
+        if(isCorrect) {
+            correctImageView.image = UIImage(named: "checkmark")
+        }
+        else {
+            correctImageView.image = UIImage(named: "wrong")
+        }
         
-        eggBehavior.addEgg(eggView)
-        eggBehavior.addEgg(eggLabel)
+        correctImageView.alpha = 0.7
+        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { correctImageView.alpha = 0.0}, completion: nil)
+
+        gameView.addSubview(correctImageView)
     }
     
     func chooseColor(button: UIButton) {
-        println(button.backgroundColor)
+        if button.currentAttributedTitle!.string == currentColor {
+            addWord()
+            score++
+            addAnimation(true)
+        }
+        else {
+            score = score - 0.5
+            addAnimation(false)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        animator.addBehavior(eggBehavior)
+        timerLabel.text = timeString(timeRemaining)
+        addWord()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "addEgg:", userInfo: nil, repeats: true)
         
-        //scoreboard
-        let scoreboardHeight = gameView.bounds.size.height / 3
-        let scoreboardWidth = gameView.bounds.size.width / 5
-        
-        let scoreboardFrame = CGRect(origin: CGPoint(x: 0, y : gameView.bounds.size.height/2 - scoreboardHeight/2), size: CGSize(width: scoreboardWidth, height: scoreboardHeight))
-        let scoreboardView = UIImageView(frame: scoreboardFrame)
-        scoreboardView.image = UIImage(named: "scoreboard")!
-        scoreboardView.contentMode = UIViewContentMode.ScaleAspectFit
-        gameView.addSubview(scoreboardView)
-        
-        //lives
-        let livesHeight = scoreboardHeight * 0.3
-        let livesWidth = scoreboardWidth * 0.3
-        let livesFrame = CGRect(origin: CGPoint(x: scoreboardFrame.size.width/20, y: gameView.bounds.size.height/2 - livesHeight/2), size: CGSize(width: livesWidth, height: livesHeight))
-        let livesView = UIView(frame: livesFrame)
-        livesView.backgroundColor = UIColor.blackColor()
-        gameView.addSubview(livesView)
-        
-        //console
-        let consoleHeight = gameView.bounds.size.height / 2
-        let consoleWidth = gameView.bounds.size.width / 3
-        
-        let consoleFrame = CGRect(origin: CGPoint(x: gameView.bounds.size.width - consoleWidth, y : gameView.bounds.size.height/2 - consoleHeight/2), size: CGSize(width: consoleWidth, height: consoleHeight))
-        let consoleView = UIImageView(frame: consoleFrame)
-        consoleView.image = UIImage(named: "console")!
-        consoleView.contentMode = UIViewContentMode.ScaleAspectFit
-        gameView.addSubview(consoleView)
-        
+        startTimer()
+    
         //color buttons
-        let buttonHeight = gameView.bounds.size.width / 10
-        let buttonWidth = gameView.bounds.size.width / 10
+        let buttonHeight = gameView.bounds.size.height / 5
+        let buttonWidth = gameView.bounds.size.width / 5
         let buttonSize = CGSize(width: buttonWidth, height: buttonHeight)
-        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth * 1.1, y: gameView.bounds.size.height/2 - consoleHeight * 0.3)
+        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth, y: 0)
         
         var buttons = [UIButton]()
         for i in 0..<colors.count {
             var button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
-            button.backgroundColor = colors[i].value
+            button.backgroundColor = UIColor(white: 0.1, alpha: 0.2)
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.layer.borderWidth = 1
+            button.layer.cornerRadius = 10
+            button.showsTouchWhenHighlighted = true
+            
+            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(20.0)]
+            var title = NSMutableAttributedString(string: colors[i].description, attributes: attrs)
+            button.setAttributedTitle(title, forState: UIControlState.Normal)
+            
             button.addTarget(self, action: "chooseColor:", forControlEvents: UIControlEvents.TouchUpInside)
             buttons.append(button)
+            
             gameView.addSubview(button)
             
-            buttonOrigin.y += (1.1 * buttonHeight)
+            buttonOrigin.y += buttonHeight
         }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.timer?.invalidate()
-        self.timer = nil 
+        self.timer = nil
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -142,18 +177,5 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         }))
         
         presentViewController(alert, animated: true, completion: nil)
-    }
-}
-
-private extension UIColor {
-    class var random: UIColor {
-        switch arc4random()%5 {
-        case 0: return UIColor.redColor()
-        case 1: return UIColor.orangeColor()
-        case 2: return UIColor.blueColor()
-        case 3: return UIColor.greenColor()
-        case 4: return UIColor.purpleColor()
-        default: return UIColor.blackColor()
-        }
     }
 }
