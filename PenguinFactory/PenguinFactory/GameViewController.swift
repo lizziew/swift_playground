@@ -8,16 +8,38 @@
 
 import UIKit
 
-class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
+class GameViewController: UIViewController {
     @IBOutlet weak var gameView: UIView!
     @IBOutlet weak var colorLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var quitRoundButton: UIButton!
     
+    @IBAction func showHelpPopover(sender: UIButton) {
+        timer?.invalidate()
+        
+        var alert = UIAlertController(title: "😱Help😱", message:  "Choose the color of the word that appears on the screen, not the word itself \n\n You earn 1 point if you're correct, and lose 0.5 points if you're wrong \n\n You have 30 seconds \n\n If you choose 5 in a row correctly, you get 5 extra seconds!", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Resume", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(self.timeInterval, target: self, selector: "endTimer:", userInfo: nil, repeats: true)
+        }))
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
     var timeRemaining:NSTimeInterval = 30.0
+    
+    var bonusPoints:Int = 5 {
+        didSet {
+            if bonusPoints == 0 {
+                timeRemaining = timeRemaining + 5.0
+                addAnimation("bonus")
+                bonusPoints = 5
+            }
+        }
+    }
     
     func startTimer() {
         timer = NSTimer()
@@ -28,14 +50,15 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     func endTimer(timer: NSTimer) {
         timeRemaining = timeRemaining - timeInterval
         if(timeRemaining <= 0) {
-            timerLabel.textColor = UIColor.redColor()
-            timerLabel.text = "TIME'S UP!"
-            println("round over!")
-            //segue to next screen
             timer.invalidate()
+            
+            performSegueWithIdentifier("endRoundSegue", sender: nil)
         }
         else {
             timerLabel.text = timeString(timeRemaining)
+            if timeRemaining <= 10 {
+                timerLabel.textColor = UIColor.redColor()
+            }
         }
     }
     
@@ -80,23 +103,33 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         colorLabel.textColor = getRandomColor()
     }
     
-    func addAnimation(isCorrect: Bool) {
+    func addAnimation(description: String) {
         let imageHeight = gameView.bounds.size.height / 5
         let imageWidth = gameView.bounds.size.width / 5
         let imageSize = CGSize(width: imageWidth, height: imageHeight)
-        let imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight/2)
+        
+        var imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight/2)
+        if description == "bonus" {
+            imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight)
+        }
         
         var correctImageView = UIImageView(frame: CGRect(origin: imageOrigin, size: imageSize))
         
-        if(isCorrect) {
+        var duration = 1.0
+        
+        if description == "right" {
             correctImageView.image = UIImage(named: "checkmark")
         }
-        else {
+        else if description == "wrong" {
             correctImageView.image = UIImage(named: "wrong")
+        }
+        else if description == "bonus" {
+            correctImageView.image = UIImage(named: "bonus")
+            duration = 2.0
         }
         
         correctImageView.alpha = 0.7
-        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { correctImageView.alpha = 0.0}, completion: nil)
+        UIView.animateWithDuration(duration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { correctImageView.alpha = 0.0}, completion: nil)
 
         gameView.addSubview(correctImageView)
     }
@@ -105,11 +138,13 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         if button.currentAttributedTitle!.string == currentColor {
             addWord()
             score++
-            addAnimation(true)
+            addAnimation("right")
+            bonusPoints = bonusPoints - 1
         }
         else {
             score = score - 0.5
-            addAnimation(false)
+            addAnimation("wrong")
+            bonusPoints = 5
         }
     }
     
@@ -162,17 +197,23 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "unwindToMenu" {
             if let unwoundMVC = segue.destinationViewController as? MenuViewController {
-                println("going back to menu, save score here")
+                println("going back to menu") 
+            }
+        }
+        else if segue.identifier == "endRoundSegue" {
+            if let unwoundMVC = segue.destinationViewController as? EndViewController {
+                unwoundMVC.score = score
             }
         }
     }
     
     @IBAction func quitRound() {
-        var alert = UIAlertController(title: "Game Paused", message: "Current score...", preferredStyle: UIAlertControllerStyle.Alert)
+        timer?.invalidate()
+        
+        var alert = UIAlertController(title: "Game Paused", message: "If you quit, your score won't be saved!", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Resume", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
-            //go back to game
-            //TBD pause 
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(self.timeInterval, target: self, selector: "endTimer:", userInfo: nil, repeats: true)
         }))
         
         alert.addAction(UIAlertAction(title: "Quit", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction!) -> Void in
