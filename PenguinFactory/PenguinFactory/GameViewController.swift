@@ -13,6 +13,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var colorLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var feedbackLabel: UILabel!
     @IBOutlet weak var quitRoundButton: UIButton!
     
     @IBAction func showHelpPopover(sender: UIButton) {
@@ -29,13 +30,13 @@ class GameViewController: UIViewController {
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
-    var timeRemaining:NSTimeInterval = 30.0
+    var timeRemaining:NSTimeInterval = 20.0
     
     var bonusPoints:Int = 5 {
         didSet {
             if bonusPoints == 0 {
                 timeRemaining = timeRemaining + 5.0
-                addAnimation("bonus")
+                addFeedback("bonus")
                 bonusPoints = 5
             }
         }
@@ -57,7 +58,7 @@ class GameViewController: UIViewController {
         else {
             timerLabel.text = timeString(timeRemaining)
             if timeRemaining <= 10 {
-                timerLabel.textColor = UIColor.redColor()
+                timerLabel.textColor = UIColor.yellowColor()
             }
         }
     }
@@ -76,7 +77,7 @@ class GameViewController: UIViewController {
     
     var currentColor = ""
     
-    var colors = [Color(description: "Red", value: UIColor.redColor()), Color(description: "Orange", value: UIColor.orangeColor()), Color(description: "Blue", value: UIColor.blueColor()), Color(description: "Green", value: UIColor.greenColor()), Color(description: "Purple", value: UIColor.purpleColor())]
+    let colors = [Color(description: "Red", value: UIColor.redColor()), Color(description: "Orange", value: UIColor.orangeColor()), Color(description: "Blue", value: UIColor.blueColor()), Color(description: "Green", value: UIColor.greenColor()), Color(description: "Purple", value: UIColor.purpleColor())]
     
     struct Color {
         var description: String
@@ -98,52 +99,58 @@ class GameViewController: UIViewController {
         return c.value
     }
     
+    func getRandomBackgroundColor(textColor: UIColor) -> UIColor {
+        var backgroundColors: [Color] = colors
+        
+        backgroundColors.removeAtIndex(findColor(backgroundColors, c: textColor))
+        
+        var backgroundColor = backgroundColors[Int(arc4random()%4)]
+        
+        return backgroundColor.value
+    }
+    
+    func findColor(colors: [Color], c: UIColor) -> Int {
+        for i in 0..<colors.count {
+            if c == colors[i].value {
+                return i
+            }
+        }
+        return -1
+    }
+    
     func addWord() {
         colorLabel.text = getRandomColorName()
         colorLabel.textColor = getRandomColor()
+        gameView.backgroundColor = getRandomBackgroundColor(colorLabel.textColor)
     }
     
-    func addAnimation(description: String) {
-        let imageHeight = gameView.bounds.size.height / 5
-        let imageWidth = gameView.bounds.size.width / 5
-        let imageSize = CGSize(width: imageWidth, height: imageHeight)
-        
-        var imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight/2)
-        if description == "bonus" {
-            imageOrigin = CGPoint(x: gameView.bounds.size.width/2 - imageWidth/2, y: gameView.bounds.size.height/2 - imageHeight)
-        }
-        
-        var correctImageView = UIImageView(frame: CGRect(origin: imageOrigin, size: imageSize))
-        
-        var duration = 1.0
+    func addFeedback(description: String) {
+        feedbackLabel.alpha = 1.0
         
         if description == "right" {
-            correctImageView.image = UIImage(named: "checkmark")
+            feedbackLabel.text = "😋"
         }
         else if description == "wrong" {
-            correctImageView.image = UIImage(named: "wrong")
+            feedbackLabel.text = "😥"
         }
         else if description == "bonus" {
-            correctImageView.image = UIImage(named: "bonus")
-            duration = 2.0
+            feedbackLabel.textColor = UIColor.whiteColor()
+            feedbackLabel.text = "+5 extra seconds!"
         }
         
-        correctImageView.alpha = 0.7
-        UIView.animateWithDuration(duration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { correctImageView.alpha = 0.0}, completion: nil)
-
-        gameView.addSubview(correctImageView)
+        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { self.feedbackLabel.alpha = 0.0 }, completion: nil)
     }
     
     func chooseColor(button: UIButton) {
         if button.currentAttributedTitle!.string == currentColor {
             addWord()
             score++
-            addAnimation("right")
+            addFeedback("right")
             bonusPoints = bonusPoints - 1
         }
         else {
             score = score - 0.5
-            addAnimation("wrong")
+            addFeedback("wrong")
             bonusPoints = 5
         }
     }
@@ -151,6 +158,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         timerLabel.text = timeString(timeRemaining)
+        feedbackLabel.text = ""
         addWord()
         quitRoundButton.layer.cornerRadius = 10
     }
@@ -167,15 +175,16 @@ class GameViewController: UIViewController {
         var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth, y: 0)
         
         var buttons = [UIButton]()
+
         for i in 0..<colors.count {
             var button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
-            button.backgroundColor = UIColor(white: 0.1, alpha: 0.2)
+            button.backgroundColor = UIColor.grayColor()
             button.layer.borderColor = UIColor.whiteColor().CGColor
             button.layer.borderWidth = 1
             button.layer.cornerRadius = 10
             button.showsTouchWhenHighlighted = true
             
-            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(20.0)]
+            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(20.0), NSForegroundColorAttributeName : UIColor.whiteColor()]
             var title = NSMutableAttributedString(string: colors[i].description, attributes: attrs)
             button.setAttributedTitle(title, forState: UIControlState.Normal)
             
