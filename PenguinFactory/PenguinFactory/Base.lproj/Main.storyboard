@@ -194,15 +194,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="quitRound" destination="IVS-c9-stV" eventType="touchUpInside" id="YoS-ey-DUD"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDi-e3-0OT">
-                                <rect key="frame" x="12" y="556" width="41" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Help"/>
-                                <connections>
-                                    <action selector="showHelpPopover:" destination="IVS-c9-stV" eventType="touchUpInside" id="aLx-tw-dxe"/>
+                                    <segue destination="y3W-dL-5Mj" kind="presentation" identifier="showPauseSegue" id="DtI-dm-fbS"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3R-Ea-IcC">
@@ -214,7 +206,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cDi-e3-0OT" firstAttribute="leading" secondItem="LE8-VY-O4G" secondAttribute="leadingMargin" constant="-4" id="2SZ-VY-Hfa"/>
                             <constraint firstItem="Vev-0r-kGq" firstAttribute="top" secondItem="i44-0J-FUS" secondAttribute="bottom" constant="517" id="715-vP-JPb"/>
                             <constraint firstItem="vTN-uF-qRB" firstAttribute="top" secondItem="LE8-VY-O4G" secondAttribute="top" id="9LK-4A-Fzq"/>
                             <constraint firstItem="Pqw-ox-cmH" firstAttribute="top" secondItem="O3R-Ea-IcC" secondAttribute="bottom" constant="-16.5" id="DlF-4S-vsF"/>
@@ -222,7 +213,6 @@
                             <constraint firstAttribute="centerX" secondItem="O3R-Ea-IcC" secondAttribute="centerX" constant="-0.5" id="JO6-FI-NWj"/>
                             <constraint firstItem="i44-0J-FUS" firstAttribute="top" secondItem="vTN-uF-qRB" secondAttribute="bottom" id="K0V-aM-lgj"/>
                             <constraint firstItem="Pqw-ox-cmH" firstAttribute="top" secondItem="Wea-Bj-UJK" secondAttribute="bottom" constant="269" id="RO7-m6-1UW"/>
-                            <constraint firstItem="Vev-0r-kGq" firstAttribute="top" secondItem="cDi-e3-0OT" secondAttribute="bottom" constant="8" id="UC9-gj-RhI"/>
                             <constraint firstAttribute="centerY" secondItem="Pqw-ox-cmH" secondAttribute="centerY" id="Zyp-67-0Hq"/>
                             <constraint firstItem="Vev-0r-kGq" firstAttribute="top" secondItem="Pqw-ox-cmH" secondAttribute="bottom" constant="290" id="mSr-0l-qNO"/>
                             <constraint firstItem="i44-0J-FUS" firstAttribute="top" secondItem="Wea-Bj-UJK" secondAttribute="bottom" constant="8" symbolic="YES" id="p7X-H1-JIb"/>
@@ -256,6 +246,109 @@
             </objects>
             <point key="canvasLocation" x="1531" y="832"/>
         </scene>
+        <!--Pause View Controller-->
+        <scene sceneID="eea-bW-hyx">
+            <objects>
+                <viewController id="y3W-dL-5Mj" customClass="PauseViewController" customModule="PenguinFactory" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oip-YJ-gUF"/>
+                        <viewControllerLayoutGuide type="bottom" id="tKG-cJ-O0F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uIR-rQ-oQw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resume" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFs-BW-gWX">
+                                <rect key="frame" x="474" y="358" width="63" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tr3-oq-tT0">
+                                <rect key="frame" x="262" y="249" width="75" height="102"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
+                                <state key="normal" title="🔄">
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="IVS-c9-stV" kind="show" id="u4P-fS-E5p"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PS4-bE-Fkc">
+                                <rect key="frame" x="272" y="359" width="55.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fI-fi-bny">
+                                <rect key="frame" x="60" y="354" width="36" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S85-O4-RzK">
+                                <rect key="frame" x="41" y="244" width="75" height="102"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
+                                <state key="normal" title="😱">
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showHelp:" destination="y3W-dL-5Mj" eventType="touchUpInside" id="X5y-hz-JC2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-Co-ZmQ">
+                                <rect key="frame" x="474" y="248" width="75" height="102"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
+                                <state key="normal" title="▶︎">
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="IVS-c9-stV" kind="show" identifier="resumeGameSegue" id="LbA-BW-fQj"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9c-0j-dZd">
+                                <rect key="frame" x="0.0" y="397" width="600" height="18"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qbf-Co-ZmQ" secondAttribute="trailing" constant="35" id="9vD-bj-bye"/>
+                            <constraint firstAttribute="centerX" secondItem="tr3-oq-tT0" secondAttribute="centerX" id="A7Z-h8-ncJ"/>
+                            <constraint firstAttribute="centerY" secondItem="S85-O4-RzK" secondAttribute="centerY" constant="5" id="D81-Jn-WJv"/>
+                            <constraint firstItem="PS4-bE-Fkc" firstAttribute="top" secondItem="tr3-oq-tT0" secondAttribute="bottom" constant="8" symbolic="YES" id="EX6-sC-9B1"/>
+                            <constraint firstItem="O9c-0j-dZd" firstAttribute="top" secondItem="PS4-bE-Fkc" secondAttribute="bottom" constant="17.5" id="IQn-Ws-QG3"/>
+                            <constraint firstItem="S85-O4-RzK" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="25" id="Imc-bX-8Qo"/>
+                            <constraint firstItem="O9c-0j-dZd" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="-16" id="Jmf-Z9-t2k"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O9c-0j-dZd" secondAttribute="trailing" constant="-16" id="KzH-xj-Q22"/>
+                            <constraint firstItem="0fI-fi-bny" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="44" id="LBI-d7-Hvv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JFs-BW-gWX" secondAttribute="trailing" constant="47" id="Otn-na-7dD"/>
+                            <constraint firstItem="O9c-0j-dZd" firstAttribute="top" secondItem="tr3-oq-tT0" secondAttribute="bottom" constant="8" symbolic="YES" id="QcQ-xv-bhJ"/>
+                            <constraint firstItem="0fI-fi-bny" firstAttribute="top" secondItem="S85-O4-RzK" secondAttribute="bottom" constant="8" symbolic="YES" id="fo3-nB-maL"/>
+                            <constraint firstAttribute="centerY" secondItem="tr3-oq-tT0" secondAttribute="centerY" id="s50-1w-pSN"/>
+                            <constraint firstAttribute="centerX" secondItem="PS4-bE-Fkc" secondAttribute="centerX" id="sp2-1v-Jwa"/>
+                            <constraint firstItem="JFs-BW-gWX" firstAttribute="top" secondItem="qbf-Co-ZmQ" secondAttribute="bottom" constant="8" symbolic="YES" id="t9q-AI-6ln"/>
+                            <constraint firstAttribute="centerY" secondItem="qbf-Co-ZmQ" secondAttribute="centerY" constant="0.5" id="tjY-nb-iiJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="QcQ-xv-bhJ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="helpLabel" destination="O9c-0j-dZd" id="xl7-qf-WIl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Atl-NV-cgI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2294" y="832"/>
+        </scene>
         <!--End View Controller-->
         <scene sceneID="XXX-Yr-4t8">
             <objects>
@@ -283,12 +376,11 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPu-gE-yhO">
                                 <rect key="frame" x="277" y="361" width="50" height="72"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <state key="normal" title="▶︎">
+                                <state key="normal" title="🔄">
                                     <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToMenu:" destination="knd-QU-8T3" eventType="touchUpInside" id="vnR-SO-LkJ"/>
                                     <segue destination="IVS-c9-stV" kind="show" identifier="toGameSegue" id="Dvn-w0-guj"/>
                                 </connections>
                             </button>
@@ -309,10 +401,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Boc-cm-2lh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2239" y="155"/>
+            <point key="canvasLocation" x="3041" y="439"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dvn-w0-guj"/>
+        <segue reference="bhh-Ok-QSw"/>
     </inferredMetricsTieBreakers>
 </document>

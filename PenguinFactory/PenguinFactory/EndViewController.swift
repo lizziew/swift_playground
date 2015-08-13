@@ -9,10 +9,6 @@
 import UIKit
 
 class EndViewController: UIViewController {
-    @IBAction func goToMenu(sender: UIButton) {
-        performSegueWithIdentifier("toGameSegue", sender: nil)
-    }
-    
     @IBOutlet weak var scoreLabel: UILabel!
     var score = 0.0
     

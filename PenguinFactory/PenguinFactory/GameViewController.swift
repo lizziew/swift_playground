@@ -16,18 +16,6 @@ class GameViewController: UIViewController {
     @IBOutlet weak var feedbackLabel: UILabel!
     @IBOutlet weak var quitRoundButton: UIButton!
     
-    @IBAction func showHelpPopover(sender: UIButton) {
-        timer?.invalidate()
-        
-        var alert = UIAlertController(title: "😱Help😱", message:  "Choose the color of the word that appears on the screen, not the word itself \n\n You earn 1 point if you're correct, and lose 0.5 points if you're wrong \n\n You have 30 seconds \n\n If you choose 5 in a row correctly, you get 5 extra seconds!", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addAction(UIAlertAction(title: "Resume", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(self.timeInterval, target: self, selector: "endTimer:", userInfo: nil, repeats: true)
-        }))
-        
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
     var timeRemaining:NSTimeInterval = 20.0
@@ -71,7 +59,9 @@ class GameViewController: UIViewController {
     
     var score = 0.0 {
         didSet {
-            scoreLabel.text = "\(score)"
+            if scoreLabel != nil {
+                scoreLabel.text = "\(score)"
+            }
         }
     }
     
@@ -158,6 +148,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         timerLabel.text = timeString(timeRemaining)
+        scoreLabel.text = "\(score)"
         feedbackLabel.text = ""
         addWord()
         quitRoundButton.layer.cornerRadius = 10
@@ -214,21 +205,23 @@ class GameViewController: UIViewController {
                 unwoundMVC.score = score
             }
         }
-    }
-    
-    @IBAction func quitRound() {
-        timer?.invalidate()
-        
-        var alert = UIAlertController(title: "Game Paused", message: "If you quit, your score won't be saved!", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addAction(UIAlertAction(title: "Resume", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(self.timeInterval, target: self, selector: "endTimer:", userInfo: nil, repeats: true)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Quit", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction!) -> Void in
-            self.performSegueWithIdentifier("unwindToMenu", sender: nil)
-        }))
-        
-        presentViewController(alert, animated: true, completion: nil)
+        else if segue.identifier == "showPauseSegue" {
+            if let unwoundMVC = segue.destinationViewController as? PauseViewController {
+                timer?.invalidate()
+                unwoundMVC.view.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+                unwoundMVC.score = self.score
+                unwoundMVC.timeRemaining = self.timeRemaining
+                
+                if UIDevice.currentDevice().systemVersion >= "8" {
+                    //For iOS 8
+                    self.definesPresentationContext = true
+                    unwoundMVC.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                }
+                else {
+                    //For iOS 7
+                    self.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                }
+            }
+        }
     }
 }

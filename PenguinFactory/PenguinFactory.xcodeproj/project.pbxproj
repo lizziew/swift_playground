@@ -16,6 +16,7 @@
 		831F66261B5F69E000067B1F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F66251B5F69E000067B1F /* GameViewController.swift */; };
 		831F662A1B5F704500067B1F /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F66291B5F704500067B1F /* HelpViewController.swift */; };
 		831F66341B729A4800067B1F /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F66331B729A4800067B1F /* EndViewController.swift */; };
+		83E4F7521B7C175A00A91A72 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4F7511B7C175A00A91A72 /* PauseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		831F66251B5F69E000067B1F /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		831F66291B5F704500067B1F /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		831F66331B729A4800067B1F /* EndViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
+		83E4F7511B7C175A00A91A72 /* PauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				831F66071B5F643500067B1F /* Main.storyboard */,
+				83E4F7511B7C175A00A91A72 /* PauseViewController.swift */,
 				831F66331B729A4800067B1F /* EndViewController.swift */,
 				831F66291B5F704500067B1F /* HelpViewController.swift */,
 				831F66231B5F64A700067B1F /* MenuViewController.swift */,
@@ -226,6 +229,7 @@
 				831F66261B5F69E000067B1F /* GameViewController.swift in Sources */,
 				831F66241B5F64A700067B1F /* MenuViewController.swift in Sources */,
 				831F662A1B5F704500067B1F /* HelpViewController.swift in Sources */,
+				83E4F7521B7C175A00A91A72 /* PauseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
