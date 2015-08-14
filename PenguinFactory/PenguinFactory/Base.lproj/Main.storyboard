@@ -17,29 +17,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ColorCraze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TI0-hm-Y3G">
-                                <rect key="frame" x="16" y="20" width="568" height="38.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="fBi-ke-I6K"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Menu" translatesAutoresizingMaskIntoConstraints="NO" id="FgD-x6-Mdt">
+                                <rect key="frame" x="16" y="20" width="557" height="580"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AA-lD-Ove">
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="fBi-ke-I6K"/>
-                                    </mask>
-                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLj-0l-w7f">
-                                <rect key="frame" x="277" y="279" width="45" height="41"/>
+                                <rect key="frame" x="235" y="308" width="130" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="108" id="1hd-8F-pYJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="LPI-CN-9NH"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Play">
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="30"/>
+                                <state key="normal" title="   Play   ">
+                                    <color key="titleColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="1hd-8F-pYJ"/>
@@ -50,14 +55,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xa-Zz-98v">
-                                <rect key="frame" x="275" y="328" width="49" height="41"/>
+                                <rect key="frame" x="234" y="366" width="132" height="37"/>
+                                <color key="backgroundColor" red="1" green="0.80000001192092896" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="KrW-Hs-JJe"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Help">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Superclarendon-Italic" family="Superclarendon" pointSize="20"/>
+                                <state key="normal" title="      Help     ">
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="KrW-Hs-JJe"/>
@@ -71,18 +83,27 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="QLj-0l-w7f" secondAttribute="centerX" id="3gd-Tw-Klb"/>
-                            <constraint firstItem="TI0-hm-Y3G" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="C5h-sG-kIa"/>
-                            <constraint firstItem="QLj-0l-w7f" firstAttribute="centerX" secondItem="TI0-hm-Y3G" secondAttribute="centerX" id="CWY-it-tCq"/>
+                            <constraint firstAttribute="centerX" secondItem="1AA-lD-Ove" secondAttribute="centerX" id="5KB-7c-rBm"/>
+                            <constraint firstItem="FgD-x6-Mdt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="5mz-0b-nTS"/>
+                            <constraint firstAttribute="centerY" secondItem="1AA-lD-Ove" secondAttribute="centerY" id="8WF-ho-1Oa"/>
                             <constraint firstAttribute="centerX" secondItem="4xa-Zz-98v" secondAttribute="centerX" id="FuD-d7-fxE"/>
-                            <constraint firstItem="TI0-hm-Y3G" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Mzh-u8-OkR"/>
-                            <constraint firstItem="TI0-hm-Y3G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="RNL-Rg-pHB"/>
+                            <constraint firstAttribute="centerX" secondItem="4xa-Zz-98v" secondAttribute="centerX" id="NOc-oG-4rZ"/>
                             <constraint firstItem="QLj-0l-w7f" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Z7v-bS-hgD"/>
+                            <constraint firstItem="FgD-x6-Mdt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cpT-Mj-KQt"/>
+                            <constraint firstItem="QLj-0l-w7f" firstAttribute="top" secondItem="1AA-lD-Ove" secondAttribute="bottom" constant="8" symbolic="YES" id="dYm-AL-MHb"/>
+                            <constraint firstAttribute="centerX" secondItem="QLj-0l-w7f" secondAttribute="centerX" id="eFG-gv-Sim"/>
                             <constraint firstItem="4xa-Zz-98v" firstAttribute="top" secondItem="QLj-0l-w7f" secondAttribute="bottom" constant="8" id="hXk-lb-ZZP"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="FgD-x6-Mdt" secondAttribute="bottom" id="lol-Ve-QnG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FgD-x6-Mdt" secondAttribute="trailing" constant="11" id="rPL-Rh-GOi"/>
+                            <constraint firstItem="4xa-Zz-98v" firstAttribute="top" secondItem="QLj-0l-w7f" secondAttribute="bottom" constant="8" id="x9g-Z8-P9v"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="QLj-0l-w7f" secondAttribute="bottom" constant="282" id="xTC-7c-5wH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="CWY-it-tCq"/>
+                                <exclude reference="3gd-Tw-Klb"/>
+                                <exclude reference="Z7v-bS-hgD"/>
+                                <exclude reference="FuD-d7-fxE"/>
+                                <exclude reference="hXk-lb-ZZP"/>
                                 <exclude reference="xTC-7c-5wH"/>
                             </mask>
                         </variation>
@@ -90,6 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="411" y="410"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="327-3Z-BpC">
@@ -141,7 +163,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zox-TE-0AK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fXa-wh-4G8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1531" y="155"/>
+            <point key="canvasLocation" x="580" y="1156"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="ahI-gk-GId">
@@ -244,7 +266,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMM-dn-s96" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="8FD-ed-png" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1531" y="832"/>
+            <point key="canvasLocation" x="1351" y="252"/>
         </scene>
         <!--Pause View Controller-->
         <scene sceneID="eea-bW-hyx">
@@ -347,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Atl-NV-cgI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2294" y="832"/>
+            <point key="canvasLocation" x="1992" y="252"/>
         </scene>
         <!--End View Controller-->
         <scene sceneID="XXX-Yr-4t8">
@@ -367,8 +389,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVb-Vo-IeY">
-                                <rect key="frame" x="251" y="329" width="98" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score : TBD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVb-Vo-IeY">
+                                <rect key="frame" x="224" y="329" width="153" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -401,9 +423,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Boc-cm-2lh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3041" y="439"/>
+            <point key="canvasLocation" x="2621" y="252"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Menu" width="1506" height="897"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bhh-Ok-QSw"/>
     </inferredMetricsTieBreakers>

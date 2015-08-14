@@ -19,7 +19,7 @@ class PauseViewController: UIViewController {
     }
     
     @IBAction func showHelp(sender: UIButton) {
-        helpLabel.text = "Choose the color of the word that appears on the screen, not the word itself \n You earn 1 point if you're correct, and lose 0.5 points if you're wrong \n You have 30 seconds \n If you choose 5 in a row correctly, you get 5 extra seconds!"
+        helpLabel.text = "Choose the color of the word that appears on the screen, not the word itself \n You earn 1 point if you're correct, and lose 0.5 points if you're wrong \n You have 20 seconds \n If you choose 5 in a row correctly, you get 5 extra seconds!"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
