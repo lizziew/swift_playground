@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var feedbackLabel: UILabel!
     @IBOutlet weak var quitRoundButton: UIButton!
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
@@ -54,7 +55,7 @@ class GameViewController: UIViewController {
     func timeString(time:NSTimeInterval) -> String {
         let seconds = Int(time) % 60
         let secondFraction = Int((time - Double(seconds)) * 10.0)
-        return String(format:"%02i.%01i sec left",  seconds, secondFraction)
+        return String(format:"%02i.%01i s left",  seconds, secondFraction)
     }
     
     var score = 0.0 {
@@ -160,10 +161,10 @@ class GameViewController: UIViewController {
         startTimer()
     
         //color buttons
-        let buttonHeight = gameView.bounds.size.height / 5
-        let buttonWidth = gameView.bounds.size.width / 5
+        let buttonHeight = (0.9 * gameView.bounds.size.height) / 5
+        let buttonWidth = (0.8 * gameView.bounds.size.width) / 5
         let buttonSize = CGSize(width: buttonWidth, height: buttonHeight)
-        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - buttonWidth, y: 0)
+        var buttonOrigin = CGPoint(x: gameView.bounds.size.width - 1.07 * buttonWidth, y: 0.4 * buttonHeight)
         
         var buttons = [UIButton]()
 
@@ -192,6 +193,10 @@ class GameViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.timer?.invalidate()
         self.timer = nil
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
