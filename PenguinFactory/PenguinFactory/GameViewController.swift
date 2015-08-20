@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
-    var timeRemaining:NSTimeInterval = 20.0
+    var timeRemaining:NSTimeInterval = 20.0 
     
     var bonusPoints:Int = 5 {
         didSet {
@@ -46,9 +46,6 @@ class GameViewController: UIViewController {
         }
         else {
             timerLabel.text = timeString(timeRemaining)
-            if timeRemaining <= 10 {
-                timerLabel.textColor = UIColor.yellowColor()
-            }
         }
     }
     
@@ -167,6 +164,11 @@ class GameViewController: UIViewController {
         var buttonOrigin = CGPoint(x: gameView.bounds.size.width - 1.07 * buttonWidth, y: 0.4 * buttonHeight)
         
         var buttons = [UIButton]()
+        
+        var fontSize = CGFloat(20.0)
+        if self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Regular {
+            fontSize = CGFloat(30.0)
+        }
 
         for i in 0..<colors.count {
             var button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
@@ -176,7 +178,7 @@ class GameViewController: UIViewController {
             button.layer.cornerRadius = 10
             button.showsTouchWhenHighlighted = true
             
-            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(20.0), NSForegroundColorAttributeName : UIColor.whiteColor()]
+            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(fontSize), NSForegroundColorAttributeName : UIColor.whiteColor()]
             var title = NSMutableAttributedString(string: colors[i].description, attributes: attrs)
             button.setAttributedTitle(title, forState: UIControlState.Normal)
             

@@ -279,10 +279,13 @@
                                 <rect key="frame" x="16" y="544" width="30" height="36"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
-                                <state key="normal" title="| |">
+                                <state key="normal" title=" | | ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
+                                </variation>
                                 <connections>
                                     <segue destination="y3W-dL-5Mj" kind="presentation" identifier="showPauseSegue" id="DtI-dm-fbS"/>
                                 </connections>
@@ -299,6 +302,12 @@
                                     <mask key="constraints">
                                         <exclude reference="EMZ-zb-vxS"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqw-ox-cmH">
@@ -337,6 +346,12 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -412,81 +427,99 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resume" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFs-BW-gWX">
-                                <rect key="frame" x="474" y="358" width="63" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tr3-oq-tT0">
-                                <rect key="frame" x="262" y="249" width="75" height="102"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
-                                <state key="normal" title="🔄">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="215" y="278" width="170" height="43"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                                <state key="normal" title="Start Over">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                </variation>
                                 <connections>
                                     <segue destination="IVS-c9-stV" kind="show" id="u4P-fS-E5p"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PS4-bE-Fkc">
-                                <rect key="frame" x="272" y="359" width="55.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fI-fi-bny">
-                                <rect key="frame" x="60" y="354" width="36" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S85-O4-RzK">
-                                <rect key="frame" x="41" y="244" width="75" height="102"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
-                                <state key="normal" title="😱">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="41" y="278.5" width="74" height="43"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                                <state key="normal" title="Help">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                </variation>
                                 <connections>
                                     <action selector="showHelp:" destination="y3W-dL-5Mj" eventType="touchUpInside" id="X5y-hz-JC2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-Co-ZmQ">
-                                <rect key="frame" x="474" y="248" width="75" height="102"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
-                                <state key="normal" title="▶︎">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="445" y="278" width="114" height="43"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                                <state key="normal" title="Resume">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                </variation>
                                 <connections>
                                     <segue destination="IVS-c9-stV" kind="show" identifier="resumeGameSegue" id="LbA-BW-fQj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9c-0j-dZd">
-                                <rect key="frame" x="0.0" y="397" width="600" height="18"/>
+                                <rect key="frame" x="0.0" y="348" width="600" height="18"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="30"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="           " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNo-eg-7Oi">
+                                <rect key="frame" x="292.5" y="342" width="16.5" height="6"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="5"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="qbf-Co-ZmQ" secondAttribute="trailing" constant="35" id="9vD-bj-bye"/>
+                            <constraint firstAttribute="centerX" secondItem="gNo-eg-7Oi" secondAttribute="centerX" constant="-0.5" id="0jo-jL-XhM"/>
+                            <constraint firstItem="gNo-eg-7Oi" firstAttribute="top" secondItem="tr3-oq-tT0" secondAttribute="bottom" constant="21" id="6a1-35-HDG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qbf-Co-ZmQ" secondAttribute="trailing" constant="25" id="9vD-bj-bye"/>
                             <constraint firstAttribute="centerX" secondItem="tr3-oq-tT0" secondAttribute="centerX" id="A7Z-h8-ncJ"/>
-                            <constraint firstAttribute="centerY" secondItem="S85-O4-RzK" secondAttribute="centerY" constant="5" id="D81-Jn-WJv"/>
-                            <constraint firstItem="PS4-bE-Fkc" firstAttribute="top" secondItem="tr3-oq-tT0" secondAttribute="bottom" constant="8" symbolic="YES" id="EX6-sC-9B1"/>
-                            <constraint firstItem="O9c-0j-dZd" firstAttribute="top" secondItem="PS4-bE-Fkc" secondAttribute="bottom" constant="17.5" id="IQn-Ws-QG3"/>
+                            <constraint firstAttribute="centerY" secondItem="S85-O4-RzK" secondAttribute="centerY" id="D81-Jn-WJv"/>
                             <constraint firstItem="S85-O4-RzK" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="25" id="Imc-bX-8Qo"/>
                             <constraint firstItem="O9c-0j-dZd" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="-16" id="Jmf-Z9-t2k"/>
                             <constraint firstAttribute="trailingMargin" secondItem="O9c-0j-dZd" secondAttribute="trailing" constant="-16" id="KzH-xj-Q22"/>
-                            <constraint firstItem="0fI-fi-bny" firstAttribute="leading" secondItem="uIR-rQ-oQw" secondAttribute="leadingMargin" constant="44" id="LBI-d7-Hvv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JFs-BW-gWX" secondAttribute="trailing" constant="47" id="Otn-na-7dD"/>
                             <constraint firstItem="O9c-0j-dZd" firstAttribute="top" secondItem="tr3-oq-tT0" secondAttribute="bottom" constant="8" symbolic="YES" id="QcQ-xv-bhJ"/>
-                            <constraint firstItem="0fI-fi-bny" firstAttribute="top" secondItem="S85-O4-RzK" secondAttribute="bottom" constant="8" symbolic="YES" id="fo3-nB-maL"/>
+                            <constraint firstItem="O9c-0j-dZd" firstAttribute="top" secondItem="gNo-eg-7Oi" secondAttribute="bottom" id="XIo-31-bec"/>
                             <constraint firstAttribute="centerY" secondItem="tr3-oq-tT0" secondAttribute="centerY" id="s50-1w-pSN"/>
-                            <constraint firstAttribute="centerX" secondItem="PS4-bE-Fkc" secondAttribute="centerX" id="sp2-1v-Jwa"/>
-                            <constraint firstItem="JFs-BW-gWX" firstAttribute="top" secondItem="qbf-Co-ZmQ" secondAttribute="bottom" constant="8" symbolic="YES" id="t9q-AI-6ln"/>
+                            <constraint firstAttribute="centerX" secondItem="O9c-0j-dZd" secondAttribute="centerX" id="s9v-UU-v8I"/>
                             <constraint firstAttribute="centerY" secondItem="qbf-Co-ZmQ" secondAttribute="centerY" constant="0.5" id="tjY-nb-iiJ"/>
                         </constraints>
                         <variation key="default">
@@ -515,25 +548,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="End" translatesAutoresizingMaskIntoConstraints="NO" id="TGA-Gq-mOo">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ne1-1B-Yqs">
-                                <rect key="frame" x="235" y="269" width="134" height="60"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score : TBD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVb-Vo-IeY">
-                                <rect key="frame" x="224" y="329" width="153" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="232" y="307" width="135.5" height="45.5"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPu-gE-yhO">
-                                <rect key="frame" x="277" y="361" width="50" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <state key="normal" title="🔄">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="136" y="387.5" width="328" height="63"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                <state key="normal" title=" Start Over  ">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="35"/>
+                                </variation>
                                 <connections>
                                     <segue destination="IVS-c9-stV" kind="show" identifier="toGameSegue" id="Dvn-w0-guj"/>
                                 </connections>
@@ -541,12 +581,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="hPu-gE-yhO" secondAttribute="centerX" constant="-2" id="EPo-24-lVH"/>
-                            <constraint firstItem="FVb-Vo-IeY" firstAttribute="top" secondItem="Ne1-1B-Yqs" secondAttribute="bottom" constant="-0.5" id="Vgf-zr-oGi"/>
-                            <constraint firstAttribute="centerY" secondItem="Ne1-1B-Yqs" secondAttribute="centerY" constant="0.5" id="d33-0F-8pz"/>
-                            <constraint firstAttribute="centerX" secondItem="FVb-Vo-IeY" secondAttribute="centerX" constant="-0.5" id="gPK-7S-fqj"/>
-                            <constraint firstAttribute="centerX" secondItem="Ne1-1B-Yqs" secondAttribute="centerX" constant="-2" id="n9c-yf-9VM"/>
-                            <constraint firstItem="hPu-gE-yhO" firstAttribute="top" secondItem="FVb-Vo-IeY" secondAttribute="bottom" constant="8" id="zrr-IU-B9y"/>
+                            <constraint firstItem="TGA-Gq-mOo" firstAttribute="top" secondItem="S21-cq-Oeg" secondAttribute="bottom" id="DTf-Q1-ceh"/>
+                            <constraint firstAttribute="centerX" secondItem="hPu-gE-yhO" secondAttribute="centerX" id="EPo-24-lVH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TGA-Gq-mOo" secondAttribute="trailing" constant="-16" id="TTH-OQ-7Fv"/>
+                            <constraint firstItem="hPu-gE-yhO" firstAttribute="top" secondItem="Ne1-1B-Yqs" secondAttribute="bottom" constant="35" id="XhO-mM-BrI">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
+                            <constraint firstAttribute="centerY" secondItem="Ne1-1B-Yqs" secondAttribute="centerY" constant="-30" id="d33-0F-8pz">
+                                <variation key="heightClass=regular-widthClass=regular" constant="-80"/>
+                            </constraint>
+                            <constraint firstAttribute="centerX" secondItem="Ne1-1B-Yqs" secondAttribute="centerX" id="n9c-yf-9VM"/>
+                            <constraint firstItem="TGA-Gq-mOo" firstAttribute="leading" secondItem="GNb-Su-d5Q" secondAttribute="leadingMargin" constant="-16" id="tjN-9j-c5v"/>
+                            <constraint firstItem="EsD-QP-dve" firstAttribute="top" secondItem="TGA-Gq-mOo" secondAttribute="bottom" id="xHs-Oo-gbn"/>
                         </constraints>
                     </view>
                     <connections>
@@ -559,10 +605,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="End" width="1591" height="934"/>
         <image name="Game" width="1089" height="703"/>
         <image name="Menu" width="1519" height="877"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bhh-Ok-QSw"/>
+        <segue reference="Dvn-w0-guj"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,6 +13,7 @@ class EndViewController: UIViewController {
     var score = 0.0
     
     override func viewDidLoad() {
-        scoreLabel.text = "\(score)"
+        scoreLabel.text = "\(score) pts"
+        view.backgroundColor = UIColor(red: 0.6, green: 0.88, blue: 0.97, alpha: 1.0)
     }
 }
