@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
-    var timeRemaining:NSTimeInterval = 20.0 
+    var timeRemaining:NSTimeInterval = 5.0  //change back to 20.0
     
     var bonusPoints:Int = 5 {
         didSet {
@@ -210,6 +210,7 @@ class GameViewController: UIViewController {
         else if segue.identifier == "endRoundSegue" {
             if let unwoundMVC = segue.destinationViewController as? EndViewController {
                 unwoundMVC.score = score
+                println(score)
             }
         }
         else if segue.identifier == "showPauseSegue" {
