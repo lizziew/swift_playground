@@ -252,7 +252,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zox-TE-0AK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fXa-wh-4G8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="580" y="1156"/>
+            <point key="canvasLocation" x="411" y="1172"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="ahI-gk-GId">
@@ -287,7 +287,7 @@
                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="y3W-dL-5Mj" kind="presentation" identifier="showPauseSegue" id="DtI-dm-fbS"/>
+                                    <segue destination="y3W-dL-5Mj" kind="presentation" identifier="showPauseSegue" modalTransitionStyle="crossDissolve" id="DtI-dm-fbS"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i44-0J-FUS">
@@ -413,7 +413,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMM-dn-s96" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="8FD-ed-png" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1283" y="235"/>
+            <point key="canvasLocation" x="1083" y="410"/>
         </scene>
         <!--Pause View Controller-->
         <scene sceneID="eea-bW-hyx">
@@ -534,7 +534,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Atl-NV-cgI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="252"/>
+            <point key="canvasLocation" x="1858" y="-11"/>
         </scene>
         <!--End View Controller-->
         <scene sceneID="XXX-Yr-4t8">
@@ -601,7 +601,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Boc-cm-2lh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2621" y="252"/>
+            <point key="canvasLocation" x="1858" y="1172"/>
         </scene>
     </scenes>
     <resources>
@@ -610,6 +610,6 @@
         <image name="Menu" width="1519" height="877"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Dvn-w0-guj"/>
+        <segue reference="u4P-fS-E5p"/>
     </inferredMetricsTieBreakers>
 </document>
