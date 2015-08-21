@@ -166,9 +166,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="DBZ-p7-fOm">
-                                <rect key="frame" x="502" y="505" width="82" height="43"/>
+                                <rect key="frame" x="502" y="501" width="82" height="47"/>
                                 <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="30"/>
                                 <state key="normal" title="Menu">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -180,7 +180,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="50"/>
                                 </variation>
                                 <connections>
                                     <segue destination="fXa-wh-4G8" kind="unwind" unwindAction="goBack:" id="GHQ-yw-WNP"/>
@@ -270,8 +270,8 @@
                                 <rect key="frame" x="-6" y="20" width="611" height="580"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3R-Ea-IcC">
-                                <rect key="frame" x="247" y="218" width="107.5" height="54"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <rect key="frame" x="242" y="220.5" width="117.5" height="52"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="45"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -304,15 +304,15 @@
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqw-ox-cmH">
-                                <rect key="frame" x="205" y="255" width="189.5" height="89.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="75"/>
+                                <rect key="frame" x="202" y="256" width="195.5" height="87"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="75"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -347,7 +347,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="heightClass=compact-widthClass=compact">
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -449,7 +449,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S85-O4-RzK">
-                                <rect key="frame" x="41" y="278.5" width="74" height="43"/>
+                                <rect key="frame" x="41" y="278" width="74" height="43"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
                                 <state key="normal" title="Help">
@@ -491,16 +491,16 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9c-0j-dZd">
-                                <rect key="frame" x="0.0" y="348" width="600" height="18"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                <rect key="frame" x="0.0" y="348" width="600" height="17.5"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="30"/>
+                                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="30"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="           " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNo-eg-7Oi">
-                                <rect key="frame" x="292.5" y="342" width="16.5" height="6"/>
+                                <rect key="frame" x="292" y="342" width="16.5" height="6"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="5"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -551,8 +551,17 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="End" translatesAutoresizingMaskIntoConstraints="NO" id="TGA-Gq-mOo">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Scores:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="APn-Lt-yFJ">
+                                <rect key="frame" x="217" y="30" width="197" height="30.5"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                </variation>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPu-gE-yhO">
-                                <rect key="frame" x="136" y="387" width="328" height="63"/>
+                                <rect key="frame" x="151" y="384.5" width="328" height="63"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
                                 <state key="normal" title=" Start Over  ">
@@ -572,29 +581,25 @@
                                     <segue destination="IVS-c9-stV" kind="show" identifier="toGameSegue" id="Dvn-w0-guj"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Scores:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APn-Lt-yFJ">
-                                <rect key="frame" x="201" y="236.5" width="197" height="30.5"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="Ne1-1B-Yqs">
+                                <rect key="frame" x="254.5" y="309.5" width="120.5" height="40.5"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="50"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="23"/>
                                 </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ne1-1B-Yqs">
-                                <rect key="frame" x="232" y="307" width="135.5" height="45.5"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="45"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ne1-1B-Yqs" firstAttribute="top" secondItem="APn-Lt-yFJ" secondAttribute="bottom" constant="40" id="Ag9-iI-UWI">
+                                <variation key="heightClass=compact-widthClass=compact" constant="55"/>
                                 <variation key="heightClass=regular-widthClass=regular" constant="140"/>
                             </constraint>
                             <constraint firstItem="TGA-Gq-mOo" firstAttribute="top" secondItem="S21-cq-Oeg" secondAttribute="bottom" id="DTf-Q1-ceh"/>
-                            <constraint firstAttribute="centerX" secondItem="hPu-gE-yhO" secondAttribute="centerX" id="EPo-24-lVH"/>
+                            <constraint firstAttribute="centerX" secondItem="hPu-gE-yhO" secondAttribute="centerX" constant="-15" id="EPo-24-lVH"/>
+                            <constraint firstItem="APn-Lt-yFJ" firstAttribute="top" secondItem="S21-cq-Oeg" secondAttribute="bottom" constant="10" id="KnD-TK-k6s"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TGA-Gq-mOo" secondAttribute="trailing" constant="-16" id="TTH-OQ-7Fv"/>
                             <constraint firstItem="hPu-gE-yhO" firstAttribute="top" secondItem="Ne1-1B-Yqs" secondAttribute="bottom" constant="35" id="XhO-mM-BrI">
                                 <variation key="heightClass=regular-widthClass=regular" constant="150"/>
@@ -602,11 +607,16 @@
                             <constraint firstAttribute="centerY" secondItem="Ne1-1B-Yqs" secondAttribute="centerY" constant="-30" id="d33-0F-8pz">
                                 <variation key="heightClass=regular-widthClass=regular" constant="-80"/>
                             </constraint>
-                            <constraint firstAttribute="centerX" secondItem="APn-Lt-yFJ" secondAttribute="centerX" id="jx6-9S-Igo"/>
-                            <constraint firstAttribute="centerX" secondItem="Ne1-1B-Yqs" secondAttribute="centerX" id="n9c-yf-9VM"/>
+                            <constraint firstAttribute="centerX" secondItem="APn-Lt-yFJ" secondAttribute="centerX" constant="-15" id="jx6-9S-Igo"/>
+                            <constraint firstAttribute="centerX" secondItem="Ne1-1B-Yqs" secondAttribute="centerX" constant="-15" id="n9c-yf-9VM"/>
                             <constraint firstItem="TGA-Gq-mOo" firstAttribute="leading" secondItem="GNb-Su-d5Q" secondAttribute="leadingMargin" constant="-16" id="tjN-9j-c5v"/>
                             <constraint firstItem="EsD-QP-dve" firstAttribute="top" secondItem="TGA-Gq-mOo" secondAttribute="bottom" id="xHs-Oo-gbn"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ag9-iI-UWI"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="scoreLabel" destination="Ne1-1B-Yqs" id="ThY-C5-0q4"/>
@@ -619,7 +629,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="End" width="1591" height="934"/>
+        <image name="End" width="1516" height="852"/>
         <image name="Game" width="1086" height="699"/>
         <image name="Menu" width="1519" height="877"/>
     </resources>

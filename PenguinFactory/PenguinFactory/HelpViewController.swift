@@ -11,7 +11,7 @@ import UIKit
 class HelpViewController: UIViewController {
     var instructionsText: UILabel = UILabel()
     
-    var text: [String] = ["~Help~", "Choose the color of the word that appears on the screen, not the word itself", "You earn 1 point if you're correct, and lose 0.5 points if you're wrong", "You have 20 seconds", "If you choose 5 in a row correctly, you get 5 extra seconds!"]
+    var text: [String] = [">Help<", "Choose the color of the word that appears on the screen, not the word itself", "You earn 1 point if you're correct, and lose 0.5 points if you're wrong", "You have 20 seconds", "If you choose 5 in a row correctly, you get 5 extra seconds!"]
     
     var textIndex = 0 {
         didSet {
@@ -56,7 +56,7 @@ class HelpViewController: UIViewController {
         instructionsText = UILabel(frame: CGRect(origin: CGPoint(x: 0.2 * self.view.bounds.width, y: 0.2 * self.view.bounds.height), size: CGSize(width: 0.55 * self.view.bounds.width, height: 0.7 * self.view.bounds.height)))
         instructionsText.numberOfLines = 3
         instructionsText.textAlignment = NSTextAlignment.Center
-        instructionsText.font = UIFont(name: "Bradley Hand", size: 50.0)
+        instructionsText.font = UIFont(name: "American Typewriter", size: 50.0)
         instructionsText.adjustsFontSizeToFitWidth = true
 //        instructionsText.layer.borderColor = UIColor.greenColor().CGColor
 //        instructionsText.layer.borderWidth = 3.0

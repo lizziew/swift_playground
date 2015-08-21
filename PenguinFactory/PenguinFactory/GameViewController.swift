@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
-    var timeRemaining:NSTimeInterval = 5.0  //change back to 20.0
+    var timeRemaining:NSTimeInterval = 20.0 
     
     var bonusPoints:Int = 5 {
         didSet {
@@ -52,7 +52,7 @@ class GameViewController: UIViewController {
     func timeString(time:NSTimeInterval) -> String {
         let seconds = Int(time) % 60
         let secondFraction = Int((time - Double(seconds)) * 10.0)
-        return String(format:"%02i.%01i s left",  seconds, secondFraction)
+        return String(format:" %02i.%01i s left ",  seconds, secondFraction)
     }
     
     var score = 0.0 {
@@ -130,7 +130,7 @@ class GameViewController: UIViewController {
     }
     
     func chooseColor(button: UIButton) {
-        if button.currentAttributedTitle!.string == currentColor {
+        if button.currentTitle! == currentColor {
             addWord()
             score++
             addFeedback("right")
@@ -178,9 +178,9 @@ class GameViewController: UIViewController {
             button.layer.cornerRadius = 10
             button.showsTouchWhenHighlighted = true
             
-            var attrs = [NSFontAttributeName: UIFont.systemFontOfSize(fontSize), NSForegroundColorAttributeName : UIColor.whiteColor()]
-            var title = NSMutableAttributedString(string: colors[i].description, attributes: attrs)
-            button.setAttributedTitle(title, forState: UIControlState.Normal)
+            button.setTitle(colors[i].description, forState: UIControlState.Normal)
+            button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            button.titleLabel!.font =  UIFont(name: "American Typewriter", size: fontSize)
             
             button.addTarget(self, action: "chooseColor:", forControlEvents: UIControlEvents.TouchUpInside)
             buttons.append(button)
