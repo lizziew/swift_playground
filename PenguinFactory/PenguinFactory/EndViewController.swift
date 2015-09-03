@@ -12,16 +12,33 @@ class EndViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     var score = 0.0
     @IBOutlet weak var scoresListLabel: UILabel!
+    var saved = false
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor(red: 0.6, green: 0.88, blue: 0.97, alpha: 1.0)
+
+//        scoreLabel.layer.borderColor = UIColor.greenColor().CGColor
+//        scoreLabel.layer.borderWidth = 3.0
+//        
+//        scoresListLabel.layer.borderColor = UIColor.greenColor().CGColor
+//        scoresListLabel.layer.borderWidth = 3.0
         
-        scoreLabel.layer.borderColor = UIColor.greenColor().CGColor
-        scoreLabel.layer.borderWidth = 3.0
-        
-        scoresListLabel.layer.borderColor = UIColor.greenColor().CGColor
-        scoresListLabel.layer.borderWidth = 3.0
-        
+        saveAndDisplayScore()
+    }
+    
+    func saveScore() {
+        var defaults = NSUserDefaults.standardUserDefaults()
+        var scores = [AnyObject]()
+        if let storedScores = defaults.arrayForKey("score") {
+            scores = storedScores
+        }
+        scores.append(score)
+        defaults.setObject(scores, forKey: "score")
+        defaults.synchronize()
+        saved = true
+    }
+    
+    func saveAndDisplayScore() {
         //save new score
         var defaults = NSUserDefaults.standardUserDefaults()
         var scores = [AnyObject]()
@@ -39,10 +56,10 @@ class EndViewController: UIViewController {
         
         //display (high) score
         if sortedscores.count > 1 && score == sortedscores[0] {
-            scoreLabel.text = "New high! \(score) pts"
+            scoreLabel.text = "New high!\n \(score) pts"
         }
         else {
-            scoreLabel.text = "\(score) pts"
+            scoreLabel.text = "You scored\n \(score) pts"
         }
     }
     

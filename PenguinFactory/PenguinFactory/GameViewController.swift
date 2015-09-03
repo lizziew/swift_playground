@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     
     var timer: NSTimer?
     let timeInterval:NSTimeInterval = 0.05
-    var timeRemaining:NSTimeInterval = 20.0 
+    var timeRemaining:NSTimeInterval = 15.0
     
     var bonusPoints:Int = 5 {
         didSet {
@@ -52,7 +52,7 @@ class GameViewController: UIViewController {
     func timeString(time:NSTimeInterval) -> String {
         let seconds = Int(time) % 60
         let secondFraction = Int((time - Double(seconds)) * 10.0)
-        return String(format:" %02i.%01i s left ",  seconds, secondFraction)
+        return String(format:" %02i.%01i s \nleft ",  seconds, secondFraction)
     }
     
     var score = 0.0 {
@@ -65,7 +65,7 @@ class GameViewController: UIViewController {
     
     var currentColor = ""
     
-    let colors = [Color(description: "Red", value: UIColor.redColor()), Color(description: "Orange", value: UIColor.orangeColor()), Color(description: "Blue", value: UIColor.blueColor()), Color(description: "Green", value: UIColor.greenColor()), Color(description: "Purple", value: UIColor.purpleColor())]
+    let colors = [Color(description: "Red", value: UIColor.redColor()), Color(description: "Orange", value: UIColor.orangeColor()), Color(description: "Blue", value: UIColor.blueColor()), Color(description: "Green", value: UIColor(red: 0.275, green: 0.77, blue: 0.25, alpha: 1.0)), Color(description: "Purple", value: UIColor.purpleColor())]
     
     struct Color {
         var description: String
@@ -150,8 +150,25 @@ class GameViewController: UIViewController {
         feedbackLabel.text = ""
         addWord()
         quitRoundButton.layer.cornerRadius = 10
+        
+        //app delegate observers 
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: "appWillResignActive:", name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
+    var paused = false
+    
+    func appWillResignActive(notification: NSNotification) {
+        println("app will resign active in game view view controller")
+        
+        if !paused {
+            performSegueWithIdentifier("showPauseSegue", sender: self)
+        }
+    
+        paused = true
+        
+    }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -214,6 +231,8 @@ class GameViewController: UIViewController {
             }
         }
         else if segue.identifier == "showPauseSegue" {
+            paused = true 
+            
             if let unwoundMVC = segue.destinationViewController as? PauseViewController {
                 timer?.invalidate()
                 unwoundMVC.view.backgroundColor = UIColor(white: 1.0, alpha: 0.6)

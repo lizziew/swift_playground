@@ -11,7 +11,7 @@ import UIKit
 class HelpViewController: UIViewController {
     var instructionsText: UILabel = UILabel()
     
-    var text: [String] = [">Help<", "Choose the color of the word that appears on the screen, not the word itself", "You earn 1 point if you're correct, and lose 0.5 points if you're wrong", "You have 20 seconds", "If you choose 5 in a row correctly, you get 5 extra seconds!"]
+    var text: [String] = ["Help", "Choose the color of the word that appears on the screen, not the word itself", "You earn 1 point if you're correct, and lose 0.5 points if you're wrong", "You have 15 seconds", "If you choose 5 in a row correctly, you get 5 extra seconds!"]
     
     var textIndex = 0 {
         didSet {
