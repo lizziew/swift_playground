@@ -27,7 +27,7 @@ class EndViewController: UIViewController {
     }
     
     func saveScore() {
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         var scores = [AnyObject]()
         if let storedScores = defaults.arrayForKey("score") {
             scores = storedScores
@@ -40,7 +40,7 @@ class EndViewController: UIViewController {
     
     func saveAndDisplayScore() {
         //save new score
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         var scores = [AnyObject]()
         if let storedScores = defaults.arrayForKey("score") {
             scores = storedScores
@@ -51,7 +51,7 @@ class EndViewController: UIViewController {
         
         //display high scores
         var sortedscores = scores as AnyObject as! [Double]
-        sortedscores.sort(>)
+        sortedscores.sortInPlace(>)
         displaySortedScores(sortedscores)
         
         //display (high) score

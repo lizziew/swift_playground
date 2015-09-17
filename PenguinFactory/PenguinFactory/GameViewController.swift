@@ -82,7 +82,7 @@ class GameViewController: UIViewController {
     }
     
     func getRandomColor() -> UIColor {
-        var c = colors[Int(arc4random()%5)]
+        let c = colors[Int(arc4random()%5)]
         currentColor = c.description
         return c.value
     }
@@ -92,7 +92,7 @@ class GameViewController: UIViewController {
         
         backgroundColors.removeAtIndex(findColor(backgroundColors, c: textColor))
         
-        var backgroundColor = backgroundColors[Int(arc4random()%4)]
+        let backgroundColor = backgroundColors[Int(arc4random()%4)]
         
         return backgroundColor.value
     }
@@ -159,7 +159,7 @@ class GameViewController: UIViewController {
     var paused = false
     
     func appWillResignActive(notification: NSNotification) {
-        println("app will resign active in game view view controller")
+        print("app will resign active in game view view controller")
         
         if !paused {
             performSegueWithIdentifier("showPauseSegue", sender: self)
@@ -188,7 +188,7 @@ class GameViewController: UIViewController {
         }
 
         for i in 0..<colors.count {
-            var button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
+            let button = UIButton(frame: CGRect(origin: buttonOrigin, size: buttonSize))
             button.backgroundColor = UIColor.grayColor()
             button.layer.borderColor = UIColor.whiteColor().CGColor
             button.layer.borderWidth = 1
@@ -220,14 +220,14 @@ class GameViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "unwindToMenu" {
-            if let unwoundMVC = segue.destinationViewController as? MenuViewController {
-                println("going back to menu") 
+            if let _ = segue.destinationViewController as? MenuViewController {
+                print("going back to menu")
             }
         }
         else if segue.identifier == "endRoundSegue" {
             if let unwoundMVC = segue.destinationViewController as? EndViewController {
                 unwoundMVC.score = score
-                println(score)
+                print(score)
             }
         }
         else if segue.identifier == "showPauseSegue" {
