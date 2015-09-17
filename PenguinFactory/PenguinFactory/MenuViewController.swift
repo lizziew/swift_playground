@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UIViewController {
     @IBAction func goBack(segue: UIStoryboardSegue) {
-        println("back to menu!")
+        print("back to menu!")
     }
     
     
