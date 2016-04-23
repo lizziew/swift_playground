@@ -28,6 +28,8 @@
 		83BBCFF61CCBF4D300326C37 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */; };
 		83BBCFF81CCC02A000326C37 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */; };
 		83BBCFFA1CCC02C400326C37 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF91CCC02C400326C37 /* CustomSearchController.swift */; };
+		83BBCFFC1CCC204600326C37 /* StartDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFFB1CCC204600326C37 /* StartDateViewController.swift */; };
+		83BBCFFE1CCC295700326C37 /* EndDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFFD1CCC295700326C37 /* EndDateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		83BBCFF91CCC02C400326C37 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
+		83BBCFFB1CCC204600326C37 /* StartDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartDateViewController.swift; sourceTree = "<group>"; };
+		83BBCFFD1CCC295700326C37 /* EndDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndDateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,8 @@
 				83BBCFE31CCB18F400326C37 /* HomeViewController.swift */,
 				83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */,
 				83BBCFAC1CCB089500326C37 /* Main.storyboard */,
+				83BBCFFD1CCC295700326C37 /* EndDateViewController.swift */,
+				83BBCFFB1CCC204600326C37 /* StartDateViewController.swift */,
 				83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */,
 				83BBCFF31CCBF36F00326C37 /* LocationViewController.swift */,
 				83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */,
@@ -324,6 +330,8 @@
 				83BBCFEA1CCB3C2F00326C37 /* PinTableViewCell.swift in Sources */,
 				83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */,
 				83BBCFE81CCB190F00326C37 /* SettingsViewController.swift in Sources */,
+				83BBCFFE1CCC295700326C37 /* EndDateViewController.swift in Sources */,
+				83BBCFFC1CCC204600326C37 /* StartDateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

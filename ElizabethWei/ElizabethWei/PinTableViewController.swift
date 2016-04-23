@@ -19,15 +19,8 @@ class PinTableViewController: UITableViewController {
             pins += savedPins
         }
         else {
-            loadSamplePins()
+            //TBD: TELL PEOPLE TO ADD DATE
         }
-    }
-    
-    func loadSamplePins() {
-        let pin1 = Pin(location: "Cambridge, MA", date: "April 23, 2016 to May 31, 2016")!
-        let pin2 = Pin(location: "Seattle, WA", date: "June 1, 2016 to September 1, 2016")!
-        let pin3 = Pin(location: "San Francisco, CA", date: "September 2, 2016 to December 31, 2016")!
-        pins += [pin1, pin2, pin3]
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,15 +39,19 @@ class PinTableViewController: UITableViewController {
         let cellIdentifier = "PinTableViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! PinTableViewCell
         let pin = pins[indexPath.row]
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMMM dd, YYYY"
 
-        cell.LocationLabel.text = pin.location
-        cell.DateLabel.text = pin.date
+        cell.LocationLabel.text = pin.location.name 
+        cell.DateLabel.text = formatter.stringFromDate(pin.startDate) + " to " + formatter.stringFromDate(pin.endDate)
 
         return cell
     }
     
     @IBAction func unwindToPinList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.sourceViewController as? PinViewController, pin = sourceViewController.pin {
+            
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 pins[selectedIndexPath.row] = pin
                 tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)

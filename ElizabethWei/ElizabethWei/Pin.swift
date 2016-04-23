@@ -7,38 +7,40 @@
 //
 
 import UIKit
+import MapKit
 
 class Pin: NSObject, NSCoding {
-    var location: String
-    var date: String
+    var location: MKPlacemark
+    var startDate: NSDate
+    var endDate: NSDate
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("pins")
     
     struct PropertyKey {
         static let locationKey = "name"
-        static let dateKey = "date"
+        static let startDateKey = "startDate"
+        static let endDateKey = "endDate"
     }
     
-    init?(location: String, date: String) {
+    init?(location: MKPlacemark, startDate: NSDate, endDate: NSDate) {
         self.location = location
-        self.date = date
+        self.startDate = startDate
+        self.endDate = endDate
         
         super.init()
-        
-        if location.isEmpty || date.isEmpty {
-            return nil
-        }
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(location, forKey: PropertyKey.locationKey)
-        aCoder.encodeObject(date, forKey: PropertyKey.dateKey)
+        aCoder.encodeObject(startDate, forKey: PropertyKey.startDateKey)
+        aCoder.encodeObject(endDate, forKey: PropertyKey.endDateKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let location = aDecoder.decodeObjectForKey(PropertyKey.locationKey) as! String
-        let date = aDecoder.decodeObjectForKey(PropertyKey.dateKey) as! String
-        self.init(location: location, date: date)
+        let location = aDecoder.decodeObjectForKey(PropertyKey.locationKey) as! MKPlacemark
+        let startDate = aDecoder.decodeObjectForKey(PropertyKey.startDateKey) as! NSDate
+        let endDate = aDecoder.decodeObjectForKey(PropertyKey.endDateKey) as! NSDate
+        self.init(location: location, startDate: startDate, endDate: endDate)
     }
 }
