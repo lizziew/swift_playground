@@ -12,22 +12,22 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
-            // User is already logged in, do work such as go to next view controller.
             print("already logged in")
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+    
+            let tabBar = self.storyboard?.instantiateViewControllerWithIdentifier("tabBar") as! UITabBarController
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             
-            //let nextViewController = storyBoard.instantiateViewControllerWithIdentifier("nextView") as! TabViewController
-            //self.presentViewController(nextViewController, animated:true, completion:nil)
+            tabBar.selectedIndex = 1
+            
+            appDelegate.window?.rootViewController = tabBar
         }
         else
         {
             let loginView : FBSDKLoginButton = FBSDKLoginButton()
             loginView.center = self.view.center
-            loginView.readPermissions = ["public_profile", "email", "user_friends"]
+            loginView.readPermissions = ["public_profile", "user_friends"]
             loginView.delegate = self
             self.view.addSubview(loginView)
         }
@@ -35,7 +35,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
@@ -49,8 +48,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             // Handle cancellations
         }
         else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
+            let tabBar = self.storyboard?.instantiateViewControllerWithIdentifier("tabBar") as! UITabBarController
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            tabBar.selectedIndex = 1
+            
+            appDelegate.window?.rootViewController = tabBar
+
             if result.grantedPermissions.contains("email")
             {
                 // Do work

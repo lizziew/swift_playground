@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -23,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="-701" y="227"/>
         </scene>
-        <!--Item 2-->
+        <!--Home-->
         <scene sceneID="SMk-Mc-Lyw">
             <objects>
-                <viewController id="QIZ-YH-kn8" sceneMemberID="viewController">
+                <viewController id="QIZ-YH-kn8" customClass="HomeViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eBx-fM-sMs"/>
                         <viewControllerLayoutGuide type="bottom" id="eDt-zA-HYj"/>
@@ -34,18 +35,32 @@
                     <view key="view" contentMode="scaleToFill" id="sxR-jc-OSN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3Yn-YX-Yg7">
+                                <rect key="frame" x="0.0" y="-6" width="600" height="587"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3Yn-YX-Yg7" firstAttribute="leading" secondItem="sxR-jc-OSN" secondAttribute="leading" id="1Fb-JC-5cj"/>
+                            <constraint firstItem="3Yn-YX-Yg7" firstAttribute="centerX" secondItem="sxR-jc-OSN" secondAttribute="centerX" id="J1D-sF-OWA"/>
+                            <constraint firstItem="3Yn-YX-Yg7" firstAttribute="top" secondItem="sxR-jc-OSN" secondAttribute="topMargin" constant="-6" id="bFu-70-fXo"/>
+                            <constraint firstItem="eDt-zA-HYj" firstAttribute="top" secondItem="3Yn-YX-Yg7" secondAttribute="bottom" constant="-30" id="jIM-tO-sqb"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="3Gq-Dp-al0"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home" id="3Gq-Dp-al0"/>
+                    <connections>
+                        <outlet property="map" destination="3Yn-YX-Yg7" id="id1-4B-xcd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hf5-sm-uAj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="899" y="558"/>
         </scene>
-        <!--Item 1-->
+        <!--Me-->
         <scene sceneID="UTD-9q-qgd">
             <objects>
-                <viewController id="P1i-ni-Hmz" sceneMemberID="viewController">
+                <viewController id="P1i-ni-Hmz" customClass="MeViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QsJ-7H-mao"/>
                         <viewControllerLayoutGuide type="bottom" id="Arj-fP-62j"/>
@@ -55,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="Fq3-HY-RZk"/>
+                    <tabBarItem key="tabBarItem" title="Me" image="Me" id="Fq3-HY-RZk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4q-2y-8zq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -64,7 +79,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="JKA-Qe-dM6">
             <objects>
-                <tabBarController id="1D0-QL-hp6" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBar" id="1D0-QL-hp6" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="CAd-C0-7Kb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -73,11 +88,36 @@
                     <connections>
                         <segue destination="P1i-ni-Hmz" kind="relationship" relationship="viewControllers" id="X1O-tR-hqf"/>
                         <segue destination="QIZ-YH-kn8" kind="relationship" relationship="viewControllers" id="GVX-P8-67E"/>
+                        <segue destination="DAm-o7-QsP" kind="relationship" relationship="viewControllers" id="L5J-C6-SbY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aU1-Pd-GOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="79" y="227"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="lFw-6U-Xhq">
+            <objects>
+                <viewController id="DAm-o7-QsP" customClass="SettingsViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hp5-9o-YDo"/>
+                        <viewControllerLayoutGuide type="bottom" id="qos-mJ-18c"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Myz-iR-YQF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Gear" id="kWV-Ih-Duo"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bxr-nN-ez1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="79" y="980"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Gear" width="29" height="29"/>
+        <image name="Home" width="29" height="29"/>
+        <image name="Me" width="29" height="29"/>
+    </resources>
 </document>

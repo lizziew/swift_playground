@@ -18,6 +18,9 @@
 		83BBCFDA1CCB08C400326C37 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BBCFD91CCB08C400326C37 /* FBSDKCoreKit.framework */; };
 		83BBCFDE1CCB0A0100326C37 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BBCFDD1CCB0A0100326C37 /* FBSDKLoginKit.framework */; };
 		83BBCFE01CCB0A0900326C37 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BBCFDF1CCB0A0900326C37 /* Bolts.framework */; };
+		83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE31CCB18F400326C37 /* HomeViewController.swift */; };
+		83BBCFE61CCB190200326C37 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE51CCB190200326C37 /* MeViewController.swift */; };
+		83BBCFE81CCB190F00326C37 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,9 @@
 		83BBCFDC1CCB095F00326C37 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "/Users/elizabethwei/code/swift_playground/ElizabethWei/ElizabethWei/../Bridging-Header.h"; sourceTree = "<absolute>"; };
 		83BBCFDD1CCB0A0100326C37 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		83BBCFDF1CCB0A0900326C37 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
+		83BBCFE31CCB18F400326C37 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		83BBCFE51CCB190200326C37 /* MeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
+		83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,9 @@
 				83BBCFDC1CCB095F00326C37 /* Bridging-Header.h */,
 				83BBCFA81CCB089500326C37 /* AppDelegate.swift */,
 				83BBCFAA1CCB089500326C37 /* LoginViewController.swift */,
+				83BBCFE31CCB18F400326C37 /* HomeViewController.swift */,
+				83BBCFE51CCB190200326C37 /* MeViewController.swift */,
+				83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */,
 				83BBCFAC1CCB089500326C37 /* Main.storyboard */,
 				83BBCFB21CCB089500326C37 /* Assets.xcassets */,
 				83BBCFB41CCB089500326C37 /* LaunchScreen.storyboard */,
@@ -281,9 +290,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83BBCFE61CCB190200326C37 /* MeViewController.swift in Sources */,
 				83BBCFAB1CCB089500326C37 /* LoginViewController.swift in Sources */,
 				83BBCFB11CCB089500326C37 /* ElizabethWei.xcdatamodeld in Sources */,
 				83BBCFA91CCB089500326C37 /* AppDelegate.swift in Sources */,
+				83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */,
+				83BBCFE81CCB190F00326C37 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
