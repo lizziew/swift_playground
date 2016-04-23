@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ElizabethWei would like your current location</string>
+	<string>ElizabethWei wants to use your location.</string>
 	<key>FacebookAppID</key>
 	<string>266239503716039</string>
 	<key>FacebookDisplayName</key>

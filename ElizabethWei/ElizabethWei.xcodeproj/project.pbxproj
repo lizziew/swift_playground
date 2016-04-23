@@ -24,6 +24,10 @@
 		83BBCFEC1CCB3D1B00326C37 /* PinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */; };
 		83BBCFEE1CCB3DA200326C37 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFED1CCB3DA200326C37 /* Pin.swift */; };
 		83BBCFF01CCB44DD00326C37 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */; };
+		83BBCFF41CCBF36F00326C37 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF31CCBF36F00326C37 /* LocationViewController.swift */; };
+		83BBCFF61CCBF4D300326C37 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */; };
+		83BBCFF81CCC02A000326C37 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */; };
+		83BBCFFA1CCC02C400326C37 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFF91CCC02C400326C37 /* CustomSearchController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,10 @@
 		83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTableViewController.swift; sourceTree = "<group>"; };
 		83BBCFED1CCB3DA200326C37 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
+		83BBCFF31CCBF36F00326C37 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
+		83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		83BBCFF91CCC02C400326C37 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +136,10 @@
 				83BBCFE31CCB18F400326C37 /* HomeViewController.swift */,
 				83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */,
 				83BBCFAC1CCB089500326C37 /* Main.storyboard */,
+				83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */,
+				83BBCFF31CCBF36F00326C37 /* LocationViewController.swift */,
+				83BBCFF71CCC02A000326C37 /* CustomSearchBar.swift */,
+				83BBCFF91CCC02C400326C37 /* CustomSearchController.swift */,
 				83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */,
 				83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */,
 				83BBCFED1CCB3DA200326C37 /* Pin.swift */,
@@ -301,9 +313,13 @@
 			files = (
 				83BBCFAB1CCB089500326C37 /* LoginViewController.swift in Sources */,
 				83BBCFEC1CCB3D1B00326C37 /* PinTableViewController.swift in Sources */,
+				83BBCFF81CCC02A000326C37 /* CustomSearchBar.swift in Sources */,
 				83BBCFF01CCB44DD00326C37 /* PinViewController.swift in Sources */,
 				83BBCFB11CCB089500326C37 /* ElizabethWei.xcdatamodeld in Sources */,
+				83BBCFFA1CCC02C400326C37 /* CustomSearchController.swift in Sources */,
 				83BBCFEE1CCB3DA200326C37 /* Pin.swift in Sources */,
+				83BBCFF61CCBF4D300326C37 /* LocationSearchTable.swift in Sources */,
+				83BBCFF41CCBF36F00326C37 /* LocationViewController.swift in Sources */,
 				83BBCFA91CCB089500326C37 /* AppDelegate.swift in Sources */,
 				83BBCFEA1CCB3C2F00326C37 /* PinTableViewCell.swift in Sources */,
 				83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */,

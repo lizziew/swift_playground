@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class PinViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
@@ -15,8 +16,8 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        let isPresentingInAddMealMode = presentingViewController is UINavigationController
-        if isPresentingInAddMealMode {
+        let isPresentingInAddPinMode = presentingViewController is UINavigationController
+        if isPresentingInAddPinMode {
             dismissViewControllerAnimated(true, completion: nil)
         }
         else {
@@ -44,10 +45,17 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
             let location = LocationTextField.text ?? ""
             pin = Pin(location: location, date: "new date placeholder")
         }
+        if segue.identifier == "ShowLocation"{
+            let navigationViewController = segue.destinationViewController as! UINavigationController
+            if let locationViewController = navigationViewController.topViewController as! LocationViewController? {
+                locationViewController.placemarkDelegate = self
+            }
+        }
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
         saveButton.enabled = false
+        performSegueWithIdentifier("ShowLocation", sender: self)
     }
     
     func checkValidPinLocation() {
@@ -64,15 +72,13 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
         textField.resignFirstResponder()
         return true
     }
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension PinViewController: PlacemarkDelegate
+{
+    func sendPlacemarkToPin(placemark: MKPlacemark?) {
+        if placemark != nil {
+            LocationTextField.text = placemark!.name
+        }
     }
-    */
-
 }
