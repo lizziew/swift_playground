@@ -19,8 +19,11 @@
 		83BBCFDE1CCB0A0100326C37 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BBCFDD1CCB0A0100326C37 /* FBSDKLoginKit.framework */; };
 		83BBCFE01CCB0A0900326C37 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BBCFDF1CCB0A0900326C37 /* Bolts.framework */; };
 		83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE31CCB18F400326C37 /* HomeViewController.swift */; };
-		83BBCFE61CCB190200326C37 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE51CCB190200326C37 /* MeViewController.swift */; };
 		83BBCFE81CCB190F00326C37 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */; };
+		83BBCFEA1CCB3C2F00326C37 /* PinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFE91CCB3C2F00326C37 /* PinTableViewCell.swift */; };
+		83BBCFEC1CCB3D1B00326C37 /* PinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */; };
+		83BBCFEE1CCB3DA200326C37 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFED1CCB3DA200326C37 /* Pin.swift */; };
+		83BBCFF01CCB44DD00326C37 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +63,11 @@
 		83BBCFDD1CCB0A0100326C37 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		83BBCFDF1CCB0A0900326C37 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		83BBCFE31CCB18F400326C37 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		83BBCFE51CCB190200326C37 /* MeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		83BBCFE91CCB3C2F00326C37 /* PinTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTableViewCell.swift; sourceTree = "<group>"; };
+		83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTableViewController.swift; sourceTree = "<group>"; };
+		83BBCFED1CCB3DA200326C37 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,9 +126,12 @@
 				83BBCFA81CCB089500326C37 /* AppDelegate.swift */,
 				83BBCFAA1CCB089500326C37 /* LoginViewController.swift */,
 				83BBCFE31CCB18F400326C37 /* HomeViewController.swift */,
-				83BBCFE51CCB190200326C37 /* MeViewController.swift */,
 				83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */,
 				83BBCFAC1CCB089500326C37 /* Main.storyboard */,
+				83BBCFEF1CCB44DD00326C37 /* PinViewController.swift */,
+				83BBCFEB1CCB3D1B00326C37 /* PinTableViewController.swift */,
+				83BBCFED1CCB3DA200326C37 /* Pin.swift */,
+				83BBCFE91CCB3C2F00326C37 /* PinTableViewCell.swift */,
 				83BBCFB21CCB089500326C37 /* Assets.xcassets */,
 				83BBCFB41CCB089500326C37 /* LaunchScreen.storyboard */,
 				83BBCFB71CCB089500326C37 /* Info.plist */,
@@ -290,10 +299,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BBCFE61CCB190200326C37 /* MeViewController.swift in Sources */,
 				83BBCFAB1CCB089500326C37 /* LoginViewController.swift in Sources */,
+				83BBCFEC1CCB3D1B00326C37 /* PinTableViewController.swift in Sources */,
+				83BBCFF01CCB44DD00326C37 /* PinViewController.swift in Sources */,
 				83BBCFB11CCB089500326C37 /* ElizabethWei.xcdatamodeld in Sources */,
+				83BBCFEE1CCB3DA200326C37 /* Pin.swift in Sources */,
 				83BBCFA91CCB089500326C37 /* AppDelegate.swift in Sources */,
+				83BBCFEA1CCB3C2F00326C37 /* PinTableViewCell.swift in Sources */,
 				83BBCFE41CCB18F400326C37 /* HomeViewController.swift in Sources */,
 				83BBCFE81CCB190F00326C37 /* SettingsViewController.swift in Sources */,
 			);
