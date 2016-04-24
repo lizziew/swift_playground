@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		834ECD641CCC5F3F002E6D22 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834ECD631CCC5F3F002E6D22 /* CloudKit.framework */; };
+		834ECDF11CCCC62F002E6D22 /* Start.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834ECDF01CCCC62F002E6D22 /* Start.swift */; };
 		83BBCFA91CCB089500326C37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFA81CCB089500326C37 /* AppDelegate.swift */; };
-		83BBCFAB1CCB089500326C37 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFAA1CCB089500326C37 /* LoginViewController.swift */; };
 		83BBCFAE1CCB089500326C37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BBCFAC1CCB089500326C37 /* Main.storyboard */; };
 		83BBCFB11CCB089500326C37 /* ElizabethWei.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83BBCFAF1CCB089500326C37 /* ElizabethWei.xcdatamodeld */; };
 		83BBCFB31CCB089500326C37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BBCFB21CCB089500326C37 /* Assets.xcassets */; };
@@ -53,9 +53,9 @@
 /* Begin PBXFileReference section */
 		834ECD621CCC5F3D002E6D22 /* ElizabethWei.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ElizabethWei.entitlements; sourceTree = "<group>"; };
 		834ECD631CCC5F3F002E6D22 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		834ECDF01CCCC62F002E6D22 /* Start.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Start.swift; sourceTree = "<group>"; };
 		83BBCFA51CCB089500326C37 /* ElizabethWei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ElizabethWei.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83BBCFA81CCB089500326C37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		83BBCFAA1CCB089500326C37 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		83BBCFAD1CCB089500326C37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		83BBCFB01CCB089500326C37 /* ElizabethWei.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ElizabethWei.xcdatamodel; sourceTree = "<group>"; };
 		83BBCFB21CCB089500326C37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,10 +141,10 @@
 				834ECD621CCC5F3D002E6D22 /* ElizabethWei.entitlements */,
 				83BBCFDC1CCB095F00326C37 /* Bridging-Header.h */,
 				83BBCFA81CCB089500326C37 /* AppDelegate.swift */,
-				83BBCFAA1CCB089500326C37 /* LoginViewController.swift */,
 				83BBCFE31CCB18F400326C37 /* HomeViewController.swift */,
 				83BBCFE71CCB190F00326C37 /* SettingsViewController.swift */,
 				83BBCFAC1CCB089500326C37 /* Main.storyboard */,
+				834ECDF01CCCC62F002E6D22 /* Start.swift */,
 				83BBCFFD1CCC295700326C37 /* EndDateViewController.swift */,
 				83BBCFFB1CCC204600326C37 /* StartDateViewController.swift */,
 				83BBCFF51CCBF4D300326C37 /* LocationSearchTable.swift */,
@@ -329,7 +329,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BBCFAB1CCB089500326C37 /* LoginViewController.swift in Sources */,
 				83BBCFEC1CCB3D1B00326C37 /* PinTableViewController.swift in Sources */,
 				83BBCFF81CCC02A000326C37 /* CustomSearchBar.swift in Sources */,
 				83BBCFF01CCB44DD00326C37 /* PinViewController.swift in Sources */,
@@ -337,6 +336,7 @@
 				83BBCFFA1CCC02C400326C37 /* CustomSearchController.swift in Sources */,
 				83BBCFEE1CCB3DA200326C37 /* Pin.swift in Sources */,
 				83BBCFF61CCBF4D300326C37 /* LocationSearchTable.swift in Sources */,
+				834ECDF11CCCC62F002E6D22 /* Start.swift in Sources */,
 				83BBCFF41CCBF36F00326C37 /* LocationViewController.swift in Sources */,
 				83BBCFA91CCB089500326C37 /* AppDelegate.swift in Sources */,
 				83BBCFEA1CCB3C2F00326C37 /* PinTableViewCell.swift in Sources */,

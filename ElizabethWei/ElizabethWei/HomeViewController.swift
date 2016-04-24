@@ -36,11 +36,55 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         self.map.delegate = self
         
+        //load pins
         loadPins()
+        
+        //icloud
+        iCloudUserIDAsync() {
+            recordID, error in
+            if let userID = recordID?.recordName {
+                print("received iCloudID \(userID)")
+            } else {
+                print("Fetched iCloudID was nil")
+                let alert = UIAlertController(title: "Welcome", message: "Please sign into iCloud", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                    UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                }))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         loadPins()
+        
+        iCloudUserIDAsync() {
+            recordID, error in
+            if let userID = recordID?.recordName {
+                print("received iCloudID \(userID)")
+            } else {
+                print("Fetched iCloudID was nil")
+                let alert = UIAlertController(title: "Welcome", message: "Please sign into iCloud", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                    UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                }))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func iCloudUserIDAsync(complete: (instance: CKRecordID?, error: NSError?) -> ()) {
+        let container = CKContainer.defaultContainer()
+        container.fetchUserRecordIDWithCompletionHandler() {
+            recordID, error in
+            if error != nil {
+                print(error!.localizedDescription)
+                complete(instance: nil, error: error)
+            } else {
+                print("fetched ID \(recordID?.recordName)")
+                complete(instance: recordID, error: nil)
+            }
+        }
     }
     
     //location delegate methods 
