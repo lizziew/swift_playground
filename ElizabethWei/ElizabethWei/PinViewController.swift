@@ -23,7 +23,14 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
 //        
 //        print(presentingViewController)
         
-        if presentingViewController != nil {
+//        if presentingViewController != nil {
+//            dismissViewControllerAnimated(true, completion: nil)
+//        }
+//        else {
+//            navigationController!.popViewControllerAnimated(true)
+//        }
+        let isPresentingInAddPinMode = presentingViewController is UINavigationController
+        if isPresentingInAddPinMode {
             dismissViewControllerAnimated(true, completion: nil)
         }
         else {
@@ -45,7 +52,7 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
             
                 let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
             
-                if !filledOut || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending {
+                if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
                 }
                 else {
@@ -65,7 +72,7 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
                 
                 let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
                 
-                if !filledOut || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending {
+                if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
                 }
                 else {
@@ -85,7 +92,7 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
                 
                 let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
                 
-                if !filledOut || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending {
+                if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
                 }
                 else {

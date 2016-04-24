@@ -32,11 +32,6 @@ class PinTableViewController: UITableViewController {
         self.tableView.addSubview(refresh)
         
         loadPins()
-        
-        print("pin table view controller")
-        print(givenName)
-        print(familyName)
-        print(phoneNumber)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
