@@ -49,6 +49,9 @@ class PhoneViewController: UIViewController, UITextFieldDelegate {
                             self.WelcomeLabel.text = "Welcome, " + (info?.displayContact?.givenName)! + " " + (info?.displayContact?.familyName)!
                             self.familyName = (info?.displayContact?.familyName)!
                             self.givenName = (info?.displayContact?.givenName)!
+                            container.discoverUserInfoWithUserRecordID(recordID!) { (info, fetchError) in
+                                self.performSegueWithIdentifier("ToApp", sender: nil)
+                            }
                         }
                     }
                 }

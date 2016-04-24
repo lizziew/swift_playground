@@ -23,7 +23,9 @@ class HomeViewController: UIViewController, MFMessageComposeViewControllerDelega
     
     var familyName: String? = nil
     
-    var phoneNumber: String? = nil 
+    var phoneNumber: String? = nil
+    
+    var defaultRange: Double? = 80000
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +108,7 @@ class HomeViewController: UIViewController, MFMessageComposeViewControllerDelega
                                         let privatePinLocation = (privatePin["location"] as? CLLocation)!
                                         let publicPinLocation = (publicPin["location"] as? CLLocation)!
                                         let distance = privatePinLocation.distanceFromLocation(publicPinLocation)
-                                        if distance < 80000 {
+                                        if distance < Double(self.defaultRange!) {
                                             distresult = true
                                         }
                                         

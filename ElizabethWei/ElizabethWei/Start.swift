@@ -31,7 +31,6 @@ class Start: UITabBarController {
             controller.familyName = familyName
             controller.givenName = givenName
             controller.phoneNumber = phoneNumber
-            self.selectedIndex = 1
         }
     }
 }

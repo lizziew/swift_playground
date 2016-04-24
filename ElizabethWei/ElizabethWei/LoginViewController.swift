@@ -35,6 +35,9 @@ class LoginViewController: UIViewController {
                     if status == CKApplicationPermissionStatus.Granted {
                         print("allowed to discovers user info")
                         self.startButton.enabled = true
+                        container.discoverUserInfoWithUserRecordID(recordID!) { (info, fetchError) in
+                            self.performSegueWithIdentifier("ToPhone", sender: nil)
+                        }
                     }
                 }
             }
