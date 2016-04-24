@@ -432,9 +432,50 @@
                     <view key="view" contentMode="scaleToFill" id="Myz-iR-YQF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhe-kH-opk">
+                                <rect key="frame" x="20" y="28" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Intro to App Text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5D-AD-L1I">
+                                <rect key="frame" x="20" y="79" width="560" height="110"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Intro to App Text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxY-kE-Pjn">
+                                <rect key="frame" x="20" y="244" width="560" height="157"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Credits" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ds-K8-ZYL">
+                                <rect key="frame" x="20" y="437" width="560" height="80"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="1Ds-K8-ZYL" secondAttribute="leading" id="5Wc-Rr-755"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="B5D-AD-L1I" secondAttribute="trailing" id="Bq3-Lu-V1w"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="HxY-kE-Pjn" secondAttribute="leading" id="O0Z-h5-h85"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="B5D-AD-L1I" secondAttribute="leading" id="OeT-HY-LCt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HxY-kE-Pjn" secondAttribute="trailing" id="Tfs-hd-WZO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1Ds-K8-ZYL" secondAttribute="trailing" id="VZA-M8-axd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uhe-kH-opk" secondAttribute="trailing" id="WJj-hs-onu"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="uhe-kH-opk" secondAttribute="leading" id="abF-3e-Fa5"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="Gear" id="kWV-Ih-Duo"/>
+                    <connections>
+                        <outlet property="CreditsLabel" destination="1Ds-K8-ZYL" id="RiY-cd-G38"/>
+                        <outlet property="ExplanationLabel" destination="B5D-AD-L1I" id="8YO-N2-uja"/>
+                        <outlet property="ExplanationLabel2" destination="HxY-kE-Pjn" id="KHE-ZK-Nru"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bxr-nN-ez1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -650,6 +691,6 @@
         <image name="Me" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cB8-RM-ree"/>
+        <segue reference="7hj-bS-JSI"/>
     </inferredMetricsTieBreakers>
 </document>
