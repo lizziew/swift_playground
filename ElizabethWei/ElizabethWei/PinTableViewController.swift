@@ -83,9 +83,9 @@ class PinTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            deletePin(indexPath, recordID: pins[indexPath.row].recordID)
-            //pins.removeAtIndex(indexPath.row)
-            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            pins.removeAtIndex(indexPath.row)
+            //savePins()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -170,25 +170,6 @@ class PinTableViewController: UITableViewController {
                 }
             }
         }
-    }
-    
-    func deletePin(indexPath: NSIndexPath, recordID: CKRecordID) {
-        let publicData = CKContainer.defaultContainer().publicCloudDatabase
-        publicData.deleteRecordWithID(recordID) { (record: CKRecordID?, error: NSError?) in
-            if error != nil {
-                print(error)
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.beginUpdates()
-                    self.pins.removeAtIndex(indexPath.row)
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                    self.tableView.endUpdates()
-                })
-            }
-        }
-        
-
     }
     
     func loadPins() {
