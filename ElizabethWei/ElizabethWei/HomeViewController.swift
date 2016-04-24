@@ -9,11 +9,14 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CloudKit
 
 class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var map: MKMapView!
     
     let locationManager = CLLocationManager()
+    
+    var pins = [CKRecord]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,14 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         self.locationManager.startUpdatingLocation()
         
         self.map.showsUserLocation = true
+        
+        self.map.delegate = self
+        
+        loadPins()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        loadPins()
     }
     
     //location delegate methods 
@@ -45,5 +56,26 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Errors: " + error.localizedDescription)
+    }
+    
+    func loadPins() {
+        let publicData = CKContainer.defaultContainer().publicCloudDatabase
+        let query = CKQuery(recordType: "Pin", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
+        
+        map.removeAnnotations(map.annotations)
+        
+        publicData.performQuery(query, inZoneWithID: nil) { (results: [CKRecord]?, error: NSError?) in
+            if let cloudPins = results {
+                self.pins = cloudPins
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    for p in cloudPins {
+                        let displayPin = MKPointAnnotation()
+                        displayPin.coordinate = (p["location"] as? CLLocation)!.coordinate
+                        displayPin.title = (p["name"] as? String)!
+                        self.map.addAnnotation(displayPin)
+                    }
+                })
+            }
+        }
     }
 }
