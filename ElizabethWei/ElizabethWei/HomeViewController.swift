@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 import CoreLocation
 import CloudKit
+import MessageUI
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, MFMessageComposeViewControllerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var map: MKMapView!
     
     let locationManager = CLLocationManager()
@@ -45,11 +46,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         //load pins
         loadPins()
     }
-//    
-//    override func viewWillAppear(animated: Bool) {
-//        loadPins()
-//    }
-//    
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        switch result.rawValue {
+        case MessageComposeResultCancelled.rawValue :
+            print("message canceled")
+            
+        case MessageComposeResultFailed.rawValue :
+            print("message failed")
+            
+        case MessageComposeResultSent.rawValue :
+            print("message sent")
+            
+        default:
+            break
+        }
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     //location delegate methods
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
@@ -152,9 +166,15 @@ extension HomeViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let alert = UIAlertController(title: "Send a text message!", message: "Ask " + view.annotation!.title!! + " to meet up!", preferredStyle: UIAlertControllerStyle.Alert)
-        //Add UI alert action to text the person 
-        //let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-        //location.mapItem().openInMapsWithLaunchOptions(launchOptions)
+        alert.addAction(UIAlertAction(title: "Send SMS", style: UIAlertActionStyle.Default) { (action) in
+            let messageVC = MFMessageComposeViewController()
+            
+            messageVC.body = "Hi I heard you were also going to be in " + view.annotation!.subtitle!! + " - let's meet up!"
+            messageVC.recipients = [self.phoneNumber!]
+            messageVC.messageComposeDelegate = self
+            
+            self.presentViewController(messageVC, animated: false, completion: nil)
+        })
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
