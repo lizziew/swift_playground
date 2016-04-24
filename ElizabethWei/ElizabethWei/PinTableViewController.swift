@@ -7,25 +7,20 @@
 //
 
 import UIKit
-import CloudKit
 
 class PinTableViewController: UITableViewController {
     
-    var pins = [CKRecord]()
-    
-    var refresh:UIRefreshControl!
+    var pins = [Pin]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.leftBarButtonItem = editButtonItem()
-        
-        refresh = UIRefreshControl()
-        refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresh.addTarget(self, action: #selector(PinTableViewController.loadPins), forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refresh)
-        
-        loadPins()
+        if let savedPins = loadPins() {
+            pins += savedPins
+        }
+        else {
+            //TBD: TELL PEOPLE TO ADD DATE
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,24 +38,14 @@ class PinTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "PinTableViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! PinTableViewCell
-        
-        if pins.count == 0 {
-            return cell
-        }
-        
         let pin = pins[indexPath.row]
         
-        if let pinName = pin["name"] as? String {
-            cell.LocationLabel.text = pinName
-        }
-        
-        if let startPinDate = pin["startDate"] as? NSDate, endPinDate = pin["endDate"] as? NSDate {
-            let formatter = NSDateFormatter()
-            formatter.dateFormat = "MMMM dd, YYYY"
-            
-            cell.DateLabel.text = formatter.stringFromDate(startPinDate) + " to " + formatter.stringFromDate(endPinDate)
-        }
-        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMMM dd, YYYY"
+
+        cell.LocationLabel.text = pin.location.name 
+        cell.DateLabel.text = formatter.stringFromDate(pin.startDate) + " to " + formatter.stringFromDate(pin.endDate)
+
         return cell
     }
     
@@ -68,11 +53,15 @@ class PinTableViewController: UITableViewController {
         if let sourceViewController = sender.sourceViewController as? PinViewController, pin = sourceViewController.pin {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                modifyPin(pin, selectedIndexPath: selectedIndexPath, recordID: pins[selectedIndexPath.row].recordID)
+                pins[selectedIndexPath.row] = pin
+                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
             }
             else {
-                addPin(pin)
+                let newIndexPath = NSIndexPath(forRow: pins.count, inSection: 0)
+                pins.append(pin)
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }
+            savePins()
         }
     }
     
@@ -84,7 +73,7 @@ class PinTableViewController: UITableViewController {
         if editingStyle == .Delete {
             // Delete the row from the data source
             pins.removeAtIndex(indexPath.row)
-            //savePins()
+            savePins()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -111,79 +100,23 @@ class PinTableViewController: UITableViewController {
             let pinDetailViewController = segue.destinationViewController as! PinViewController
             if let selectedPinCell = sender as? PinTableViewCell {
                 let indexPath = tableView.indexPathForCell(selectedPinCell)!
-                let pin = pins[indexPath.row]
-                pinDetailViewController.pin = Pin(name: (pin["name"] as? String)!, location: (pin["location"] as? CLLocation)!, startDate: (pin["startDate"] as? NSDate)!, endDate: (pin["endDate"] as? NSDate)!)
+                let selectedPin = pins[indexPath.row]
+                pinDetailViewController.pin = selectedPin
             }
         }
         else if segue.identifier == "AddItem" {
             print("Adding new pin.")
         }
     }
-    
-    func addPin(pin: Pin) {
-        let newPin = CKRecord(recordType: "Pin")
-        newPin.setValue(pin.name, forKey: "name")
-        newPin.setValue(pin.location, forKey: "location")
-        newPin.setValue(pin.startDate, forKey: "startDate")
-        newPin.setValue(pin.endDate, forKey: "endDate")
-        
-        let publicData = CKContainer.defaultContainer().publicCloudDatabase
-        publicData.saveRecord(newPin) { (record: CKRecord?, error: NSError?) in
-            if error == nil {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.beginUpdates()
-                    let indexPath = NSIndexPath(forRow: self.pins.count, inSection: 0)
-                    self.pins.append(newPin)
-                    self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
-                    self.tableView.endUpdates()
-                })
-            }
-            else {
-                print(error)
-            }
+
+    func savePins() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(pins, toFile: Pin.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save pins...")
         }
     }
     
-    func modifyPin(pin: Pin, selectedIndexPath: NSIndexPath, recordID: CKRecordID) {
-        let publicData = CKContainer.defaultContainer().publicCloudDatabase
-        publicData.fetchRecordWithID(recordID) { (record: CKRecord?, error: NSError?) in
-            if error != nil {
-                print(error)
-            }
-            else {
-                record!["name"] = pin.name
-                record!["location"] = pin.location
-                record!["startDate"] = pin.startDate
-                record!["endDate"] = pin.endDate
-                publicData.saveRecord(record!) { (record: CKRecord?, error: NSError?) in
-                    if error == nil {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.beginUpdates()
-                            self.pins[selectedIndexPath.row] = record!
-                            self.tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
-                            self.tableView.endUpdates()
-                        })
-                    }
-                    else {
-                        print(error)
-                    }
-                }
-            }
-        }
-    }
-    
-    func loadPins() {
-        let publicData = CKContainer.defaultContainer().publicCloudDatabase
-        let query = CKQuery(recordType: "Pin", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
-        
-        publicData.performQuery(query, inZoneWithID: nil) { (results: [CKRecord]?, error: NSError?) in
-            if let cloudPins = results {
-                self.pins = cloudPins
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.reloadData()
-                    self.refresh.endRefreshing()
-                })
-            }
-        }
+    func loadPins() -> [Pin]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(Pin.ArchiveURL.path!) as? [Pin]
     }
 }

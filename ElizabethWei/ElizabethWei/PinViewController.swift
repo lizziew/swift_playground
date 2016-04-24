@@ -24,18 +24,18 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
 //        print(presentingViewController)
         
         if presentingViewController != nil {
+            print("situation 1")
             dismissViewControllerAnimated(true, completion: nil)
         }
         else {
+            print("situation 2")
             navigationController!.popViewControllerAnimated(true)
         }
     }
     
     var pin: Pin?
     
-    var nameInput: String? = nil
-    
-    var locationInput: CLLocation? = nil {
+    var locationInput: MKPlacemark? = nil {
         didSet {
             saveButton.enabled = false
             if locationInput != nil && startDateInput != nil && endDateInput != nil  {
@@ -78,6 +78,7 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     var endDateInput: NSDate? = nil {
         didSet {
             saveButton.enabled = false
+            print("got here")
             if locationInput != nil && startDateInput != nil && endDateInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
@@ -108,12 +109,11 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
             let formatter = NSDateFormatter()
             formatter.dateFormat = "MMMM dd, YYYY"
             
-            navigationItem.title = pin.name
-            LocationTextField.text   = pin.name
+            navigationItem.title = pin.location.name
+            LocationTextField.text   = pin.location.name 
             StartDateTextField.text = formatter.stringFromDate(pin.startDate)
             EndDateTextField.text = formatter.stringFromDate(pin.endDate)
             
-            nameInput = pin.name 
             locationInput = pin.location
             startDateInput = pin.startDate
             endDateInput = pin.endDate
@@ -122,7 +122,7 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if saveButton === sender {
-            pin = Pin(name: nameInput!, location: locationInput!, startDate: startDateInput!, endDate: endDateInput!)
+            pin = Pin(location: locationInput!, startDate: startDateInput!, endDate: endDateInput!)
         }
         if segue.identifier == "ShowLocation"{
             let navigationViewController = segue.destinationViewController as! UINavigationController
@@ -171,8 +171,7 @@ extension PinViewController: PlacemarkDelegate
     func sendPlacemarkToPin(placemark: MKPlacemark?) {
         if placemark != nil {
             LocationTextField.text = placemark!.name
-            nameInput = placemark!.name
-            locationInput = placemark!.location
+            locationInput = placemark
         }
     }
 }
