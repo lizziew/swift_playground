@@ -10,10 +10,28 @@ import UIKit
 import CloudKit
 
 class Start: UITabBarController {
+    
+    var givenName: String? = nil
+    
+    var familyName: String? = nil
+    
+    var phoneNumber: String? = nil 
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.selectedIndex = 1
+        if let navigationController = viewControllers![0] as? UINavigationController {
+            let controller = navigationController.viewControllers[0] as! PinTableViewController
+            controller.familyName = familyName
+            controller.givenName = givenName
+            controller.phoneNumber = phoneNumber
+        }
+        if let controller = viewControllers![1] as? HomeViewController {
+            controller.familyName = familyName
+            controller.givenName = givenName
+            controller.phoneNumber = phoneNumber
+            self.selectedIndex = 1
+        }
     }
 }

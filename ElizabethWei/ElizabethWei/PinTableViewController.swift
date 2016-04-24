@@ -15,6 +15,12 @@ class PinTableViewController: UITableViewController {
     
     var refresh:UIRefreshControl!
     
+    var givenName: String? = nil
+    
+    var familyName: String? = nil
+    
+    var phoneNumber: String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,12 +32,13 @@ class PinTableViewController: UITableViewController {
         self.tableView.addSubview(refresh)
         
         loadPins()
+        
+        print("pin table view controller")
+        print(givenName)
+        print(familyName)
+        print(phoneNumber)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -82,10 +89,7 @@ class PinTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
             deletePin(indexPath, recordID: pins[indexPath.row].recordID)
-            //pins.removeAtIndex(indexPath.row)
-            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -126,10 +130,24 @@ class PinTableViewController: UITableViewController {
         newPin.setValue(pin.location, forKey: "location")
         newPin.setValue(pin.startDate, forKey: "startDate")
         newPin.setValue(pin.endDate, forKey: "endDate")
+        newPin.setValue(givenName, forKey: "givenName")
+        newPin.setValue(familyName, forKey: "familyName")
+        newPin.setValue(phoneNumber, forKey: "phoneNumber")
         
         let publicData = CKContainer.defaultContainer().publicCloudDatabase
         publicData.saveRecord(newPin) { (record: CKRecord?, error: NSError?) in
             if error == nil {
+                print("successfully saved to public database")
+            }
+            else {
+                print(error)
+            }
+        }
+        
+        let privateData = CKContainer.defaultContainer().privateCloudDatabase
+        privateData.saveRecord(newPin) { (record: CKRecord?, error: NSError?) in
+            if error == nil {
+                print("successfully saved to private database")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.beginUpdates()
                     let indexPath = NSIndexPath(forRow: self.pins.count, inSection: 0)
@@ -155,8 +173,35 @@ class PinTableViewController: UITableViewController {
                 record!["location"] = pin.location
                 record!["startDate"] = pin.startDate
                 record!["endDate"] = pin.endDate
+                record!["givenName"] = self.givenName
+                record!["familyName"] = self.familyName
+                record!["phoneNumber"] = self.phoneNumber
                 publicData.saveRecord(record!) { (record: CKRecord?, error: NSError?) in
                     if error == nil {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            print("successfully modified public database")
+                        })
+                    }
+                    else {
+                        print(error)
+                    }
+                }
+            }
+        }
+        
+        let privateData = CKContainer.defaultContainer().privateCloudDatabase
+        privateData.fetchRecordWithID(recordID) { (record: CKRecord?, error: NSError?) in
+            if error != nil {
+                print(error)
+            }
+            else {
+                record!["name"] = pin.name
+                record!["location"] = pin.location
+                record!["startDate"] = pin.startDate
+                record!["endDate"] = pin.endDate
+                privateData.saveRecord(record!) { (record: CKRecord?, error: NSError?) in
+                    if error == nil {
+                        print("successfully modified private database")
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.tableView.beginUpdates()
                             self.pins[selectedIndexPath.row] = record!
@@ -179,6 +224,17 @@ class PinTableViewController: UITableViewController {
                 print(error)
             }
             else {
+                print("successfully deleted from public database")
+            }
+        }
+        
+        let privateData = CKContainer.defaultContainer().privateCloudDatabase
+        privateData.deleteRecordWithID(recordID) { (record: CKRecordID?, error: NSError?) in
+            if error != nil {
+                print(error)
+            }
+            else {
+                print("successfully deleted from private database")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.beginUpdates()
                     self.pins.removeAtIndex(indexPath.row)
@@ -187,15 +243,13 @@ class PinTableViewController: UITableViewController {
                 })
             }
         }
-        
-
     }
     
     func loadPins() {
-        let publicData = CKContainer.defaultContainer().publicCloudDatabase
+        let privateData = CKContainer.defaultContainer().privateCloudDatabase
         let query = CKQuery(recordType: "Pin", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
         
-        publicData.performQuery(query, inZoneWithID: nil) { (results: [CKRecord]?, error: NSError?) in
+        privateData.performQuery(query, inZoneWithID: nil) { (results: [CKRecord]?, error: NSError?) in
             if let cloudPins = results {
                 self.pins = cloudPins
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in

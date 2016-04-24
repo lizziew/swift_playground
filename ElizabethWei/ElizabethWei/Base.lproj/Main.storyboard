@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1D0-QL-hp6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UdT-wP-vp2">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -282,6 +282,125 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oho-7D-8HN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5951" y="-633"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="B5B-oU-FVK">
+            <objects>
+                <viewController id="UdT-wP-vp2" customClass="LoginViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K18-Lb-fdx"/>
+                        <viewControllerLayoutGuide type="bottom" id="TPw-6v-aIA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IeN-In-qvZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gsl-OA-cJI">
+                                <rect key="frame" x="209" y="28" width="182" height="95"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hi there" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ivw-qh-0eD">
+                                        <rect key="frame" x="61" y="0.0" width="61" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please sign in to iCloud." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v42-PV-QYI">
+                                        <rect key="frame" x="0.0" y="33" width="182" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JZ-IC-d4y">
+                                        <rect key="frame" x="75" y="65" width="32" height="30"/>
+                                        <state key="normal" title="Next"/>
+                                        <connections>
+                                            <action selector="start:" destination="UdT-wP-vp2" eventType="touchUpInside" id="5zB-YG-CQq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gsl-OA-cJI" firstAttribute="leading" secondItem="IeN-In-qvZ" secondAttribute="leading" constant="190" id="Qsc-KY-Spf"/>
+                            <constraint firstItem="Gsl-OA-cJI" firstAttribute="centerX" secondItem="IeN-In-qvZ" secondAttribute="centerX" id="fta-82-otq"/>
+                            <constraint firstItem="TPw-6v-aIA" firstAttribute="top" secondItem="Gsl-OA-cJI" secondAttribute="bottom" constant="485" id="hkg-hG-5WU"/>
+                            <constraint firstItem="Gsl-OA-cJI" firstAttribute="top" secondItem="K18-Lb-fdx" secondAttribute="bottom" id="lqA-cg-tcy"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Qsc-KY-Spf"/>
+                                <exclude reference="hkg-hG-5WU"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="startButton" destination="3JZ-IC-d4y" id="Pa4-1x-juI"/>
+                        <segue destination="rMw-Wz-XYU" kind="show" identifier="ToPhone" id="wVO-FW-7wM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GpA-3Q-86l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1407" y="227"/>
+        </scene>
+        <!--Phone View Controller-->
+        <scene sceneID="9RO-9O-syB">
+            <objects>
+                <viewController id="rMw-Wz-XYU" customClass="PhoneViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zG6-BU-Wmr"/>
+                        <viewControllerLayoutGuide type="bottom" id="UfP-s7-Hsw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DrD-Y9-UKD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdf-7P-w6J">
+                                <rect key="frame" x="265" y="28" width="71" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your phone number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-TI-Cm4">
+                                <rect key="frame" x="176" y="70" width="249" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BTi-x6-Ep5">
+                                <rect key="frame" x="234" y="110" width="133" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ERc-Co-mtm">
+                                <rect key="frame" x="284" y="160" width="32" height="30"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="start:" destination="rMw-Wz-XYU" eventType="touchUpInside" id="AEk-Y5-lPk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ERc-Co-mtm" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="CAa-Lx-v7W"/>
+                            <constraint firstItem="Cdf-7P-w6J" firstAttribute="top" secondItem="zG6-BU-Wmr" secondAttribute="bottom" constant="8" id="ahp-Nm-0Hi"/>
+                            <constraint firstItem="BTi-x6-Ep5" firstAttribute="top" secondItem="bI7-TI-Cm4" secondAttribute="bottom" constant="19" id="fnd-cu-23g"/>
+                            <constraint firstItem="BTi-x6-Ep5" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="rKA-6z-Oqu"/>
+                            <constraint firstItem="Cdf-7P-w6J" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="uSY-hr-Vxp"/>
+                            <constraint firstItem="bI7-TI-Cm4" firstAttribute="top" secondItem="Cdf-7P-w6J" secondAttribute="bottom" constant="21" id="vb5-2v-1r0"/>
+                            <constraint firstItem="bI7-TI-Cm4" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="zij-UP-G7J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="PhoneInput" destination="BTi-x6-Ep5" id="f9S-rE-G0W"/>
+                        <outlet property="WelcomeLabel" destination="Cdf-7P-w6J" id="8bg-KD-rsX"/>
+                        <outlet property="startButton" destination="ERc-Co-mtm" id="eEd-zm-ZGP"/>
+                        <segue destination="1D0-QL-hp6" kind="show" identifier="ToApp" id="UwP-qa-Ahz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UKX-05-gIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-689" y="227"/>
         </scene>
         <!--Start-->
         <scene sceneID="JKA-Qe-dM6">
