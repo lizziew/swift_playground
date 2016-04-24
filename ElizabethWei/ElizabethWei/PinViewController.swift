@@ -18,11 +18,17 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        let isPresentingInAddPinMode = presentingViewController is UINavigationController
-        if isPresentingInAddPinMode {
+        //navigationController!.popViewControllerAnimated(true)
+//        let isPresentingInAddPinMode = presentingViewController is UINavigationController
+//        
+//        print(presentingViewController)
+        
+        if presentingViewController != nil {
+            print("situation 1")
             dismissViewControllerAnimated(true, completion: nil)
         }
         else {
+            print("situation 2")
             navigationController!.popViewControllerAnimated(true)
         }
     }
@@ -31,7 +37,8 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     
     var locationInput: MKPlacemark? = nil {
         didSet {
-            if pin != nil && locationInput != nil && startDateInput != nil && endDateInput != nil  {
+            saveButton.enabled = false
+            if locationInput != nil && startDateInput != nil && endDateInput != nil  {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
@@ -50,7 +57,8 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     
     var startDateInput: NSDate? = nil {
         didSet {
-            if pin != nil && locationInput != nil && startDateInput != nil && endDateInput != nil {
+            saveButton.enabled = false
+            if locationInput != nil && startDateInput != nil && endDateInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
@@ -69,7 +77,9 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     
     var endDateInput: NSDate? = nil {
         didSet {
-            if pin != nil && locationInput != nil && startDateInput != nil && endDateInput != nil {
+            saveButton.enabled = false
+            print("got here")
+            if locationInput != nil && startDateInput != nil && endDateInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
@@ -92,6 +102,8 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
         LocationTextField.delegate = self
         StartDateTextField.delegate = self
         EndDateTextField.delegate = self
+        
+        saveButton.enabled = false
         
         if let pin = pin {
             let formatter = NSDateFormatter()

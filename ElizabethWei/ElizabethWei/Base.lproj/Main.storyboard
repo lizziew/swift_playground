@@ -104,7 +104,7 @@
                     <navigationItem key="navigationItem" title="My Pins" id="g5O-aj-tDN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rxh-On-mm4">
                             <connections>
-                                <segue destination="zZu-if-fM3" kind="presentation" identifier="AddItem" id="WGy-3R-CCE"/>
+                                <segue destination="zZu-if-fM3" kind="show" identifier="AddItem" id="WGy-3R-CCE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -199,9 +199,9 @@
                         <outlet property="StartDateTextField" destination="T6H-NY-fC0" id="dYi-4d-4hF"/>
                         <outlet property="saveButton" destination="370-tf-x71" id="GKF-7v-EjZ"/>
                         <segue destination="SqY-Lk-8H3" kind="show" identifier="ShowLocation" id="M5m-FZ-jXp"/>
-                        <segue destination="BhF-fP-fBc" kind="show" identifier="ShowStartDate" id="WHo-EO-Gt4"/>
-                        <segue destination="dzy-tb-Z4f" kind="show" identifier="ShowEndDate" id="y2B-jA-Z65"/>
                         <segue destination="Nfb-AW-EYP" kind="unwind" identifier="unwindToList" unwindAction="unwindToPinList:" id="qwW-P9-VTX"/>
+                        <segue destination="BhF-fP-fBc" kind="show" identifier="ShowStartDate" id="dMT-dI-Q2Y"/>
+                        <segue destination="dzy-tb-Z4f" kind="show" identifier="ShowEndDate" id="AVy-bl-h0K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NGZ-KY-UIM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -221,7 +221,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfj-MP-eXj">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfj-MP-eXj">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <connections>
                                     <outlet property="delegate" destination="7WY-rx-6mh" id="2Tq-iz-xwv"/>
@@ -392,7 +392,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kp1-NU-mxb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3767" y="-633"/>
+            <point key="canvasLocation" x="3767" y="-737"/>
         </scene>
         <!--Start Date View Controller-->
         <scene sceneID="UR1-5Z-5gS">
@@ -522,7 +522,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pR-4M-VJM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3767" y="112"/>
+            <point key="canvasLocation" x="3767" y="-72"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Syj-oW-QIT">
@@ -540,7 +540,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ofP-6q-r3X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3767" y="844"/>
+            <point key="canvasLocation" x="3767" y="660"/>
         </scene>
     </scenes>
     <resources>
@@ -549,6 +549,6 @@
         <image name="Me" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cB8-RM-ree"/>
+        <segue reference="7hj-bS-JSI"/>
     </inferredMetricsTieBreakers>
 </document>
