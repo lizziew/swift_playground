@@ -18,39 +18,56 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        //navigationController!.popViewControllerAnimated(true)
-//        let isPresentingInAddPinMode = presentingViewController is UINavigationController
-//        
-//        print(presentingViewController)
-        
-//        if presentingViewController != nil {
-//            dismissViewControllerAnimated(true, completion: nil)
-//        }
-//        else {
-//            navigationController!.popViewControllerAnimated(true)
-//        }
         let isPresentingInAddPinMode = presentingViewController is UINavigationController
         if isPresentingInAddPinMode {
+            print("situation 1")
+            
             dismissViewControllerAnimated(true, completion: nil)
+            
         }
         else {
-            navigationController!.popViewControllerAnimated(true)
+            print("situation 2")
+           navigationController!.popViewControllerAnimated(true)
         }
     }
+    
+    @IBOutlet weak var phoneTextField: UITextField!
     
     var pin: Pin?
     
     var nameInput: String? = nil
     
-    var locationInput: CLLocation? = nil {
+    var phoneInput: String? = nil {
         didSet {
             saveButton.enabled = false
-            if locationInput != nil && startDateInput != nil && endDateInput != nil  {
+            if locationInput != nil && startDateInput != nil && endDateInput != nil && phoneInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
+                let phoneNumber = phoneTextField.text ?? ""
+                
+                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty && !phoneNumber.isEmpty
+                
+                if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
+                    saveButton.enabled = false
+                }
+                else {
+                    saveButton.enabled = true
+                }
+            }
+        }
+    }
+    
+    var locationInput: CLLocation? = nil {
+        didSet {
+            saveButton.enabled = false
+            if locationInput != nil && startDateInput != nil && endDateInput != nil && phoneInput != nil {
+                let location = LocationTextField.text ?? ""
+                let startDate = StartDateTextField.text ?? ""
+                let endDate = EndDateTextField.text ?? ""
+                let phoneNumber = phoneTextField.text ?? ""
             
-                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
+                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty && !phoneNumber.isEmpty
             
                 if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
@@ -65,12 +82,13 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     var startDateInput: NSDate? = nil {
         didSet {
             saveButton.enabled = false
-            if locationInput != nil && startDateInput != nil && endDateInput != nil {
+            if locationInput != nil && startDateInput != nil && endDateInput != nil && phoneInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
+                let phoneNumber = phoneTextField.text ?? ""
                 
-                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
+                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty && !phoneNumber.isEmpty
                 
                 if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
@@ -85,12 +103,13 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     var endDateInput: NSDate? = nil {
         didSet {
             saveButton.enabled = false
-            if locationInput != nil && startDateInput != nil && endDateInput != nil {
+            if locationInput != nil && startDateInput != nil && endDateInput != nil && phoneInput != nil {
                 let location = LocationTextField.text ?? ""
                 let startDate = StartDateTextField.text ?? ""
                 let endDate = EndDateTextField.text ?? ""
+                let phoneNumber = phoneTextField.text ?? ""
                 
-                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty
+                let filledOut = !location.isEmpty && !startDate.isEmpty && !endDate.isEmpty && !phoneNumber.isEmpty
                 
                 if !filledOut || (endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedAscending || endDateInput!.compare(startDateInput!) == NSComparisonResult.OrderedSame) {
                     saveButton.enabled = false
@@ -108,8 +127,14 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
         LocationTextField.delegate = self
         StartDateTextField.delegate = self
         EndDateTextField.delegate = self
+        phoneTextField.delegate = self
         
         saveButton.enabled = false
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PinViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        phoneTextField.addTarget(self, action: #selector(PinViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
         if let pin = pin {
             let formatter = NSDateFormatter()
@@ -119,17 +144,29 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
             LocationTextField.text   = pin.name
             StartDateTextField.text = formatter.stringFromDate(pin.startDate)
             EndDateTextField.text = formatter.stringFromDate(pin.endDate)
+            phoneTextField.text = pin.phoneNumber
             
             nameInput = pin.name 
             locationInput = pin.location
             startDateInput = pin.startDate
             endDateInput = pin.endDate
+            phoneInput = pin.phoneNumber
         }
+    }
+    
+    func textFieldDidChange(textField: UITextField) {
+        phoneInput = phoneTextField.text
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        phoneInput = phoneTextField.text
+        view.endEditing(true)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if saveButton === sender {
-            pin = Pin(name: nameInput!, location: locationInput!, startDate: startDateInput!, endDate: endDateInput!)
+            pin = Pin(name: nameInput!, location: locationInput!, startDate: startDateInput!, endDate: endDateInput!, phoneNumber: phoneInput!)
         }
         if segue.identifier == "ShowLocation"{
             let navigationViewController = segue.destinationViewController as! UINavigationController

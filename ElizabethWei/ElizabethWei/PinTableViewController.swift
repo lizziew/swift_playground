@@ -19,8 +19,6 @@ class PinTableViewController: UITableViewController {
     
     var familyName: String? = nil
     
-    var phoneNumber: String? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,28 +89,13 @@ class PinTableViewController: UITableViewController {
         }    
     }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowDetail" {
             let pinDetailViewController = segue.destinationViewController as! PinViewController
             if let selectedPinCell = sender as? PinTableViewCell {
                 let indexPath = tableView.indexPathForCell(selectedPinCell)!
                 let pin = pins[indexPath.row]
-                pinDetailViewController.pin = Pin(name: (pin["name"] as? String)!, location: (pin["location"] as? CLLocation)!, startDate: (pin["startDate"] as? NSDate)!, endDate: (pin["endDate"] as? NSDate)!)
+                pinDetailViewController.pin = Pin(name: (pin["name"] as? String)!, location: (pin["location"] as? CLLocation)!, startDate: (pin["startDate"] as? NSDate)!, endDate: (pin["endDate"] as? NSDate)!, phoneNumber: (pin["phoneNumber"] as? String)!)
             }
         }
         else if segue.identifier == "AddItem" {
@@ -128,7 +111,7 @@ class PinTableViewController: UITableViewController {
         newPin.setValue(pin.endDate, forKey: "endDate")
         newPin.setValue(givenName, forKey: "givenName")
         newPin.setValue(familyName, forKey: "familyName")
-        newPin.setValue(phoneNumber, forKey: "phoneNumber")
+        newPin.setValue(pin.phoneNumber, forKey: "phoneNumber")
         
         let publicData = CKContainer.defaultContainer().publicCloudDatabase
         publicData.saveRecord(newPin) { (record: CKRecord?, error: NSError?) in
@@ -171,7 +154,7 @@ class PinTableViewController: UITableViewController {
                 record!["endDate"] = pin.endDate
                 record!["givenName"] = self.givenName
                 record!["familyName"] = self.familyName
-                record!["phoneNumber"] = self.phoneNumber
+                record!["phoneNumber"] = pin.phoneNumber
                 publicData.saveRecord(record!) { (record: CKRecord?, error: NSError?) in
                     if error == nil {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in

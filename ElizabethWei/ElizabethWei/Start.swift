@@ -14,9 +14,6 @@ class Start: UITabBarController {
     var givenName: String? = nil
     
     var familyName: String? = nil
-    
-    var phoneNumber: String? = nil 
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +22,10 @@ class Start: UITabBarController {
             let controller = navigationController.viewControllers[0] as! PinTableViewController
             controller.familyName = familyName
             controller.givenName = givenName
-            controller.phoneNumber = phoneNumber
         }
         if let controller = viewControllers![1] as? HomeViewController {
             controller.familyName = familyName
             controller.givenName = givenName
-            controller.phoneNumber = phoneNumber
         }
     }
 }

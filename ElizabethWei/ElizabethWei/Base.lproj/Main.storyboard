@@ -114,7 +114,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="tDh-4E-2wY">
-                                <rect key="frame" x="20" y="80" width="560" height="212"/>
+                                <rect key="frame" x="20" y="80" width="560" height="286"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xst-qS-XOd">
                                         <rect key="frame" x="0.0" y="0.0" width="71" height="21"/>
@@ -152,6 +152,18 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Phone Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcU-jd-EoV">
+                                        <rect key="frame" x="0.0" y="224" width="122" height="21"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where friends text you if they want to meet up!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EqY-GL-UDC">
+                                        <rect key="frame" x="0.0" y="256" width="560" height="30"/>
+                                        <color key="textColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="T6H-NY-fC0" secondAttribute="trailing" id="5Jc-P2-JNv"/>
@@ -160,6 +172,7 @@
                                     <constraint firstAttribute="trailing" secondItem="hf0-cE-8ge" secondAttribute="trailing" id="cUT-DR-MHX"/>
                                     <constraint firstItem="z1M-Yh-GYW" firstAttribute="leading" secondItem="tDh-4E-2wY" secondAttribute="leading" id="fN3-vj-zWC"/>
                                     <constraint firstItem="T6H-NY-fC0" firstAttribute="leading" secondItem="tDh-4E-2wY" secondAttribute="leading" id="hqR-7y-NPm"/>
+                                    <constraint firstAttribute="trailing" secondItem="EqY-GL-UDC" secondAttribute="trailing" id="vGD-je-OBA"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -190,6 +203,7 @@
                         <outlet property="EndDateTextField" destination="hf0-cE-8ge" id="WfY-aD-AkG"/>
                         <outlet property="LocationTextField" destination="z1M-Yh-GYW" id="qUK-fy-9li"/>
                         <outlet property="StartDateTextField" destination="T6H-NY-fC0" id="dYi-4d-4hF"/>
+                        <outlet property="phoneTextField" destination="EqY-GL-UDC" id="rpL-X2-jtX"/>
                         <outlet property="saveButton" destination="370-tf-x71" id="GKF-7v-EjZ"/>
                         <segue destination="SqY-Lk-8H3" kind="show" identifier="ShowLocation" id="M5m-FZ-jXp"/>
                         <segue destination="Nfb-AW-EYP" kind="unwind" identifier="unwindToList" unwindAction="unwindToPinList:" id="qwW-P9-VTX"/>
@@ -329,16 +343,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Nucleus" translatesAutoresizingMaskIntoConstraints="NO" id="Uxa-rC-puA">
                                 <rect key="frame" x="251" y="28" width="98" height="120"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JZ-IC-d4y">
-                                <rect key="frame" x="262" y="464" width="76" height="51"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="start:" destination="UdT-wP-vp2" eventType="touchUpInside" id="5zB-YG-CQq"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -348,89 +352,21 @@
                             <constraint firstAttribute="trailingMargin" secondItem="v42-PV-QYI" secondAttribute="trailing" id="Ms3-Dw-fx1"/>
                             <constraint firstItem="8h1-xM-koO" firstAttribute="top" secondItem="v42-PV-QYI" secondAttribute="bottom" constant="14" id="QZp-2B-nDz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ivw-qh-0eD" secondAttribute="trailing" id="Ub4-3l-jZ5"/>
-                            <constraint firstItem="3JZ-IC-d4y" firstAttribute="top" secondItem="8h1-xM-koO" secondAttribute="bottom" constant="103" id="Yor-Ab-cNR"/>
                             <constraint firstItem="ivw-qh-0eD" firstAttribute="leading" secondItem="IeN-In-qvZ" secondAttribute="leadingMargin" id="Z7J-GW-lD8"/>
                             <constraint firstItem="Uxa-rC-puA" firstAttribute="top" secondItem="K18-Lb-fdx" secondAttribute="bottom" constant="8" id="eru-Nt-mPB"/>
-                            <constraint firstItem="3JZ-IC-d4y" firstAttribute="centerX" secondItem="IeN-In-qvZ" secondAttribute="centerX" id="gr5-Ev-yfL"/>
                             <constraint firstItem="Uxa-rC-puA" firstAttribute="centerX" secondItem="IeN-In-qvZ" secondAttribute="centerX" id="waX-C3-bOl"/>
                             <constraint firstItem="ivw-qh-0eD" firstAttribute="top" secondItem="Uxa-rC-puA" secondAttribute="bottom" constant="34" id="zXu-KR-F64"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="8h1-xM-koO" id="uOo-4p-t1a"/>
-                        <outlet property="startButton" destination="3JZ-IC-d4y" id="Pa4-1x-juI"/>
                         <outlet property="statusLabel" destination="v42-PV-QYI" id="t98-5L-fV6"/>
-                        <segue destination="rMw-Wz-XYU" kind="show" identifier="ToPhone" id="wVO-FW-7wM"/>
+                        <segue destination="1D0-QL-hp6" kind="show" identifier="ToApp" id="Zbq-OR-vnv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GpA-3Q-86l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1407" y="227"/>
-        </scene>
-        <!--Phone View Controller-->
-        <scene sceneID="9RO-9O-syB">
-            <objects>
-                <viewController id="rMw-Wz-XYU" customClass="PhoneViewController" customModule="ElizabethWei" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zG6-BU-Wmr"/>
-                        <viewControllerLayoutGuide type="bottom" id="UfP-s7-Hsw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="DrD-Y9-UKD">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please enter your phone number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-TI-Cm4">
-                                <rect key="frame" x="20" y="105" width="560" height="25"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBoldItalic" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BTi-x6-Ep5">
-                                <rect key="frame" x="20" y="162" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ERc-Co-mtm">
-                                <rect key="frame" x="264" y="208" width="72" height="36"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="start:" destination="rMw-Wz-XYU" eventType="touchUpInside" id="AEk-Y5-lPk"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdf-7P-w6J">
-                                <rect key="frame" x="223" y="28" width="154" height="60"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
-                                <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="BTi-x6-Ep5" secondAttribute="leading" id="DBx-fq-XA6"/>
-                            <constraint firstItem="bI7-TI-Cm4" firstAttribute="top" secondItem="Cdf-7P-w6J" secondAttribute="bottom" constant="17" id="YT3-rI-g0d"/>
-                            <constraint firstItem="ERc-Co-mtm" firstAttribute="top" secondItem="BTi-x6-Ep5" secondAttribute="bottom" constant="16" id="cBr-Kg-mow"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bI7-TI-Cm4" secondAttribute="trailing" id="ir1-cl-yv0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BTi-x6-Ep5" secondAttribute="trailing" id="kDy-Kv-30A"/>
-                            <constraint firstItem="ERc-Co-mtm" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="oC2-Xx-cqd"/>
-                            <constraint firstItem="BTi-x6-Ep5" firstAttribute="top" secondItem="bI7-TI-Cm4" secondAttribute="bottom" constant="32" id="r00-cT-8Wr"/>
-                            <constraint firstItem="Cdf-7P-w6J" firstAttribute="top" secondItem="zG6-BU-Wmr" secondAttribute="bottom" constant="8" id="sZi-t1-oIt"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="bI7-TI-Cm4" secondAttribute="leading" id="vJi-eH-2wL"/>
-                            <constraint firstItem="Cdf-7P-w6J" firstAttribute="centerX" secondItem="DrD-Y9-UKD" secondAttribute="centerX" id="zSy-g9-OwA"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="PhoneInput" destination="BTi-x6-Ep5" id="f9S-rE-G0W"/>
-                        <outlet property="WelcomeLabel" destination="Cdf-7P-w6J" id="8bg-KD-rsX"/>
-                        <outlet property="startButton" destination="ERc-Co-mtm" id="eEd-zm-ZGP"/>
-                        <segue destination="1D0-QL-hp6" kind="show" identifier="ToApp" id="UwP-qa-Ahz"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UKX-05-gIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-689" y="227"/>
+            <point key="canvasLocation" x="-621" y="227"/>
         </scene>
         <!--Start-->
         <scene sceneID="JKA-Qe-dM6">

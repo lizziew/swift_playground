@@ -23,8 +23,6 @@ class HomeViewController: UIViewController, MFMessageComposeViewControllerDelega
     
     var familyName: String? = nil
     
-    var phoneNumber: String? = nil
-    
     var defaultRange: Double? = 80000
     
     override func viewDidLoad() {
@@ -132,7 +130,7 @@ class HomeViewController: UIViewController, MFMessageComposeViewControllerDelega
                                         }
                                         
                                         if distresult && (date1result || date2result) && (publicPin["givenName"] as? String)! != self.givenName! && (publicPin["familyName"] as? String)! != self.familyName!  {
-                                            let displayPin = CustomPin(title: (publicPin["givenName"] as? String)! + " " + (publicPin["familyName"] as? String)!, name: (publicPin["name"] as? String)!, phoneNumber: self.phoneNumber!, coordinate: (publicPin["location"] as? CLLocation)!.coordinate)
+                                            let displayPin = CustomPin(title: (publicPin["givenName"] as? String)! + " " + (publicPin["familyName"] as? String)!, name: (publicPin["name"] as? String)!, phoneNumber: (publicPin["phoneNumber"] as? String)!, coordinate: (publicPin["location"] as? CLLocation)!.coordinate)
                                             self.map.addAnnotation(displayPin)
                                         }
                                     }
@@ -170,9 +168,10 @@ extension HomeViewController: MKMapViewDelegate {
         let alert = UIAlertController(title: "Send a text message!", message: "Ask " + view.annotation!.title!! + " to meet up!", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Send SMS", style: UIAlertActionStyle.Default) { (action) in
             let messageVC = MFMessageComposeViewController()
+            let pin = view.annotation! as? CustomPin
             
-            messageVC.body = "Hi I heard you were also going to be in " + view.annotation!.subtitle!! + " - let's meet up!"
-            messageVC.recipients = [self.phoneNumber!]
+            messageVC.body = "Hi I heard you were also going to be in " + (pin?.title)! + " - let's meet up!"
+            messageVC.recipients = [(pin?.phoneNumber)!]
             messageVC.messageComposeDelegate = self
             
             self.presentViewController(messageVC, animated: false, completion: nil)

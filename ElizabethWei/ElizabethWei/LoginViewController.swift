@@ -10,23 +10,18 @@ import UIKit
 import CloudKit
 
 class LoginViewController: UIViewController {
-
-    @IBAction func start(sender: UIButton) {
-        self.performSegueWithIdentifier("ToPhone", sender: sender)
-    }
-    
-    @IBOutlet weak var startButton: UIButton!
-    
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var statusLabel: UILabel!
+    
+    var givenName: String? = nil
+    
+    var familyName: String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         activityIndicator.startAnimating()
-        
-        startButton.enabled = false
 
         let container = CKContainer.defaultContainer()
         
@@ -40,28 +35,11 @@ class LoginViewController: UIViewController {
                     guard error == nil else { return }
                     if status == CKApplicationPermissionStatus.Granted {
                         self.activityIndicator.stopAnimating()
-                        self.startButton.enabled = true
                         container.discoverUserInfoWithUserRecordID(recordID!) { (info, fetchError) in
-                            self.performSegueWithIdentifier("ToPhone", sender: nil)
+                            self.familyName = (info?.displayContact?.familyName)!
+                            self.givenName = (info?.displayContact?.givenName)!
+                            self.performSegueWithIdentifier("ToApp", sender: nil)
                         }
-                    }
-                }
-            }
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        let container = CKContainer.defaultContainer()
-        
-        iCloudUserIDAsync() {
-            recordID, error in
-            if let userID = recordID?.recordName {
-                print("received iCloudID \(userID)")
-                container.requestApplicationPermission(.UserDiscoverability) { (status, error) in
-                    guard error == nil else { return }
-                    if status == CKApplicationPermissionStatus.Granted {
-                        self.activityIndicator.stopAnimating()
-                        self.startButton.enabled = true
                     }
                 }
             }
@@ -81,5 +59,11 @@ class LoginViewController: UIViewController {
                 complete(instance: recordID, error: nil)
             }
         }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        let destinationVC = segue.destinationViewController as! Start
+        destinationVC.familyName = familyName
+        destinationVC.givenName = givenName
     }
 }
