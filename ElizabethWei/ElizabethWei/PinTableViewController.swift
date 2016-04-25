@@ -25,6 +25,7 @@ class PinTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = editButtonItem()
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor() 
         
         refresh = UIRefreshControl()
         refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")

@@ -17,8 +17,14 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var startButton: UIButton!
     
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var statusLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.startAnimating()
         
         startButton.enabled = false
 
@@ -33,7 +39,7 @@ class LoginViewController: UIViewController {
                 container.requestApplicationPermission(.UserDiscoverability) { (status, error) in
                     guard error == nil else { return }
                     if status == CKApplicationPermissionStatus.Granted {
-                        print("allowed to discovers user info")
+                        self.activityIndicator.stopAnimating()
                         self.startButton.enabled = true
                         container.discoverUserInfoWithUserRecordID(recordID!) { (info, fetchError) in
                             self.performSegueWithIdentifier("ToPhone", sender: nil)
@@ -54,7 +60,7 @@ class LoginViewController: UIViewController {
                 container.requestApplicationPermission(.UserDiscoverability) { (status, error) in
                     guard error == nil else { return }
                     if status == CKApplicationPermissionStatus.Granted {
-                        print("allowed to discovers user info")
+                        self.activityIndicator.stopAnimating()
                         self.startButton.enabled = true
                     }
                 }
@@ -67,6 +73,7 @@ class LoginViewController: UIViewController {
         container.fetchUserRecordIDWithCompletionHandler() {
             recordID, error in
             if error != nil {
+                self.statusLabel.text = "Please sign into iCloud"
                 print(error!.localizedDescription)
                 complete(instance: nil, error: error)
             } else {
@@ -75,16 +82,4 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
