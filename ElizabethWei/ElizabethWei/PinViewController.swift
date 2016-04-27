@@ -18,18 +18,18 @@ class PinViewController: UIViewController, UITextFieldDelegate, UINavigationCont
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        let isPresentingInAddPinMode = presentingViewController is UINavigationController
+        //let isPresentingInAddPinMode = presentingViewController is UINavigationController
         if isPresentingInAddPinMode {
-            print("situation 1")
-            
+            print("adding a pin")
             dismissViewControllerAnimated(true, completion: nil)
-            
         }
         else {
-            print("situation 2")
-           navigationController!.popViewControllerAnimated(true)
+            print("editing a pin")
+            navigationController!.popViewControllerAnimated(true)
         }
     }
+    
+    var isPresentingInAddPinMode = false
     
     @IBOutlet weak var phoneTextField: UITextField!
     

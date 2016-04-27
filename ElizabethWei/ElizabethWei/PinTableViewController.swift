@@ -96,10 +96,13 @@ class PinTableViewController: UITableViewController {
                 let indexPath = tableView.indexPathForCell(selectedPinCell)!
                 let pin = pins[indexPath.row]
                 pinDetailViewController.pin = Pin(name: (pin["name"] as? String)!, location: (pin["location"] as? CLLocation)!, startDate: (pin["startDate"] as? NSDate)!, endDate: (pin["endDate"] as? NSDate)!, phoneNumber: (pin["phoneNumber"] as? String)!)
+                pinDetailViewController.isPresentingInAddPinMode = false
             }
         }
         else if segue.identifier == "AddItem" {
-            print("Adding new pin.")
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! PinViewController
+            targetController.isPresentingInAddPinMode = true
         }
     }
     

@@ -170,7 +170,7 @@ extension HomeViewController: MKMapViewDelegate {
             let messageVC = MFMessageComposeViewController()
             let pin = view.annotation! as? CustomPin
             
-            messageVC.body = "Hi I heard you were also going to be in " + (pin?.title)! + " - let's meet up!"
+            messageVC.body = "Hi I heard you were also going to be in " + (pin?.name)! + " - let's meet up!"
             messageVC.recipients = [(pin?.phoneNumber)!]
             messageVC.messageComposeDelegate = self
             

@@ -30,15 +30,19 @@ class LoginViewController: UIViewController {
             recordID, error in
             if let userID = recordID?.recordName {
                 print("received iCloudID \(userID)")
-                
                 container.requestApplicationPermission(.UserDiscoverability) { (status, error) in
                     guard error == nil else { return }
                     if status == CKApplicationPermissionStatus.Granted {
                         self.activityIndicator.stopAnimating()
                         container.discoverUserInfoWithUserRecordID(recordID!) { (info, fetchError) in
-                            self.familyName = (info?.displayContact?.familyName)!
-                            self.givenName = (info?.displayContact?.givenName)!
-                            self.performSegueWithIdentifier("ToApp", sender: nil)
+                            if fetchError != nil {
+                                self.statusLabel.text = "Please sign into iCloud"
+                            }
+                            else {
+                                self.familyName = (info?.displayContact?.familyName)!
+                                self.givenName = (info?.displayContact?.givenName)!
+                                self.performSegueWithIdentifier("ToApp", sender: nil)
+                            }
                         }
                     }
                 }
@@ -48,15 +52,17 @@ class LoginViewController: UIViewController {
 
     func iCloudUserIDAsync(complete: (instance: CKRecordID?, error: NSError?) -> ()) {
         let container = CKContainer.defaultContainer()
-        container.fetchUserRecordIDWithCompletionHandler() {
-            recordID, error in
+        
+        container.fetchUserRecordIDWithCompletionHandler { (record: CKRecordID?, error: NSError?) in
             if error != nil {
-                self.statusLabel.text = "Please sign into iCloud"
-                print(error!.localizedDescription)
-                complete(instance: nil, error: error)
-            } else {
-                print("fetched ID \(recordID?.recordName)")
-                complete(instance: recordID, error: nil)
+                let alert = UIAlertController(title: "Please sign into iCloud", message: "You can sign in at Settings > iCloud", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                print(error?.localizedDescription)
+            }
+            else {
+                print("fetched ID \(record?.recordName)")
+                complete(instance: record, error: nil)
             }
         }
     }
