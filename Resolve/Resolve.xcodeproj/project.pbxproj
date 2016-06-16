@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8300BAD31D12808E009C1653 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8300BAD21D12808E009C1653 /* VoteViewController.swift */; };
 		83460F1B1D10BBC3007A021B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83460F1A1D10BBC3007A021B /* Assets.xcassets */; };
 		83460F221D10BBC3007A021B /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 83460F211D10BBC3007A021B /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83460F271D10BBC3007A021B /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83460F261D10BBC3007A021B /* Messages.framework */; };
@@ -44,6 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8300BAD21D12808E009C1653 /* VoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		83460F171D10BBC3007A021B /* Resolve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Resolve.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83460F1A1D10BBC3007A021B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83460F1C1D10BBC3007A021B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				83460F291D10BBC3007A021B /* MessagesViewController.swift */,
+				8300BAD21D12808E009C1653 /* VoteViewController.swift */,
 				83460F3E1D10BE4F007A021B /* Poll.swift */,
 				83460F3C1D10BE13007A021B /* PollViewController.swift */,
 				83460F3A1D10BCA5007A021B /* TemplatesCollectionViewController.swift */,
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8300BAD31D12808E009C1653 /* VoteViewController.swift in Sources */,
 				83460F3F1D10BE4F007A021B /* Poll.swift in Sources */,
 				83892E2E1D10D5A4004F6FA6 /* TemplateCollectionViewCell.swift in Sources */,
 				83460F3B1D10BCA5007A021B /* TemplatesCollectionViewController.swift in Sources */,

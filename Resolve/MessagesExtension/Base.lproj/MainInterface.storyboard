@@ -80,22 +80,92 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suggestions TBD" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bm-gb-Gij">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-Vq-AFc">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1uU-3q-izC">
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="+ Add Option">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addOpt:" destination="2iA-lw-aeK" eventType="touchUpInside" id="uqB-mD-mrL"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="XgR-Hf-JeX">
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no options yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfG-Hy-4lh">
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxo-AZ-jQn">
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ddv-Dy-NrW">
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="&gt; Send Poll">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPoll:" destination="2iA-lw-aeK" eventType="touchUpInside" id="pFn-qX-NVs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="top" secondItem="lVl-iX-JfN" secondAttribute="bottom" constant="8" id="ByT-Oe-2PU"/>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="L2l-fw-Rhd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="h9O-0J-Gq1" secondAttribute="trailing" constant="10" id="fQB-5l-sOo"/>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="pCB-Xe-fUV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1Bm-gb-Gij" secondAttribute="trailing" constant="10" id="0zo-8U-t1r"/>
+                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="46h-SW-4DG"/>
+                            <constraint firstItem="YFC-Vq-AFc" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="C5w-pe-CZl"/>
+                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="top" secondItem="h9O-0J-Gq1" secondAttribute="bottom" constant="10" id="D9n-Cp-oUl"/>
+                            <constraint firstItem="n5l-bc-lXE" firstAttribute="top" secondItem="YFC-Vq-AFc" secondAttribute="bottom" constant="10" id="Gjr-fG-Fez"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YFC-Vq-AFc" secondAttribute="trailing" constant="10" id="JEt-kp-oiE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h9O-0J-Gq1" secondAttribute="trailing" constant="10" id="KkI-aP-03N"/>
+                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="L0h-8O-4qn"/>
+                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="top" secondItem="lVl-iX-JfN" secondAttribute="bottom" constant="8" id="dK0-eF-hmL"/>
+                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="eFF-8B-xkc"/>
+                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="rUW-MS-fPJ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addOptButton" destination="1uU-3q-izC" id="4JM-7N-rBn"/>
+                        <outlet property="optionsLabel" destination="IfG-Hy-4lh" id="jLS-DI-fDe"/>
+                        <outlet property="optionsLabel2" destination="nxo-AZ-jQn" id="B35-DI-qSP"/>
+                        <outlet property="sendButton" destination="Ddv-Dy-NrW" id="SrK-WU-gXB"/>
                         <outlet property="titleLabel" destination="h9O-0J-Gq1" id="7XR-Xd-OaU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2s-NP-PVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1328.8" y="47.226386806596707"/>
+        </scene>
+        <!--Vote View Controller-->
+        <scene sceneID="koK-tV-xkh">
+            <objects>
+                <viewController storyboardIdentifier="VoteViewController" id="zd5-GO-G0y" customClass="VoteViewController" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ICf-N0-IHM"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Bn-Po-16i"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jKA-OQ-HC4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="11q-j8-4wM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2034" y="47"/>
         </scene>
     </scenes>
 </document>
