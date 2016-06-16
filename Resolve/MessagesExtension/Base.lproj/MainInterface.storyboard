@@ -128,7 +128,7 @@
                             <constraint firstItem="h9O-0J-Gq1" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="46h-SW-4DG"/>
                             <constraint firstItem="YFC-Vq-AFc" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="C5w-pe-CZl"/>
                             <constraint firstItem="1Bm-gb-Gij" firstAttribute="top" secondItem="h9O-0J-Gq1" secondAttribute="bottom" constant="10" id="D9n-Cp-oUl"/>
-                            <constraint firstItem="n5l-bc-lXE" firstAttribute="top" secondItem="YFC-Vq-AFc" secondAttribute="bottom" constant="10" id="Gjr-fG-Fez"/>
+                            <constraint firstItem="n5l-bc-lXE" firstAttribute="top" secondItem="YFC-Vq-AFc" secondAttribute="bottom" constant="150" id="Gjr-fG-Fez"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YFC-Vq-AFc" secondAttribute="trailing" constant="10" id="JEt-kp-oiE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h9O-0J-Gq1" secondAttribute="trailing" constant="10" id="KkI-aP-03N"/>
                             <constraint firstItem="h9O-0J-Gq1" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="L0h-8O-4qn"/>
@@ -160,12 +160,58 @@
                     <view key="view" contentMode="scaleToFill" id="jKA-OQ-HC4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TBD: VoteViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vaq-1Y-DLI">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vaq-1Y-DLI" firstAttribute="leading" secondItem="jKA-OQ-HC4" secondAttribute="leadingMargin" constant="10" id="47S-bO-Bw1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Vaq-1Y-DLI" secondAttribute="trailing" constant="10" id="FP1-h4-MMB"/>
+                            <constraint firstItem="Vaq-1Y-DLI" firstAttribute="centerX" secondItem="jKA-OQ-HC4" secondAttribute="centerX" id="OJz-2l-ibh"/>
+                            <constraint firstItem="Vaq-1Y-DLI" firstAttribute="top" secondItem="ICf-N0-IHM" secondAttribute="bottom" id="mfi-IG-CWb"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="11q-j8-4wM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2034" y="47"/>
+            <point key="canvasLocation" x="1329" y="-638"/>
+        </scene>
+        <!--Empty View Controller-->
+        <scene sceneID="sCJ-23-qrr">
+            <objects>
+                <viewController storyboardIdentifier="EmptyViewController" id="4Jk-dD-Qto" customClass="EmptyViewController" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08r-4w-AxB"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Ox-zc-q80"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vGm-HW-8R3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select a poll" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqE-fe-z9Z">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lqE-fe-z9Z" firstAttribute="leading" secondItem="vGm-HW-8R3" secondAttribute="leadingMargin" constant="10" id="LxP-e2-n46"/>
+                            <constraint firstItem="lqE-fe-z9Z" firstAttribute="top" secondItem="08r-4w-AxB" secondAttribute="bottom" constant="10" id="TCC-Aw-lu5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lqE-fe-z9Z" secondAttribute="trailing" constant="10" id="zQd-dQ-eMj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="instructionLabel" destination="lqE-fe-z9Z" id="gYl-Iq-aau"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9wj-2X-rAJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1329" y="733"/>
         </scene>
     </scenes>
 </document>

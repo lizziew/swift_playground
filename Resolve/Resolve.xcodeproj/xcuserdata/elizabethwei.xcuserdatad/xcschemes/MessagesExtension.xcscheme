@@ -66,8 +66,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.apple.MobileSMS"
+         RemotePath = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/Applications/MobileSMS.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83460F161D10BBC3007A021B"
@@ -75,7 +79,14 @@
             BlueprintName = "Resolve"
             ReferencedContainer = "container:Resolve.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DYLD_PRINT_STATISTICS"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
