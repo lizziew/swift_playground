@@ -166,12 +166,6 @@ class PollViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        addOptButton.frame = titleLabel.frame
-        self.view.bringSubview(toFront: addOptButton)
-    }
-    
     func presentDate() {
         titleLabel.text = "DATE"
         dateDP.datePickerMode = UIDatePickerMode.date

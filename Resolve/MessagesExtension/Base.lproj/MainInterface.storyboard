@@ -87,13 +87,13 @@
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-Vq-AFc">
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1uU-3q-izC">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnK-NF-dFc">
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="+ Add Option">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="addOpt:" destination="2iA-lw-aeK" eventType="touchUpInside" id="uqB-mD-mrL"/>
+                                            <action selector="addOpt:" destination="2iA-lw-aeK" eventType="touchUpInside" id="r4e-Yn-xST"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="XgR-Hf-JeX">
@@ -124,21 +124,19 @@
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="1Bm-gb-Gij" secondAttribute="trailing" constant="10" id="0zo-8U-t1r"/>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="46h-SW-4DG"/>
-                            <constraint firstItem="YFC-Vq-AFc" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="C5w-pe-CZl"/>
-                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="top" secondItem="h9O-0J-Gq1" secondAttribute="bottom" constant="10" id="D9n-Cp-oUl"/>
-                            <constraint firstItem="n5l-bc-lXE" firstAttribute="top" secondItem="YFC-Vq-AFc" secondAttribute="bottom" constant="150" id="Gjr-fG-Fez"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YFC-Vq-AFc" secondAttribute="trailing" constant="10" id="JEt-kp-oiE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="h9O-0J-Gq1" secondAttribute="trailing" constant="10" id="KkI-aP-03N"/>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="L0h-8O-4qn"/>
-                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="top" secondItem="lVl-iX-JfN" secondAttribute="bottom" constant="8" id="dK0-eF-hmL"/>
-                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="eFF-8B-xkc"/>
-                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="centerX" secondItem="qvs-iZ-ptJ" secondAttribute="centerX" id="rUW-MS-fPJ"/>
+                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="GQ9-xu-avk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YFC-Vq-AFc" secondAttribute="trailing" constant="10" id="IWh-gw-cJe"/>
+                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="top" secondItem="lVl-iX-JfN" secondAttribute="bottom" constant="10" id="IsX-RE-ZDx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h9O-0J-Gq1" secondAttribute="trailing" constant="10" id="KxA-b7-AhK"/>
+                            <constraint firstItem="YFC-Vq-AFc" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="Nqo-ht-4UB"/>
+                            <constraint firstItem="h9O-0J-Gq1" firstAttribute="leading" secondItem="qvs-iZ-ptJ" secondAttribute="leadingMargin" constant="10" id="Pgz-4N-svD"/>
+                            <constraint firstItem="n5l-bc-lXE" firstAttribute="top" secondItem="YFC-Vq-AFc" secondAttribute="bottom" constant="10" id="eoL-cn-dhB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1Bm-gb-Gij" secondAttribute="trailing" constant="10" id="fio-2s-JiJ"/>
+                            <constraint firstItem="1Bm-gb-Gij" firstAttribute="top" secondItem="h9O-0J-Gq1" secondAttribute="bottom" constant="10" id="lZe-wN-y5e"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addOptButton" destination="1uU-3q-izC" id="4JM-7N-rBn"/>
+                        <outlet property="addOptButton" destination="pnK-NF-dFc" id="snx-Ei-ZOU"/>
                         <outlet property="optionsLabel" destination="IfG-Hy-4lh" id="jLS-DI-fDe"/>
                         <outlet property="optionsLabel2" destination="nxo-AZ-jQn" id="B35-DI-qSP"/>
                         <outlet property="sendButton" destination="Ddv-Dy-NrW" id="SrK-WU-gXB"/>
