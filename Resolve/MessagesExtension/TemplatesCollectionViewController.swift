@@ -31,13 +31,13 @@ class TemplatesCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {        
-        delegate?.templatesCollectionViewControllerDidSelectAdd(self, pollType: templates[indexPath.item!])
+        delegate?.templatesCollectionViewControllerDidSelectAdd(self, pollType: templates[indexPath.item])
     }
     
     private func dequeueTemplateCell(at indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TemplateCollectionViewCell else { fatalError("Unable to dequeue a TemplateCell") }
         
-        cell.backgroundView = UIImageView(image: UIImage(named: templates[indexPath.item!])!)
+        cell.backgroundView = UIImageView(image: UIImage(named: templates[indexPath.item])!)
         cell.layer.cornerRadius = 8
         
         return cell

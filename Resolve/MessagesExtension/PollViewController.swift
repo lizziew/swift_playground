@@ -137,7 +137,7 @@ class PollViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         optionsLabel2.layer.cornerRadius = 8
         
         dateDP.frame = CGRect(x: self.view.frame.midX - dateDP.frame.midX, y: self.view.frame.midY - dateDP.frame.midY, width: dateDP.frame.width, height: dateDP.frame.height)
-        dateDP.timeZone = TimeZone.local()
+        dateDP.timeZone = TimeZone.autoupdatingCurrent
         dateDP.backgroundColor = UIColorFromHex(rgbValue: 0xff6f69)
         dateDP.layer.masksToBounds = true
         dateDP.layer.cornerRadius = 8

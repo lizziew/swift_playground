@@ -32,21 +32,28 @@ class MessagesViewController: MSMessagesAppViewController {
     
     private func presentViewController(for conversation: MSConversation, with presentationStyle: MSMessagesAppPresentationStyle) {
         let controller: UIViewController
+        
+        //COMPACT VIEW
         if presentationStyle == .compact {
             controller = presentTemplatesCollectionViewController()
         }
+        //EXPANDED VIEW
         else {
+            //MAKING POLL
             if conversation.selectedMessage == nil {
                 print("no selected message")
+                //NO POLL SELECTED YET
                 if pollType == nil {
                     print("no poll type")
                     controller = presentEmptyViewController()
                 }
+                //POLL SELECTED
                 else {
                     print("poll type is \(pollType)")
                     controller = presentPollViewController()
                 }
             }
+            //RESPONDING TO POLL
             else {
                 let poll = Poll(message: conversation.selectedMessage)
                 controller = presentVoteViewController(with: poll)
