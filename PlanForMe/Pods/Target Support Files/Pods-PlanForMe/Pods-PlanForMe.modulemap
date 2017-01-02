@@ -1,0 +1,6 @@
+framework module Pods_PlanForMe {
+  umbrella header "Pods-PlanForMe-umbrella.h"
+
+  export *
+  module * { export * }
+}

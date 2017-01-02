@@ -2,7 +2,7 @@
 //  BlogReaderTests.swift
 //  BlogReaderTests
 //
-//  Created by Elizabeth Wei on 3/23/16.
+//  Created by Elizabeth Wei on 12/31/16.
 //  Copyright © 2016 Elizabeth Wei. All rights reserved.
 //
 
@@ -28,7 +28,7 @@ class BlogReaderTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

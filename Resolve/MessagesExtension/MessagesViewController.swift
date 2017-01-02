@@ -8,6 +8,7 @@
 
 import UIKit
 import Messages
+import CloudKit
 
 class MessagesViewController: MSMessagesAppViewController {
     var pollType: String? = nil
@@ -106,40 +107,35 @@ class MessagesViewController: MSMessagesAppViewController {
         return controller
     }
     
-//    private func composeMessage(id: CKRecordID, session: MSSession? = nil) -> MSMessage {
-//        //var components = URLComponents()
-//        //components.queryItems = iceCream.queryItems
-//        
-//        let layout = MSMessageTemplateLayout()
-//        
-//        let database = CKContainer.default().privateCloudDatabase
-//        database.fetch(withRecordID: id) { (pollRecord, error) in
-//            if error != nil {
-//                print(error)
-//            }
-//            else if pollRecord != nil {
-//                let pollType = (pollRecord!["pollType"] as? String)!
-//                
-//                layout.caption = "Vote for a " + pollType
-//                
-//                let imgTitle = pollType + "_msg"
-//                layout.image = UIImage(named: imgTitle)
-//                
-//                
-//                //message.url = components.url!
-//                message.layout = layout
-//            }
-//        }
-//        
-//        let message = MSMessage(session: session ?? MSSession())
-//        
-//        
-//        
-//        
-//        
-//        
-//        return message
-//    }
+    func composeMessage(id: CKRecordID, session: MSSession? = nil) -> MSMessage {
+        //var components = URLComponents()
+        //components.queryItems = iceCream.queryItems
+        
+        let layout = MSMessageTemplateLayout()
+        
+        let message = MSMessage(session: session ?? MSSession())
+        
+        let database = CKContainer.default().privateCloudDatabase
+        database.fetch(withRecordID: id) { (pollRecord, error) in
+            if error != nil {
+                print(error!)
+            }
+            else if pollRecord != nil {
+                let pollType = (pollRecord!["pollType"] as? String)!
+                
+                layout.caption = "Vote for a " + pollType
+                
+                let imgTitle = pollType + "_msg"
+                layout.image = UIImage(named: imgTitle)
+                
+                
+                //message.url = components.url!
+                message.layout = layout
+            }
+        }
+        
+        return message
+    }
 }
 
 extension MessagesViewController: TemplatesCollectionViewControllerDelegate {
@@ -158,31 +154,31 @@ extension MessagesViewController: PollViewControllerDelegate {
         let dateData = controller.currDateOptions
         
         //store in iCloud
-//        let pollRecord = CKRecord(recordType: "Poll")
-//        let database = CKContainer.default().privateCloudDatabase
-//        
-//        pollRecord.setObject(pollType, forKey: "pollType")
-//        if pickerData.count > 0 {
-//            pollRecord.setObject(pickerData, forKey: "pickerData")
-//        }
-//        else if dateData.count > 0 {
-//            pollRecord.setObject(dateData, forKey: "dateData")
-//        }
-//        
-//        database.save(pollRecord) { (record, error) in
-//            if error != nil {
-//                print(error)
-//            }
-//        }
+        let pollRecord = CKRecord(recordType: "Poll")
+        let database = CKContainer.default().privateCloudDatabase
+        
+        pollRecord.setObject(pollType as CKRecordValue?, forKey: "pollType")
+        if pickerData.count > 0 {
+            pollRecord.setObject(pickerData as CKRecordValue?, forKey: "pickerData")
+        }
+        else if dateData.count > 0 {
+            pollRecord.setObject(dateData as CKRecordValue?, forKey: "dateData")
+        }
+        
+        database.save(pollRecord) { (record, error) in
+            if error != nil {
+                print(error!)
+            }
+        }
         
         let changeDescription = NSLocalizedString("We're in the process of voting", comment: "")
-        //let message = composeMessage(id: pollRecord.recordID, session: conversation.selectedMessage?.session)
+        let message = composeMessage(id: pollRecord.recordID, session: conversation.selectedMessage?.session)
         
-//        conversation.insert(message, localizedChangeDescription: changeDescription) { error in
-//            if let error = error {
-//                print(error)
-//            }
-//        }
+        conversation.insert(message) { error in
+            if let error = error {
+                print(error)
+            }
+        }
         
         dismiss()
     }

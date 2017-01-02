@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-PlanForMe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-PlanForMeTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-PlanForMeUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftRangeSlider.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1952A2B60BD11797BA8821F54908660C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2C47C2630AC5F65E4C729ACD131563C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7177E25C089BB55E608C9264BC22DAC2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B0B9FDF54A501FFC0122BAD1819DD1DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

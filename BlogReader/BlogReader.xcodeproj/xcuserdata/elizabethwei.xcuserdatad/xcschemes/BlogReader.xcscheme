@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83A0493A1CA3B0760040FB3B"
+               BlueprintIdentifier = "837DDF3E1E185D46008AC487"
                BuildableName = "BlogReader.app"
                BlueprintName = "BlogReader"
                ReferencedContainer = "container:BlogReader.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83A0494E1CA3B0760040FB3B"
+               BlueprintIdentifier = "837DDF541E185D46008AC487"
                BuildableName = "BlogReaderTests.xctest"
                BlueprintName = "BlogReaderTests"
                ReferencedContainer = "container:BlogReader.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83A049591CA3B0760040FB3B"
+               BlueprintIdentifier = "837DDF5F1E185D46008AC487"
                BuildableName = "BlogReaderUITests.xctest"
                BlueprintName = "BlogReaderUITests"
                ReferencedContainer = "container:BlogReader.xcodeproj">
@@ -52,7 +52,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83A0493A1CA3B0760040FB3B"
+            BlueprintIdentifier = "837DDF3E1E185D46008AC487"
             BuildableName = "BlogReader.app"
             BlueprintName = "BlogReader"
             ReferencedContainer = "container:BlogReader.xcodeproj">
@@ -75,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83A0493A1CA3B0760040FB3B"
+            BlueprintIdentifier = "837DDF3E1E185D46008AC487"
             BuildableName = "BlogReader.app"
             BlueprintName = "BlogReader"
             ReferencedContainer = "container:BlogReader.xcodeproj">
@@ -94,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83A0493A1CA3B0760040FB3B"
+            BlueprintIdentifier = "837DDF3E1E185D46008AC487"
             BuildableName = "BlogReader.app"
             BlueprintName = "BlogReader"
             ReferencedContainer = "container:BlogReader.xcodeproj">

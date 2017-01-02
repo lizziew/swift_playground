@@ -2,7 +2,7 @@
 //  BlogReaderUITests.swift
 //  BlogReaderUITests
 //
-//  Created by Elizabeth Wei on 3/23/16.
+//  Created by Elizabeth Wei on 12/31/16.
 //  Copyright © 2016 Elizabeth Wei. All rights reserved.
 //
 
