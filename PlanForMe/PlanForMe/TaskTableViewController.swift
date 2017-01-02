@@ -11,8 +11,9 @@ import os.log
 
 class TaskTableViewController: UITableViewController {
     
-    var tasks = [Task]()
-
+    var sections = ["Must do", "Would like to do"]
+    var tasks = [[Task]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,11 +23,11 @@ class TaskTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return tasks[section].count
     }
 
     //FORMAT TASK CELLS
@@ -36,7 +37,7 @@ class TaskTableViewController: UITableViewController {
             fatalError("Dequeued cell isn't an instance of TaskTableViewCell")
         }
 
-        let task = tasks[indexPath.row]
+        let task = tasks[indexPath.section][indexPath.row]
         
         //DISPLAY TASK NAME
         cell.nameLabel.text = task.name
@@ -60,16 +61,51 @@ class TaskTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? AddViewController, let task = sourceViewController.task {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 //EDIT EXISTING TASK
-                tasks[selectedIndexPath.row] = task
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                if task.priority == 1 && selectedIndexPath.section == 0 {
+                    //TASK HAS BEEN DEMOTED
+                    
+                    //REMOVE FROM SECTION 0
+                    tasks[0].remove(at: selectedIndexPath.row)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .fade)
+                    
+                    //ADD TO SECTION 1
+                    let newIndexPath = IndexPath(row: tasks[1].count, section: 1)
+                    tasks[1].append(task)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
+                else if task.priority == 2 && selectedIndexPath.section == 1 {
+                    //TASK HAS BEEN PROMOTED
+                    
+                    //REMOVE FROM SECTION 1
+                    tasks[1].remove(at: selectedIndexPath.row)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .fade)
+                    
+                    //ADD TO SECTION 0
+                    let newIndexPath = IndexPath(row: tasks[0].count, section: 0)
+                    tasks[0].append(task)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
+                else {
+                    //EDITED TASK HAS SAME PRIORITY
+                    tasks[selectedIndexPath.section][selectedIndexPath.row] = task
+                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                }
             }
             else {
                 //ADD NEW TASK
-                let newIndexPath = IndexPath(row: tasks.count, section: 0)
-                tasks.append(task)
+                let section = sections.count - task.priority
+                
+                let newIndexPath = IndexPath(row: tasks[section].count, section: section)
+                tasks[section].append(task)
+                
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+    }
+    
+    //SECTION TITLE
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
     }
  
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -79,27 +115,34 @@ class TaskTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tasks.remove(at: indexPath.row)
+            tasks[indexPath.section].remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
 
-    /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
+    //Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+         return true
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if sourceIndexPath.section != proposedDestinationIndexPath.section {
+            var row = 0;
+            if sourceIndexPath.section < proposedDestinationIndexPath.section {
+                row = tableView.numberOfRows(inSection: sourceIndexPath.section) - 1
+            }
+            return IndexPath(row: row, section: sourceIndexPath.section)
+        }
+        
+        return proposedDestinationIndexPath
+    }
     
     //SWITCHES FROM TASK LIST TO EITHER ADD TASK OR EDIT TASK
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -120,7 +163,7 @@ class TaskTableViewController: UITableViewController {
                 fatalError("The selected cell is not being displayed by the table")
             }
             
-            let selectedTask = tasks[indexPath.row]
+            let selectedTask = tasks[indexPath.section][indexPath.row]
             taskDetailViewController.task = selectedTask
         default:
             fatalError("Unexpected segue identifier: \(segue.identifier)") 
@@ -141,7 +184,7 @@ class TaskTableViewController: UITableViewController {
             fatalError("Unable to instantiate task")
         }
         
-        tasks += [task1, task2, task3]
+        tasks += [[task2], [task1, task3]]
     }
     
     //CONVERT TIME VALUE TO DISPLAY TIME
