@@ -233,9 +233,26 @@
                     <view key="view" contentMode="scaleToFill" id="g05-uo-dKu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add some tasks to plan out! " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFq-iZ-eg8">
+                                <rect key="frame" x="16" y="323" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="leading" secondItem="g05-uo-dKu" secondAttribute="leadingMargin" id="2CV-X9-het"/>
+                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="centerX" secondItem="g05-uo-dKu" secondAttribute="centerX" id="4UH-qx-msd"/>
+                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="centerY" secondItem="g05-uo-dKu" secondAttribute="centerY" id="ECo-pM-dcg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RFq-iZ-eg8" secondAttribute="trailing" id="NOY-wF-3b6"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Plan" image="plan" id="Kw7-4g-Klq"/>
+                    <connections>
+                        <outlet property="scheduleLabel" destination="RFq-iZ-eg8" id="UNY-5z-oSi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zxj-iA-eUS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -271,9 +288,9 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="sQQ-wc-mqq" kind="relationship" relationship="viewControllers" id="QXP-eE-Lcm"/>
                         <segue destination="AEM-ua-w6q" kind="relationship" relationship="viewControllers" id="u1q-hV-0eR"/>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="W3k-Mj-mQ0" kind="relationship" relationship="viewControllers" id="xMl-e8-Aeh"/>
                     </connections>
                 </tabBarController>

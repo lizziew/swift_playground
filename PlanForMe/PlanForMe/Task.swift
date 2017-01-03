@@ -8,11 +8,13 @@
 
 import UIKit
 
-class Task {
+class Task : CustomStringConvertible {
     var name: String
     var priority: Int
     var lowerTime: Double
     var upperTime: Double
+    
+    public var description: String { return "Task: \(name), \(priority), \(lowerTime) to \(upperTime)" }
     
     init?(name: String, priority: Int, lowerTime: Double, upperTime: Double) {
         if name.isEmpty || !(priority == 1 || priority == 2) || !(lowerTime >= 0 && lowerTime <= 24) || !(upperTime >= 0 && upperTime <= 24) {

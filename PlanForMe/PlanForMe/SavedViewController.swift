@@ -12,8 +12,6 @@ class SavedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //DEFAULT TAB IS TODAY'S TASKS
-        self.tabBarController?.selectedIndex = 1
     }
     
 }

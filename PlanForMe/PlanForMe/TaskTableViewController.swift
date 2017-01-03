@@ -147,6 +147,7 @@ class TaskTableViewController: UITableViewController {
     //SWITCHES FROM TASK LIST TO EITHER ADD TASK OR EDIT TASK
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        
         switch(segue.identifier ?? "") {
         case "AddItem":
             os_log("Adding a new task", log: OSLog.default, type: .debug)
