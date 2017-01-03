@@ -124,7 +124,9 @@ class TaskTableViewController: UITableViewController {
 
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        
+        let itemToMove = tasks[fromIndexPath.section][fromIndexPath.row]
+        tasks[fromIndexPath.section].remove(at: fromIndexPath.row)
+        tasks[fromIndexPath.section].insert(itemToMove, at: to.row)
     }
 
     //Override to support conditional rearranging of the table view.
@@ -185,7 +187,11 @@ class TaskTableViewController: UITableViewController {
             fatalError("Unable to instantiate task")
         }
         
-        tasks += [[task2], [task1, task3]]
+        guard let task4 = Task(name: "test", priority: 1, lowerTime: 9, upperTime: 16.5) else {
+            fatalError("Unable to instantiate task")
+        }
+        
+        tasks += [[task2], [task4, task1, task3]]
     }
     
     //CONVERT TIME VALUE TO DISPLAY TIME
