@@ -22,6 +22,9 @@
 		83BD460F1E19D88A00C01EE1 /* PlanForMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD460E1E19D88A00C01EE1 /* PlanForMeUITests.swift */; };
 		83BD461D1E19D90E00C01EE1 /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD461C1E19D90E00C01EE1 /* PlanViewController.swift */; };
 		83BD461F1E19E1F100C01EE1 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD461E1E19E1F100C01EE1 /* AddViewController.swift */; };
+		83D709FC1E1C5C7500648116 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D709FB1E1C5C7500648116 /* LoginViewController.swift */; };
+		83D709FE1E1C5D0C00648116 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D709FD1E1C5D0C00648116 /* GoogleService-Info.plist */; };
+		83D70A001E1C718900648116 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D709FF1E1C718900648116 /* SettingsViewController.swift */; };
 		8AD4945CD79A6166F30CF0FE /* Pods_PlanForMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C9E5CDAE70A11546E0710D /* Pods_PlanForMeUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +70,9 @@
 		83BD46101E19D88A00C01EE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83BD461C1E19D90E00C01EE1 /* PlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
 		83BD461E1E19E1F100C01EE1 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		83D709FB1E1C5C7500648116 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		83D709FD1E1C5D0C00648116 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		83D709FF1E1C718900648116 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		95D07C26A4D8C25A947D0BBF /* Pods_PlanForMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlanForMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB036AC31B40EAB1078A5D5D /* Pods_PlanForMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlanForMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B887F6225E03F1FB25891879 /* Pods-PlanForMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanForMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlanForMeTests/Pods-PlanForMeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 		83BD45EB1E19D88A00C01EE1 /* PlanForMe */ = {
 			isa = PBXGroup;
 			children = (
+				83D709FD1E1C5D0C00648116 /* GoogleService-Info.plist */,
 				83BD45EC1E19D88A00C01EE1 /* AppDelegate.swift */,
 				83BD461C1E19D90E00C01EE1 /* PlanViewController.swift */,
 				83BD461E1E19E1F100C01EE1 /* AddViewController.swift */,
@@ -145,6 +152,8 @@
 				8388725B1E1A24AE0021B089 /* TaskTableViewCell.swift */,
 				8388725D1E1A27E20021B089 /* TaskTableViewController.swift */,
 				83BD45F21E19D88A00C01EE1 /* Main.storyboard */,
+				83D709FF1E1C718900648116 /* SettingsViewController.swift */,
+				83D709FB1E1C5C7500648116 /* LoginViewController.swift */,
 				83BD45F51E19D88A00C01EE1 /* Assets.xcassets */,
 				83BD45F71E19D88A00C01EE1 /* LaunchScreen.storyboard */,
 				83BD45FA1E19D88A00C01EE1 /* Info.plist */,
@@ -303,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83BD45F91E19D88A00C01EE1 /* LaunchScreen.storyboard in Resources */,
+				83D709FE1E1C5D0C00648116 /* GoogleService-Info.plist in Resources */,
 				83BD45F61E19D88A00C01EE1 /* Assets.xcassets in Resources */,
 				83BD45F41E19D88A00C01EE1 /* Main.storyboard in Resources */,
 			);
@@ -467,8 +477,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D709FC1E1C5C7500648116 /* LoginViewController.swift in Sources */,
 				83BD461F1E19E1F100C01EE1 /* AddViewController.swift in Sources */,
 				83BD461D1E19D90E00C01EE1 /* PlanViewController.swift in Sources */,
+				83D70A001E1C718900648116 /* SettingsViewController.swift in Sources */,
 				8388725C1E1A24AE0021B089 /* TaskTableViewCell.swift in Sources */,
 				83BD45ED1E19D88A00C01EE1 /* AppDelegate.swift in Sources */,
 				8388725A1E1A1FE80021B089 /* Task.swift in Sources */,

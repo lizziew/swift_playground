@@ -6,6 +6,9 @@ target 'PlanForMe' do
   use_frameworks!
 
   pod 'SwiftRangeSlider'
+  pod 'Firebase' 
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
 
   target 'PlanForMeTests' do
     inherit! :search_paths

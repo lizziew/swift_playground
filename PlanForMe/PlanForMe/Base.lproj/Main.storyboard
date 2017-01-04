@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TMx-Ux-X2S">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -60,7 +60,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Must do" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9m4-19-eVf">
-                                            <rect key="frame" x="304.5" y="8" width="62.5" height="21"/>
+                                            <rect key="frame" x="304" y="8" width="63" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -258,10 +258,10 @@
             </objects>
             <point key="canvasLocation" x="777" y="207"/>
         </scene>
-        <!--About-->
+        <!--Settings-->
         <scene sceneID="MTj-Hl-Ijb">
             <objects>
-                <viewController id="W3k-Mj-mQ0" sceneMemberID="viewController">
+                <viewController id="W3k-Mj-mQ0" customClass="SettingsViewController" customModule="PlanForMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3go-v2-Uk0"/>
                         <viewControllerLayoutGuide type="bottom" id="5IP-Sz-swA"/>
@@ -269,13 +269,76 @@
                     <view key="view" contentMode="scaleToFill" id="P88-zK-k7b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-sZ-Ivr">
+                                <rect key="frame" x="16" y="40" width="343" height="132.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="mFP-qq-tg3">
+                                        <rect key="frame" x="121.5" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="WS5-Ed-PGN"/>
+                                            <constraint firstAttribute="width" constant="100" id="z3f-iN-Ds5"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="You're not signed in" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oF-mW-TFh">
+                                        <rect key="frame" x="0.0" y="112" width="343" height="20.5"/>
+                                        <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="0oF-mW-TFh" secondAttribute="trailing" id="eb5-UP-Sde"/>
+                                    <constraint firstItem="0oF-mW-TFh" firstAttribute="leading" secondItem="eYH-sZ-Ivr" secondAttribute="leading" id="mro-0S-Lkd"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eYH-sZ-Ivr" firstAttribute="top" secondItem="3go-v2-Uk0" secondAttribute="bottom" constant="20" id="6R3-Ry-frX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eYH-sZ-Ivr" secondAttribute="trailing" id="vuZ-bB-1jS"/>
+                            <constraint firstItem="eYH-sZ-Ivr" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leadingMargin" id="wBy-pq-3q2"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="About" image="about" id="NHZ-9v-r3h"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="NHZ-9v-r3h"/>
+                    <connections>
+                        <outlet property="profileImage" destination="mFP-qq-tg3" id="blI-q6-rjZ"/>
+                        <outlet property="profileStackView" destination="eYH-sZ-Ivr" id="Noy-P4-0bk"/>
+                        <outlet property="signInLabel" destination="0oF-mW-TFh" id="vcz-47-qIE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6mT-7D-6kK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="777" y="977"/>
+            <point key="canvasLocation" x="776.79999999999995" y="976.46176911544239"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="zyZ-ey-Vwt">
+            <objects>
+                <viewController id="TMx-Ux-X2S" customClass="LoginViewController" customModule="PlanForMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="l3z-wi-OuR"/>
+                        <viewControllerLayoutGuide type="bottom" id="xsg-65-G6L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="amK-Ma-7Ql">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bsX-4q-UTF" customClass="GIDSignInButton">
+                                <rect key="frame" x="125" y="308" width="125" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="LoginSegue" id="UgU-fU-UM9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j9r-LC-iSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-926" y="0.0"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -304,7 +367,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sQQ-wc-mqq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tasks" image="tasks" id="H9I-sb-BKm"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ygV-cw-Edp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ygV-cw-Edp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -322,7 +385,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xy0-Fa-HCT" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sb0-7B-jbG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sb0-7B-jbG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -337,9 +400,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="about" width="30" height="30"/>
         <image name="plan" width="30" height="30"/>
+        <image name="profile" width="30" height="30"/>
         <image name="saved" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
         <image name="tasks" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>

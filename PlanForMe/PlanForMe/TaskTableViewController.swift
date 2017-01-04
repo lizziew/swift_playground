@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 import os.log
 
 class TaskTableViewController: UITableViewController {
@@ -16,6 +18,8 @@ class TaskTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(FIRAuth.auth()?.currentUser?.email)
         
         navigationItem.leftBarButtonItem = editButtonItem
         
