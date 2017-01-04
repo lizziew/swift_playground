@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import EventKit
+
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+
 import os.log
 
 class TaskTableViewController: UITableViewController {
@@ -19,8 +22,13 @@ class TaskTableViewController: UITableViewController {
     
     var ref: FIRDatabaseReference!
     
+    //FIREBASE AUTH
     var userEmail = ""
     var userID = ""
+    
+    //CALENDAR
+    let eventStore = EKEventStore()
+    var calendars: [EKCalendar]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +40,63 @@ class TaskTableViewController: UITableViewController {
         ref = FIRDatabase.database().reference()
         userEmail = (FIRAuth.auth()?.currentUser?.email)!
         userID = (FIRAuth.auth()?.currentUser?.uid)!
+        //loadTasks()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        checkCalendarAuthorizationStatus()
+    }
+    
+    //CHECK IF WE HAVE ACCESS TO CALENDAR
+    func checkCalendarAuthorizationStatus() {
+        let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         
-        loadTasks()
+        switch (status) {
+        case EKAuthorizationStatus.notDetermined:
+            requestAccessToCalendar()
+        case EKAuthorizationStatus.authorized:
+            loadCalendars()
+        case EKAuthorizationStatus.restricted, EKAuthorizationStatus.denied:
+            requestCalendarPermissionAlert()
+        }
+    }
+    
+    
+    //FIGURE OUT IF WE CAN LOAD CALENDARS OR ASK FOR ACCESS
+    func requestAccessToCalendar() {
+        eventStore.requestAccess(to: EKEntityType.event, completion: {
+            (accessGranted: Bool, error: Error?) in
+            
+            if accessGranted == true {
+                DispatchQueue.main.async(execute: {
+                    self.loadCalendars()
+                })
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.requestCalendarPermissionAlert()
+                })
+            }
+        })
+    }
+    
+    //NOTIFICATION FOR CALENDAR ACCESS
+    func requestCalendarPermissionAlert() {
+        let alert = UIAlertController(title: "Alert", message: "PlanForMe needs access to your calendar in order to optimize your schedule. You can enable or disable access in Settings.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: goToSettings))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    //GO TO SETTINGS
+    func goToSettings(alert: UIAlertAction!) {
+        let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.shared.open(openSettingsUrl!, options: [:], completionHandler: nil)
+    }
+    
+    //LOAD TODAY'S EVENTS FROM CALENDAR
+    func loadCalendars() {
+        self.calendars = eventStore.calendars(for: EKEntityType.event)
+        print("LOAD CALENDAR") 
+        print(self.calendars)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -217,8 +280,11 @@ class TaskTableViewController: UITableViewController {
         tasks = [[], []]
         
         ref.child("Users/\(userID)").child("Tasks").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.value == nil {
+                return
+            }
             let value = (snapshot.value as? NSArray)!
-            
+        
             for i in 0..<value.count {
                 if let item = value[i] as? [String: Any] {
                     let name = item["name"] as! String

@@ -32,6 +32,11 @@ class PlanViewController : UIViewController {
     //DISPLAY TASKS AFTER THEY'RE SCHEDULED
     func displayTasks(_ tasks: [Task]?) {
         if tasks == nil {
+            if overlapTasks.count == 0 {
+                scheduleLabel.text = "You have nothing planned for today! Add an event or enjoy your day off :)"
+                return
+            }
+            
             //DISPLAY OVERLAP TASKS
             let t1 = overlapTasks[0]
             let t2 = overlapTasks[1]
@@ -49,7 +54,11 @@ class PlanViewController : UIViewController {
     }
     
     //SCHEDULE TASKS
-    func scheduleTasks() -> [Task]? {        
+    func scheduleTasks() -> [Task]? {
+        if tasks.count == 0 {
+            return nil
+        }
+        
         //SORT 'MUST DO' TASKS BY START TIME
         tasks[0] = tasks[0].sorted(by: { $0.lowerTime < $1.lowerTime })
         

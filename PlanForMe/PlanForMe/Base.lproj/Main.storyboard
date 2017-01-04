@@ -252,17 +252,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-sZ-Ivr">
-                                <rect key="frame" x="16" y="40" width="343" height="132.5"/>
+                                <rect key="frame" x="16" y="40" width="343" height="133"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="mFP-qq-tg3">
-                                        <rect key="frame" x="121.5" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="122" y="0.0" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="WS5-Ed-PGN"/>
                                             <constraint firstAttribute="width" constant="100" id="z3f-iN-Ds5"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="You're not signed in" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oF-mW-TFh">
-                                        <rect key="frame" x="0.0" y="112" width="343" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="112" width="343" height="21"/>
                                         <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -310,11 +310,19 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYU-T6-4zs">
+                                <rect key="frame" x="99" y="373" width="177" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Continue without account"/>
+                                <connections>
+                                    <action selector="anonLogin:" destination="TMx-Ux-X2S" eventType="touchUpInside" id="Iee-JA-SZN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="49e-Tb-3d3" kind="show" identifier="LoginSegue" id="UgU-fU-UM9"/>
+                        <segue destination="49e-Tb-3d3" kind="showDetail" identifier="LoginSegue" action="showViewController:sender:" id="UgU-fU-UM9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j9r-LC-iSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -347,7 +355,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sQQ-wc-mqq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tasks" image="tasks" id="H9I-sb-BKm"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ygV-cw-Edp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ygV-cw-Edp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -365,7 +373,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xy0-Fa-HCT" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sb0-7B-jbG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sb0-7B-jbG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -386,6 +394,6 @@
         <image name="tasks" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CAi-5N-0Fj"/>
+        <segue reference="DvZ-eS-LeT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -23,10 +23,26 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         GIDSignIn.sharedInstance().delegate = self
 
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signIn()
+        
+        if FIRAuth.auth()?.currentUser != nil  {
+            GIDSignIn.sharedInstance().signIn()
+        }
         
         //FIREBASE DATABASE SETUP
         ref = FIRDatabase.database().reference()
+    }
+    
+
+    @IBAction func anonLogin(_ sender: UIButton) {
+        FIRAuth.auth()?.signInAnonymously(completion: { (user, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            print("user logged in anonymously")
+            self.performSegue(withIdentifier: "LoginSegue", sender: self)
+        })
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
