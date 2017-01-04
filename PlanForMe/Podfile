@@ -8,6 +8,7 @@ target 'PlanForMe' do
   pod 'SwiftRangeSlider'
   pod 'Firebase' 
   pod 'Firebase/Auth'
+  pod 'Firebase/Database' 
   pod 'GoogleSignIn'
 
   target 'PlanForMeTests' do

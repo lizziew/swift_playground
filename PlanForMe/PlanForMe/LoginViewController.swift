@@ -10,17 +10,23 @@ import UIKit
 import Firebase
 import FirebaseAuth 
 import GoogleSignIn
+import FirebaseDatabase
 
 class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate { 
-
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //GOOGLE SIGN IN SETUP
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
 
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signIn()
+        
+        //FIREBASE DATABASE SETUP
+        ref = FIRDatabase.database().reference()
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
@@ -38,19 +44,21 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                 return
             }
             
-            print("User logged in through google")
+            //CREATE USER RECORD IN FIREBASE DATABASE
+            let userID = user!.uid
+            let userEmail = user!.email!
+            self.ref.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
+                if snapshot.hasChild(userID){
+                    print("user already exists")
+                }
+                else{
+                    self.ref.child("Users").child(userID).setValue(["Email": userEmail, "Tasks": []])
+                    print("adding new user")
+                }
+            })
+
+            //LOG IN TO APP
             self.performSegue(withIdentifier: "LoginSegue", sender: self)
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

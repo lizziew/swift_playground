@@ -141,8 +141,8 @@ class AddViewController: UIViewController, UITextFieldDelegate, UIPickerViewDele
         
         //SAVE BUTTON WAS PRESSED
         let name = nameTextField.text ?? ""
-        let lowerTime = timeSlider.lowerValue
-        let upperTime = timeSlider.upperValue
+        let lowerTime = round(timeSlider.lowerValue * 2.0) / 2.0
+        let upperTime = round(timeSlider.upperValue * 2.0) / 2.0
         
         var priority = 0
         let priorityInput = priorityChoices[priorityPicker.selectedRow(inComponent: 0)]

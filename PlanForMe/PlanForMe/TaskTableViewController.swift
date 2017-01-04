@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 import os.log
 
 class TaskTableViewController: UITableViewController {
@@ -16,12 +17,21 @@ class TaskTableViewController: UITableViewController {
     var sections = ["Must do", "Would like to do"]
     var tasks = [[Task]]()
     
+    var ref: FIRDatabaseReference!
+    
+    var userEmail = ""
+    var userID = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FIRAuth.auth()?.currentUser?.email)
-        
+        //UI SETUP
         navigationItem.leftBarButtonItem = editButtonItem
+        
+        //FIREBASE DATABASE SETUP
+        ref = FIRDatabase.database().reference()
+        userEmail = (FIRAuth.auth()?.currentUser?.email)!
+        userID = (FIRAuth.auth()?.currentUser?.uid)!
         
         loadTasks()
     }
@@ -31,7 +41,12 @@ class TaskTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks[section].count
+        if tasks.count == 0 {
+            return 0
+        }
+        else {
+            return tasks[section].count
+        }
     }
 
     //FORMAT TASK CELLS
@@ -104,7 +119,24 @@ class TaskTableViewController: UITableViewController {
                 
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            
+            //UPDATE TASKS IN FIREBASE DATABASE
+            ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())
         }
+    }
+    
+    func getDictOfTasks() -> [[String: Any]] {
+        var dictOfTasks = [[String: Any]]()
+        for section in tasks {
+            for t in section {
+                let t = ["name": t.name,
+                         "priority": t.priority,
+                         "lowerTime": t.lowerTime,
+                         "upperTime": t.upperTime] as [String : Any]
+                dictOfTasks.append(t)
+            }
+        }
+        return dictOfTasks
     }
     
     //SECTION TITLE
@@ -121,6 +153,9 @@ class TaskTableViewController: UITableViewController {
         if editingStyle == .delete {
             tasks[indexPath.section].remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            //UPDATE TASKS IN FIREBASE DATABASE
+            ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())     
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -177,20 +212,49 @@ class TaskTableViewController: UITableViewController {
         }
     }
 
-    //DISPLAY LIST OF TASKS
+    //LOAD TASKS FROM FIREBASE
     private func loadTasks() {
+        tasks = [[], []]
+        
+        ref.child("Users/\(userID)").child("Tasks").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = (snapshot.value as? NSArray)!
+            
+            for i in 0..<value.count {
+                if let item = value[i] as? [String: Any] {
+                    let name = item["name"] as! String
+                    let priority = item["priority"] as! Int
+                    let lowerTime = item["lowerTime"] as! Double
+                    let upperTime = item["upperTime"] as! Double
+                    let t = Task(name: name, priority: priority, lowerTime: lowerTime, upperTime: upperTime)
+                    if priority == 2 {
+                        self.tasks[0].append(t!)
+                    }
+                    else {
+                        self.tasks[1].append(t!)
+                    }
+                }
+            }
+            
+            self.tableView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    //TEST FUNCTION 
+    private func loadExampleTasks() {
         guard let task1 = Task(name: "Math class", priority: 1, lowerTime: 11, upperTime: 13) else {
             fatalError("Unable to instantiate task")
         }
-        
+
         guard let task2 = Task(name: "Soccer practice", priority: 2, lowerTime: 17, upperTime: 19) else {
             fatalError("Unable to instantiate task")
         }
-        
+
         guard let task3 = Task(name: "Breakfast", priority: 1, lowerTime: 8, upperTime: 9) else {
             fatalError("Unable to instantiate task")
         }
-        
+
         guard let task4 = Task(name: "test", priority: 1, lowerTime: 9, upperTime: 16.5) else {
             fatalError("Unable to instantiate task")
         }

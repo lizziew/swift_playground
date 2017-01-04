@@ -49,9 +49,7 @@ class PlanViewController : UIViewController {
     }
     
     //SCHEDULE TASKS
-    func scheduleTasks() -> [Task]? {
-        print(tasks) 
-        
+    func scheduleTasks() -> [Task]? {        
         //SORT 'MUST DO' TASKS BY START TIME
         tasks[0] = tasks[0].sorted(by: { $0.lowerTime < $1.lowerTime })
         
@@ -65,6 +63,7 @@ class PlanViewController : UIViewController {
             //WEIGHTED INTERVAL SCHEDULING (DP) --> optIntervals
             weightedIntervalSchedule(intervals)
             
+            //LOG OPTIMAL INTERVALS
             print(optIntervals)
             
             for interval in optIntervals {
@@ -99,6 +98,7 @@ class PlanViewController : UIViewController {
             }
         }
         
+        //LOG OPTIMAL VALUE
         print(m[m.count-1])
         
         optIntervals.removeAll()
