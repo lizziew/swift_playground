@@ -9,12 +9,12 @@
 import UIKit
 import EventKit
 
-class Calendar : CustomStringConvertible {
+class Cal : CustomStringConvertible {
     var ID: String
     var visible: Bool
     var title: String
     
-    public var description: String { return "Calendar: \(title), \(ID), \(visible)" }
+    public var description: String { return "Cal: \(title), \(ID), \(visible)" }
     
     init(title: String, ID: String, visible: Bool) {
         self.ID = ID

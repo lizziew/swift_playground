@@ -28,7 +28,8 @@ class TaskTableViewController: UITableViewController {
     
     //CALENDAR
     let eventStore = EKEventStore()
-    var calendars = [Calendar]()
+    var calendars = [Cal]()
+    var raw_calendars = [EKCalendar]() 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,31 +101,31 @@ class TaskTableViewController: UITableViewController {
     //LOAD TODAY'S EVENTS FROM CALENDAR
     func loadCalendars() {
         print("LOADING IN CALENDARS")
-        let input = eventStore.calendars(for: EKEntityType.event)
+        raw_calendars = eventStore.calendars(for: EKEntityType.event)
         calendars.removeAll()
         
         //RECONCILE iOS CALENDARS WITH FIREBASE CALENDARS
         self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.hasChild("Calendars"){
                  //FIREBASE HAS NO CALENDARS PROPERTY
-                for cal in input {
+                for cal in self.raw_calendars {
                     //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
-                    self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                    self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                     self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                 }
             }
             else {
                 //FIREBASE HAS CALENDARS PROPERTY 
-                for cal in input {
+                for cal in self.raw_calendars {
                     if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
                         //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
                         let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!
-                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
+                        self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
                         self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": value["Title"] as! String, "Visible": value["Visible"] as! Bool])
                     }
                     else {
                         //CALENDAR NOT IN FIREBASE -> ADD IN CALENDARS ARRAY AS VISIBLE, ADD TO FIREBASE AS VISIBLE
-                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                        self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                         self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                     }
                 }
@@ -132,9 +133,45 @@ class TaskTableViewController: UITableViewController {
             
             print("CALENDARS AFTER UPDATING")
             print(self.calendars)
+            
+            self.tasks = [[], []]
+            
+            //LOAD IN TODAY'S EVENTS FROM VISIBLE CALENDARS IN CALENDARS ARRAY
+            let startDate = Calendar.current.startOfDay(for: Date())
+            var components = DateComponents()
+            components.day = 1
+            components.second = -1
+            let endDate = Calendar.current.date(byAdding: components, to: startDate)!
+            
+            for cal in self.calendars {
+                if cal.visible {
+                    let raw_cal = self.raw_calendars.first(where: {$0.calendarIdentifier == cal.ID})!
+                    let eventsPredicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [raw_cal])
+                    let events = self.eventStore.events(matching: eventsPredicate).sorted(){
+                        (e1: EKEvent, e2: EKEvent) -> Bool in
+                        return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
+                    }
+                    
+                    for event in events {
+                        self.tasks[1].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                    }
+                }
+            }
+            
+            print(self.tasks)
+            
+            self.tableView.reloadData()
         })
-        
-        //TODO: LOAD IN EVENTS FROM CALENDARS IN CALENDARS ARRAY
+    }
+    
+    //TURN DATE INTO STRING
+    func getDisplayDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        formatter.timeZone = TimeZone.current
+        return formatter.string(from: date)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -163,31 +200,22 @@ class TaskTableViewController: UITableViewController {
         cell.nameLabel.text = task.name
         
         //DISPLAY TASK PRIORITY
-        switch task.priority {
-        case 2:
+        switch indexPath.section {
+        case 0:
             cell.priorityLabel.text = "❗️"
         default:
             cell.priorityLabel.text = ""
         }
         
+        //DISPLAY TASK CALENDAR INDICATOR
+        if let cal = raw_calendars.first(where: {$0.calendarIdentifier == task.calendarID}) {
+             cell.calendarView.backgroundColor = UIColor(cgColor: cal.cgColor).withAlphaComponent(0.5)
+        }
+
         //DISPLAY TASK TIME
-        cell.timeLabel.text = valueToTime(task.lowerTime) + " to " + valueToTime(task.upperTime)
+        cell.timeLabel.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
 
         return cell
-    }
-    
-    func getDictOfTasks() -> [[String: Any]] {
-        var dictOfTasks = [[String: Any]]()
-        for section in tasks {
-            for t in section {
-                let t = ["name": t.name,
-                         "priority": t.priority,
-                         "lowerTime": t.lowerTime,
-                         "upperTime": t.upperTime] as [String : Any]
-                dictOfTasks.append(t)
-            }
-        }
-        return dictOfTasks
     }
     
     //SECTION TITLE
@@ -205,8 +233,8 @@ class TaskTableViewController: UITableViewController {
             tasks[indexPath.section].remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            //UPDATE TASKS IN FIREBASE DATABASE
-            ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())     
+            //TODO: DISABLE DELETE UPDATE TASKS IN FIREBASE DATABASE
+            //ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -224,6 +252,7 @@ class TaskTableViewController: UITableViewController {
          return true
     }
     
+    //MOVE TASKS AROUND
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section != proposedDestinationIndexPath.section {
             var row = 0;
@@ -234,97 +263,5 @@ class TaskTableViewController: UITableViewController {
         }
         
         return proposedDestinationIndexPath
-    }
-
-    //LOAD TASKS FROM FIREBASE
-    private func loadTasks() {
-        tasks = [[], []]
-        
-        ref.child("Users/\(userID)").child("Tasks").observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.value == nil {
-                return
-            }
-            let value = (snapshot.value as? NSArray)!
-        
-            for i in 0..<value.count {
-                if let item = value[i] as? [String: Any] {
-                    let name = item["name"] as! String
-                    let priority = item["priority"] as! Int
-                    let lowerTime = item["lowerTime"] as! Double
-                    let upperTime = item["upperTime"] as! Double
-                    let t = Task(name: name, priority: priority, lowerTime: lowerTime, upperTime: upperTime)
-                    if priority == 2 {
-                        self.tasks[0].append(t!)
-                    }
-                    else {
-                        self.tasks[1].append(t!)
-                    }
-                }
-            }
-            
-            self.tableView.reloadData()
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    //TEST FUNCTION 
-    private func loadExampleTasks() {
-        guard let task1 = Task(name: "Math class", priority: 1, lowerTime: 11, upperTime: 13) else {
-            fatalError("Unable to instantiate task")
-        }
-
-        guard let task2 = Task(name: "Soccer practice", priority: 2, lowerTime: 17, upperTime: 19) else {
-            fatalError("Unable to instantiate task")
-        }
-
-        guard let task3 = Task(name: "Breakfast", priority: 1, lowerTime: 8, upperTime: 9) else {
-            fatalError("Unable to instantiate task")
-        }
-
-        guard let task4 = Task(name: "test", priority: 1, lowerTime: 9, upperTime: 16.5) else {
-            fatalError("Unable to instantiate task")
-        }
-        
-        tasks += [[task2], [task4, task1, task3]]
-    }
-    
-    //CONVERT TIME VALUE TO DISPLAY TIME
-    private func valueToTime(_ input: Double) -> String {
-        let value = round(input * 2.0) / 2.0
-        
-        if value < 1 {
-            if value == 0 {
-                return "12 AM"
-            }
-            else {
-                return "12:30 AM"
-            }
-        }
-        else if value == 24 {
-            return "12 AM"
-        }
-        else if value == 12 {
-            return "12 PM"
-        }
-        else if value == 12.5 {
-            return "12:30 PM"
-        }
-        else if value > 12 {
-            if value == floor(value) {
-                return String(Int(value) - 12) + " PM"
-            }
-            else {
-                return String(Int(value) - 12) + ":30 PM"
-            }
-        }
-        else {
-            if value == floor(value) {
-                return String(Int(value)) + " AM"
-            }
-            else {
-                return String(Int(value)) + ":30 AM"
-            }
-        }
     }
 }

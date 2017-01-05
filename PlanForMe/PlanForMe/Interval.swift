@@ -11,12 +11,12 @@ import UIKit
 class Interval : CustomStringConvertible {
     var weight: Int
     var index: Int
-    var start: Double
-    var finish: Double
+    var start: Date
+    var finish: Date
     
     public var description: String { return "Interval: \(weight), \(index): \(start) to \(finish)" }
     
-    init(weight: Int, index: Int, start: Double, finish: Double) {
+    init(weight: Int, index: Int, start: Date, finish: Date) {
         self.weight = weight
         self.index = index 
         self.start = start

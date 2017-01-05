@@ -16,7 +16,7 @@ import FirebaseDatabase
 class CalendarSettingsTableViewController: UITableViewController {
 
     let eventStore = EKEventStore()
-    var calendars = [Calendar]()
+    var calendars = [Cal]()
     
     //FIREBASE DATABASE
     var ref: FIRDatabaseReference!
@@ -83,7 +83,7 @@ class CalendarSettingsTableViewController: UITableViewController {
         return cell
     }
     
-    func toggleCalendar(_ cell: CalendarTableViewCell, _ cal: Calendar) {
+    func toggleCalendar(_ cell: CalendarTableViewCell, _ cal: Cal) {
         if cell.checkbox.titleLabel?.text == "✅" {
             cell.checkbox.setTitle("❌", for: .normal)
             cell.checked = false
@@ -155,7 +155,7 @@ class CalendarSettingsTableViewController: UITableViewController {
                 //FIREBASE HAS NO CALENDARS PROPERTY
                 for cal in input {
                     //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
-                    self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                    self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                     self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                 }
             }
@@ -165,12 +165,12 @@ class CalendarSettingsTableViewController: UITableViewController {
                     if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
                         //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
                         let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!
-                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
+                        self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
                         self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": value["Title"] as! String, "Visible": value["Visible"] as! Bool])
                     }
                     else {
                         //CALENDAR NOT IN FIREBASE -> ADD IN CALENDARS ARRAY AS VISIBLE, ADD TO FIREBASE AS VISIBLE
-                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                        self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                         self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                     }
                 }

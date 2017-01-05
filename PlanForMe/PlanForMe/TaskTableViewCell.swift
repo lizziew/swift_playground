@@ -13,10 +13,16 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var priorityLabel: UILabel!
-
+    @IBOutlet weak var calendarView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        calendarView.layer.cornerRadius = calendarView.frame.size.width/2
+        calendarView.clipsToBounds = true
+        calendarView.layer.backgroundColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        
+        self.selectionStyle = UITableViewCellSelectionStyle.none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

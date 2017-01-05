@@ -46,16 +46,26 @@ class PlanViewController : UIViewController {
         else {
             var taskText = "Your plan is \n"
             for task in tasks! {
-                taskText.append(valueToTime(task.lowerTime) + " to " + valueToTime(task.upperTime) + ": " + task.name + "\n")
+                taskText.append(getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime) + ": " + task.name + "\n")
             }
             
             scheduleLabel.text = taskText
         }
     }
     
+    //TURN DATE INTO STRING
+    func getDisplayDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        formatter.timeZone = TimeZone.current
+        return formatter.string(from: date)
+    }
+    
     //SCHEDULE TASKS
     func scheduleTasks() -> [Task]? {
-        if tasks.count == 0 {
+        if tasks.count == 0 || (tasks[0].count == 0 && tasks[1].count == 0){
             return nil
         }
         
@@ -185,6 +195,10 @@ class PlanViewController : UIViewController {
     
     //CHECK IF ANY 'MUST DO' TASKS OVERLAP
     func mustDoIsValid(_ input: [Task]) -> Bool {
+        if input.count == 0 {
+            return true 
+        }
+        
         for i in 0..<input.count-1 {
             if overlap(input[i], input[i+1]) {
                 overlapTasks = [input[i], input[i+1]]

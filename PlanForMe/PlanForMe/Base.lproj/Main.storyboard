@@ -27,32 +27,42 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPJ-UA-nbr">
-                                            <rect key="frame" x="8" y="8" width="176" height="21"/>
+                                            <rect key="frame" x="69" y="8" width="176" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="9 AM - 12 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoW-lT-gTY">
-                                            <rect key="frame" x="8" y="37" width="176" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v3U-3V-t37">
+                                            <rect key="frame" x="20" y="29" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="AVe-S4-rVl"/>
+                                                <constraint firstAttribute="width" constant="30" id="TQu-b8-D1V"/>
+                                            </constraints>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Must do" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9m4-19-eVf">
                                             <rect key="frame" x="304" y="8" width="63" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="9 AM - 12 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoW-lT-gTY">
+                                            <rect key="frame" x="69" y="60" width="176" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="v3U-3V-t37" firstAttribute="leading" secondItem="5n5-fR-5bz" secondAttribute="leading" constant="20" id="CB6-EG-Anu"/>
+                                        <constraint firstItem="v3U-3V-t37" firstAttribute="centerY" secondItem="5n5-fR-5bz" secondAttribute="centerY" id="N27-1X-got"/>
                                         <constraint firstAttribute="topMargin" secondItem="9m4-19-eVf" secondAttribute="top" id="bON-tx-Iqg"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9m4-19-eVf" secondAttribute="trailing" id="z4c-oE-9rx"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="calendarView" destination="v3U-3V-t37" id="qqN-3t-mQ4"/>
                                     <outlet property="nameLabel" destination="cPJ-UA-nbr" id="WVw-dI-iLv"/>
                                     <outlet property="priorityLabel" destination="9m4-19-eVf" id="38H-M7-ydY"/>
                                     <outlet property="timeLabel" destination="OoW-lT-gTY" id="OeZ-Jz-0Ad"/>
@@ -64,7 +74,7 @@
                             <outlet property="delegate" destination="ROS-MV-hBh" id="F4p-oz-h4Q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Today's Tasks" id="rFc-VQ-4mE"/>
+                    <navigationItem key="navigationItem" title="Today's Tasks" id="lep-we-VLj"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="FE9-ru-sUL">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>

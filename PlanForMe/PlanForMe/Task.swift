@@ -10,20 +10,15 @@ import UIKit
 
 class Task : CustomStringConvertible {
     var name: String
-    var priority: Int
-    var lowerTime: Double
-    var upperTime: Double
+    var calendarID: String
+    var lowerTime: Date
+    var upperTime: Date
     
-    public var description: String { return "Task: \(name), \(priority), \(lowerTime) to \(upperTime)" }
+    public var description: String { return "Task: \(name), \(calendarID), \(lowerTime) to \(upperTime)" }
     
-    init?(name: String, priority: Int, lowerTime: Double, upperTime: Double) {
-        if name.isEmpty || !(priority == 1 || priority == 2) || !(lowerTime >= 0 && lowerTime <= 24) || !(upperTime >= 0 && upperTime <= 24) {
-            print("INVALID TASK") 
-            return nil
-        }
-        
+    init(name: String, calendarID: String, lowerTime: Date, upperTime: Date) {
         self.name = name
-        self.priority = priority
+        self.calendarID = calendarID 
         self.lowerTime = lowerTime
         self.upperTime = upperTime
     }
