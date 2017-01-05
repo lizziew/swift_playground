@@ -17,7 +17,7 @@ import os.log
 
 class TaskTableViewController: UITableViewController {
     
-    var sections = ["Must do", "Would like to do"]
+    var sections = ["Must do", "Would like to do", "Don't want to do"]
     var tasks = [[Task]]()
     
     var ref: FIRDatabaseReference!
@@ -66,7 +66,6 @@ class TaskTableViewController: UITableViewController {
             requestCalendarPermissionAlert()
         }
     }
-    
     
     //FIGURE OUT IF WE CAN LOAD CALENDARS OR ASK FOR ACCESS
     func requestAccessToCalendar() {
@@ -134,7 +133,7 @@ class TaskTableViewController: UITableViewController {
             print("CALENDARS AFTER UPDATING")
             print(self.calendars)
             
-            self.tasks = [[], []]
+            self.tasks = [[], [], []]
             
             //LOAD IN TODAY'S EVENTS FROM VISIBLE CALENDARS IN CALENDARS ARRAY
             let startDate = Calendar.current.startOfDay(for: Date())
@@ -200,11 +199,8 @@ class TaskTableViewController: UITableViewController {
         cell.nameLabel.text = task.name
         
         //DISPLAY TASK PRIORITY
-        switch indexPath.section {
-        case 0:
+        if indexPath.section == 0{
             cell.priorityLabel.text = "❗️"
-        default:
-            cell.priorityLabel.text = ""
         }
         
         //DISPLAY TASK CALENDAR INDICATOR
@@ -218,50 +214,29 @@ class TaskTableViewController: UITableViewController {
         return cell
     }
     
-    //SECTION TITLE
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
  
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false 
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tasks[indexPath.section].remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            //TODO: DISABLE DELETE UPDATE TASKS IN FIREBASE DATABASE
-            //ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-
-    // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let itemToMove = tasks[fromIndexPath.section][fromIndexPath.row]
         tasks[fromIndexPath.section].remove(at: fromIndexPath.row)
-        tasks[fromIndexPath.section].insert(itemToMove, at: to.row)
-    }
-
-    //Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-         return true
-    }
-    
-    //MOVE TASKS AROUND
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        if sourceIndexPath.section != proposedDestinationIndexPath.section {
-            var row = 0;
-            if sourceIndexPath.section < proposedDestinationIndexPath.section {
-                row = tableView.numberOfRows(inSection: sourceIndexPath.section) - 1
-            }
-            return IndexPath(row: row, section: sourceIndexPath.section)
-        }
-        
-        return proposedDestinationIndexPath
+        tasks[to.section].insert(itemToMove, at: to.row)
     }
 }
