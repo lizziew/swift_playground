@@ -17,8 +17,11 @@ import os.log
 
 class TaskTableViewController: UITableViewController {
     
-    var sections = ["Must do", "Would like to do", "Don't want to do"]
+    var sections = ["All day", "Must do", "Would like to do", "Don't want to do"]
     var tasks = [[Task]]()
+    var allDayIndex = 0
+    var mustDoIndex = 1
+    var wouldLikeIndex = 2
     
     var ref: FIRDatabaseReference!
     
@@ -29,7 +32,7 @@ class TaskTableViewController: UITableViewController {
     //CALENDAR
     let eventStore = EKEventStore()
     var calendars = [Cal]()
-    var raw_calendars = [EKCalendar]() 
+    var raw_calendars = [EKCalendar]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +136,7 @@ class TaskTableViewController: UITableViewController {
             print("CALENDARS AFTER UPDATING")
             print(self.calendars)
             
-            self.tasks = [[], [], []]
+            self.tasks = [[], [], [], []]
             
             //LOAD IN TODAY'S EVENTS FROM VISIBLE CALENDARS IN CALENDARS ARRAY
             let startDate = Calendar.current.startOfDay(for: Date())
@@ -152,7 +155,12 @@ class TaskTableViewController: UITableViewController {
                     }
                     
                     for event in events {
-                        self.tasks[1].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                        if event.isAllDay {
+                            self.tasks[self.allDayIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                        }
+                        else {
+                            self.tasks[self.wouldLikeIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                        }
                     }
                 }
             }
@@ -199,8 +207,11 @@ class TaskTableViewController: UITableViewController {
         cell.nameLabel.text = task.name
         
         //DISPLAY TASK PRIORITY
-        if indexPath.section == 0{
+        if indexPath.section == mustDoIndex {
             cell.priorityLabel.text = "❗️"
+        }
+        else {
+            cell.priorityLabel.text = ""
         }
         
         //DISPLAY TASK CALENDAR INDICATOR
@@ -219,7 +230,12 @@ class TaskTableViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if indexPath.section == allDayIndex {
+            return false
+        }
+        else {
+            return true
+        }
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -231,12 +247,25 @@ class TaskTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if indexPath.section == allDayIndex {
+            return false
+        }
+        else {
+            return true
+        }
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let itemToMove = tasks[fromIndexPath.section][fromIndexPath.row]
         tasks[fromIndexPath.section].remove(at: fromIndexPath.row)
         tasks[to.section].insert(itemToMove, at: to.row)
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if proposedDestinationIndexPath.section == allDayIndex {
+            return IndexPath(row: 0, section: sourceIndexPath.section)
+        }
+        
+        return proposedDestinationIndexPath
     }
 }

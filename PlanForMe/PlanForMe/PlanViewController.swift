@@ -17,6 +17,10 @@ class PlanViewController : UIViewController {
     var m = [Int]()
     var optIntervals = [Interval]()
     
+    var allDayIndex = 0
+    var mustDoIndex = 1
+    var wouldLikeIndex = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,7 +37,7 @@ class PlanViewController : UIViewController {
     func displayTasks(_ tasks: [Task]?) {
         if tasks == nil {
             if overlapTasks.count == 0 {
-                scheduleLabel.text = "You have nothing planned for today! Add an event or enjoy your day off :)"
+                scheduleLabel.text = "You have nothing planned for today! Add a task you want to do or enjoy your day off :)"
                 return
             }
             
@@ -65,19 +69,19 @@ class PlanViewController : UIViewController {
     
     //SCHEDULE TASKS
     func scheduleTasks() -> [Task]? {
-        if tasks.count == 0 || (tasks[0].count == 0 && tasks[1].count == 0){
+        if tasks.count == 0 || (tasks[0].count == 0 && tasks[1].count == 0 && tasks[2].count == 0){
             return nil
         }
         
         //SORT 'MUST DO' TASKS BY START TIME
-        tasks[0] = tasks[0].sorted(by: { $0.lowerTime < $1.lowerTime })
+        tasks[mustDoIndex] = tasks[mustDoIndex].sorted(by: { $0.lowerTime < $1.lowerTime })
         
-        if mustDoIsValid(tasks[0]) {
-            //SORT 'WOULD LIKE TO DO' TASKS
-            var scheduledTasks = tasks[0]
+        if mustDoIsValid(tasks[mustDoIndex]) {
+            //SCHEDULE IN 'ALL DAY' AND 'MUST DO' TASKS
+            var scheduledTasks = tasks[mustDoIndex] + tasks[allDayIndex]
             
             //CONVERT 'WOULD LIKE TO DO' TASKS TO INTERVALS, FILTER OUT ALL 'WOULD LIKE TO DO' TASKS THAT CONFLICT WITH 'MUST DO' TASK(S)
-            let intervals = tasksToIntervals(mustDos: tasks[0], wouldLikes: tasks[1])
+            let intervals = tasksToIntervals(mustDos: tasks[mustDoIndex], wouldLikes: tasks[wouldLikeIndex])
             
             //WEIGHTED INTERVAL SCHEDULING (DP) --> optIntervals
             weightedIntervalSchedule(intervals)
@@ -86,7 +90,7 @@ class PlanViewController : UIViewController {
             print(optIntervals)
             
             for interval in optIntervals {
-                scheduledTasks.append(tasks[1][interval.index])
+                scheduledTasks.append(tasks[wouldLikeIndex][interval.index])
             }
             
             return scheduledTasks.sorted(by: { $0.lowerTime < $1.lowerTime })
@@ -98,6 +102,10 @@ class PlanViewController : UIViewController {
     
     //WEIGHTED INTERVAL SCHEDULING (DP)
     func weightedIntervalSchedule(_ input: [Interval]) {
+        if input.count == 0 {
+            return 
+        }
+        
         //SORT TASKS BY FINISH TIME (MONOTONICALLY INCREASING ORDER) 
         var sorted_input = input.sorted(by: {$0.finish < $1.finish})
         p = [Int](repeating: -1, count: sorted_input.count)
@@ -216,45 +224,6 @@ class PlanViewController : UIViewController {
     //CHECK IF 2 INTERVALS OVERLAP
     func overlap(_ t1: Interval, _ t2: Interval) -> Bool {
         return t1.finish > t2.start && t2.finish > t1.start
-    }
-    
-    //CONVERT TIME VALUE TO DISPLAY TIME
-    private func valueToTime(_ input: Double) -> String {
-        let value = round(input * 2.0) / 2.0
-        
-        if value < 1 {
-            if value == 0 {
-                return "12 AM"
-            }
-            else {
-                return "12:30 AM"
-            }
-        }
-        else if value == 24 {
-            return "12 AM"
-        }
-        else if value == 12 {
-            return "12 PM"
-        }
-        else if value == 12.5 {
-            return "12:30 PM"
-        }
-        else if value > 12 {
-            if value == floor(value) {
-                return String(Int(value) - 12) + " PM"
-            }
-            else {
-                return String(Int(value) - 12) + ":30 PM"
-            }
-        }
-        else {
-            if value == floor(value) {
-                return String(Int(value)) + " AM"
-            }
-            else {
-                return String(Int(value)) + ":30 AM"
-            }
-        }
     }
 }
 
