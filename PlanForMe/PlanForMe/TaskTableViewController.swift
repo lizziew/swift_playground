@@ -22,6 +22,7 @@ class TaskTableViewController: UITableViewController {
     var allDayIndex = 0
     var mustDoIndex = 1
     var wouldLikeIndex = 2
+    var notDoingIndex = 3
     
     var ref: FIRDatabaseReference!
     
@@ -156,10 +157,10 @@ class TaskTableViewController: UITableViewController {
                     
                     for event in events {
                         if event.isAllDay {
-                            self.tasks[self.allDayIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                            self.tasks[self.allDayIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
                         }
                         else {
-                            self.tasks[self.wouldLikeIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate))
+                            self.tasks[self.wouldLikeIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
                         }
                     }
                 }
@@ -215,13 +216,16 @@ class TaskTableViewController: UITableViewController {
         }
         
         //DISPLAY TASK CALENDAR INDICATOR
-        if let cal = raw_calendars.first(where: {$0.calendarIdentifier == task.calendarID}) {
-             cell.calendarView.backgroundColor = UIColor(cgColor: cal.cgColor).withAlphaComponent(0.5)
-        }
+        cell.calendarView.backgroundColor = task.color.withAlphaComponent(0.5)
 
         //DISPLAY TASK TIME
-        cell.timeLabel.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
-
+        if !task.event.isAllDay {
+            cell.timeLabel.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
+        }
+        else {
+            cell.timeLabel.text = ""
+        }
+        
         return cell
     }
     
@@ -230,12 +234,7 @@ class TaskTableViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == allDayIndex {
-            return false
-        }
-        else {
-            return true
-        }
+        return true
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -247,12 +246,11 @@ class TaskTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == allDayIndex {
-            return false
-        }
-        else {
-            return true
-        }
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -262,10 +260,28 @@ class TaskTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        if proposedDestinationIndexPath.section == allDayIndex {
-            return IndexPath(row: 0, section: sourceIndexPath.section)
-        }
+        let task = tasks[sourceIndexPath.section][sourceIndexPath.row]
         
-        return proposedDestinationIndexPath
+        if task.event.isAllDay {
+            //CAN ONLY MOVE TO ALL DAY OR NOT DOING
+            if sourceIndexPath.section == allDayIndex && proposedDestinationIndexPath.section != notDoingIndex {
+                return IndexPath(row: tasks[allDayIndex].count-1, section: allDayIndex)
+            }
+            else if sourceIndexPath.section == notDoingIndex && proposedDestinationIndexPath.section != allDayIndex {
+                return IndexPath(row: 0, section: notDoingIndex)
+            }
+            else {
+                return proposedDestinationIndexPath
+            }
+        }
+        else {
+            //CAN'T MOVE TO ALL DAY
+            if proposedDestinationIndexPath.section == allDayIndex {
+                return IndexPath(row: 0, section: sourceIndexPath.section)
+            }
+            else {
+                return proposedDestinationIndexPath
+            }
+        }
     }
 }

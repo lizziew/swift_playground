@@ -8,9 +8,10 @@
 
 import UIKit
 
-class PlanViewController : UIViewController {
+class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     var tasks = [[Task]]()
     var overlapTasks = [Task]()
+    var optTasks = [Task]()
     
     var p = [Int]()
     var m = [Int]()
@@ -20,8 +21,13 @@ class PlanViewController : UIViewController {
     var mustDoIndex = 1
     var wouldLikeIndex = 2
     
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none 
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -29,6 +35,51 @@ class PlanViewController : UIViewController {
         if let taskTableViewController = self.tabBarController?.viewControllers?[0].childViewControllers[0] as? TaskTableViewController {
             tasks = taskTableViewController.tasks
             displayTasks(scheduleTasks())
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return optTasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "eventCell")! as UITableViewCell
+        
+        let task = optTasks[indexPath.row]
+        cell.textLabel?.text = task.name
+        
+        if task.event.isAllDay {
+            cell.detailTextLabel?.text = "All day"
+            cell.layer.borderColor = UIColor.white.cgColor
+            cell.layer.borderWidth = 10
+        }
+        else {
+            cell.detailTextLabel?.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
+            cell.layer.cornerRadius = 20
+            cell.layer.borderColor = UIColor.white.cgColor
+            cell.layer.borderWidth = 10
+        }
+        
+        cell.backgroundColor = task.color.withAlphaComponent(0.5)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let task = optTasks[indexPath.row]
+        
+        if task.event.isAllDay {
+            return 90.0
+        }
+        
+        let interval = task.upperTime.timeIntervalSince(task.lowerTime)
+        let height = (CGFloat(interval) / 86400.0) * 1440.0
+
+        if height < 90.0 {
+            return 90.0
+        }
+        else {
+            return height
         }
     }
     
@@ -52,6 +103,10 @@ class PlanViewController : UIViewController {
                 taskText.append(getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime) + ": " + task.name + "\n")
             }
             print(taskText)
+            if tasks != nil {
+                optTasks = tasks!
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -147,6 +202,10 @@ class PlanViewController : UIViewController {
         else if p[i] != -1 && intervals[i].weight + m[p[i]] > m[i-1] {
             optIntervals.append(intervals[i])
             findOptIntervals(p[i], intervals: intervals)
+        }
+        else if intervals[i].weight > m[i-1] {
+            optIntervals.append(intervals[i])
+            findOptIntervals(i-1, intervals: intervals)
         }
         else {
             findOptIntervals(i-1, intervals: intervals)
