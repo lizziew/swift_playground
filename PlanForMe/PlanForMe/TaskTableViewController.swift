@@ -226,6 +226,8 @@ class TaskTableViewController: UITableViewController {
             cell.timeLabel.text = ""
         }
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -253,6 +255,13 @@ class TaskTableViewController: UITableViewController {
         return 60.0
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let taskStartDate = tasks[indexPath.section][indexPath.row].event.startDate
+        let interval = taskStartDate.timeIntervalSinceReferenceDate
+        let openCalendarUrl = URL(string: "calshow:\(interval)")!
+        UIApplication.shared.open(openCalendarUrl, options: [:], completionHandler: nil)
+    }
+    
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let itemToMove = tasks[fromIndexPath.section][fromIndexPath.row]
         tasks[fromIndexPath.section].remove(at: fromIndexPath.row)

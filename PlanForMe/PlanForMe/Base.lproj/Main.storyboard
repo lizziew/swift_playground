@@ -85,7 +85,7 @@
             </objects>
             <point key="canvasLocation" x="1557.5999999999999" y="-510.49475262368821"/>
         </scene>
-        <!--Plan-->
+        <!--Today's Plan-->
         <scene sceneID="NcT-UB-lOR">
             <objects>
                 <viewController id="AEM-ua-w6q" customClass="PlanViewController" customModule="PlanForMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -159,14 +159,14 @@
                             <constraint firstItem="N5S-2s-NHs" firstAttribute="top" secondItem="nq0-1T-33e" secondAttribute="bottom" constant="20" id="yuR-OF-LVD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Plan" image="plan" id="Kw7-4g-Klq"/>
+                    <navigationItem key="navigationItem" title="Today's Plan" id="Sac-bj-Ffi"/>
                     <connections>
                         <outlet property="tableView" destination="7Kg-da-i9n" id="NdP-Yb-Pb3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zxj-iA-eUS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="776.79999999999995" y="206.44677661169416"/>
+            <point key="canvasLocation" x="1716" y="206.44677661169416"/>
         </scene>
         <!--Settings-->
         <scene sceneID="MTj-Hl-Ijb">
@@ -348,7 +348,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="sQQ-wc-mqq" kind="relationship" relationship="viewControllers" id="QXP-eE-Lcm"/>
-                        <segue destination="AEM-ua-w6q" kind="relationship" relationship="viewControllers" id="u1q-hV-0eR"/>
+                        <segue destination="8sa-R0-QXI" kind="relationship" relationship="viewControllers" id="u1q-hV-0eR"/>
                         <segue destination="W3k-Mj-mQ0" kind="relationship" relationship="viewControllers" id="xMl-e8-Aeh"/>
                     </connections>
                 </tabBarController>
@@ -392,6 +392,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JFo-YS-J5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1681" y="976"/>
+        </scene>
+        <!--Plan-->
+        <scene sceneID="6cW-VG-Bkx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8sa-R0-QXI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Plan" image="plan" id="Kw7-4g-Klq"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3eQ-l7-Ko8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AEM-ua-w6q" kind="relationship" relationship="rootViewController" id="Hqp-bj-ra0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EVD-40-4RH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776.79999999999995" y="206.44677661169416"/>
         </scene>
     </scenes>
     <resources>

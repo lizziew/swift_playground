@@ -27,7 +27,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none 
+        tableView.separatorStyle = .none
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +62,8 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         
         cell.backgroundColor = task.color.withAlphaComponent(0.5)
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -81,6 +83,13 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         else {
             return height
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let taskStartDate = optTasks[indexPath.row].event.startDate
+        let interval = taskStartDate.timeIntervalSinceReferenceDate
+        let openCalendarUrl = URL(string: "calshow:\(interval)")!
+        UIApplication.shared.open(openCalendarUrl, options: [:], completionHandler: nil)
     }
     
     //DISPLAY TASKS AFTER THEY'RE SCHEDULED
