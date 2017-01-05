@@ -11,7 +11,6 @@ import UIKit
 class PlanViewController : UIViewController {
     var tasks = [[Task]]()
     var overlapTasks = [Task]()
-    @IBOutlet weak var scheduleLabel: UILabel!
     
     var p = [Int]()
     var m = [Int]()
@@ -37,24 +36,29 @@ class PlanViewController : UIViewController {
     func displayTasks(_ tasks: [Task]?) {
         if tasks == nil {
             if overlapTasks.count == 0 {
-                scheduleLabel.text = "You have nothing planned for today! Add a task you want to do or enjoy your day off :)"
+                showAlert("You have nothing planned for today! Add a task you want to do or enjoy your day off :)")
                 return
             }
             
             //DISPLAY OVERLAP TASKS
             let t1 = overlapTasks[0]
             let t2 = overlapTasks[1]
-            scheduleLabel.numberOfLines = 0
-            scheduleLabel.text = "Your 'must do' tasks " + t1.name + " and " + t2.name + " overlap! Please reschedule or delete at least one of the tasks."
+            
+            showAlert("Your 'must do' tasks " + t1.name + " and " + t2.name + " overlap! Please reschedule or delete at least one of the tasks.")
         }
         else {
             var taskText = "Your plan is \n"
             for task in tasks! {
                 taskText.append(getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime) + ": " + task.name + "\n")
             }
-            
-            scheduleLabel.text = taskText
+            print(taskText)
         }
+    }
+    
+    func showAlert(_ msg: String) {
+        let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     //TURN DATE INTO STRING

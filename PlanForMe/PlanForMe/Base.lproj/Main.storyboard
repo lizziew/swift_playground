@@ -96,26 +96,9 @@
                     <view key="view" contentMode="scaleToFill" id="g05-uo-dKu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add some tasks to plan out! " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFq-iZ-eg8">
-                                <rect key="frame" x="16" y="323" width="343" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="leading" secondItem="g05-uo-dKu" secondAttribute="leadingMargin" id="2CV-X9-het"/>
-                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="centerX" secondItem="g05-uo-dKu" secondAttribute="centerX" id="4UH-qx-msd"/>
-                            <constraint firstItem="RFq-iZ-eg8" firstAttribute="centerY" secondItem="g05-uo-dKu" secondAttribute="centerY" id="ECo-pM-dcg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="RFq-iZ-eg8" secondAttribute="trailing" id="NOY-wF-3b6"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Plan" image="plan" id="Kw7-4g-Klq"/>
-                    <connections>
-                        <outlet property="scheduleLabel" destination="RFq-iZ-eg8" id="UNY-5z-oSi"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zxj-iA-eUS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -134,17 +117,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-sZ-Ivr">
-                                <rect key="frame" x="16" y="40" width="343" height="133"/>
+                                <rect key="frame" x="16" y="40" width="343" height="132.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="mFP-qq-tg3">
-                                        <rect key="frame" x="122" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="121.5" y="0.0" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="WS5-Ed-PGN"/>
                                             <constraint firstAttribute="width" constant="100" id="z3f-iN-Ds5"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="You're not signed in" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oF-mW-TFh">
-                                        <rect key="frame" x="0.0" y="112" width="343" height="21"/>
+                                        <rect key="frame" x="0.0" y="112" width="343" height="20.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -245,6 +228,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="L1K-vq-Pkh">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
@@ -314,7 +298,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sQQ-wc-mqq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tasks" image="tasks" id="H9I-sb-BKm"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ygV-cw-Edp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ygV-cw-Edp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
