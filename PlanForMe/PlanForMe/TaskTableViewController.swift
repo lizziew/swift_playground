@@ -28,7 +28,7 @@ class TaskTableViewController: UITableViewController {
     
     //CALENDAR
     let eventStore = EKEventStore()
-    var calendars: [EKCalendar]?
+    var calendars = [Calendar]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +40,16 @@ class TaskTableViewController: UITableViewController {
         ref = FIRDatabase.database().reference()
         userEmail = (FIRAuth.auth()?.currentUser?.email)!
         userID = (FIRAuth.auth()?.currentUser?.uid)!
-        //loadTasks()
+        
+        //LOAD IN EVENTS FROM CALENDARS
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        checkCalendarAuthorizationStatus()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    func handleRefresh(refreshControl: UIRefreshControl) {
         checkCalendarAuthorizationStatus()
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     //CHECK IF WE HAVE ACCESS TO CALENDAR
@@ -94,9 +99,42 @@ class TaskTableViewController: UITableViewController {
     
     //LOAD TODAY'S EVENTS FROM CALENDAR
     func loadCalendars() {
-        self.calendars = eventStore.calendars(for: EKEntityType.event)
-        print("LOAD CALENDAR") 
-        print(self.calendars)
+        print("LOADING IN CALENDARS")
+        let input = eventStore.calendars(for: EKEntityType.event)
+        calendars.removeAll()
+        
+        //RECONCILE iOS CALENDARS WITH FIREBASE CALENDARS
+        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.hasChild("Calendars"){
+                 //FIREBASE HAS NO CALENDARS PROPERTY
+                for cal in input {
+                    //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
+                    self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                    self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
+                }
+            }
+            else {
+                //FIREBASE HAS CALENDARS PROPERTY 
+                for cal in input {
+                    if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
+                        //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
+                        let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!
+                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
+                        self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": value["Title"] as! String, "Visible": value["Visible"] as! Bool])
+                    }
+                    else {
+                        //CALENDAR NOT IN FIREBASE -> ADD IN CALENDARS ARRAY AS VISIBLE, ADD TO FIREBASE AS VISIBLE
+                        self.calendars.append(Calendar(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                        self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
+                    }
+                }
+            }
+            
+            print("CALENDARS AFTER UPDATING")
+            print(self.calendars)
+        })
+        
+        //TODO: LOAD IN EVENTS FROM CALENDARS IN CALENDARS ARRAY
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -136,56 +174,6 @@ class TaskTableViewController: UITableViewController {
         cell.timeLabel.text = valueToTime(task.lowerTime) + " to " + valueToTime(task.upperTime)
 
         return cell
-    }
-    
-    //UNWIND FROM ADD TASK TO TASK LIST
-    @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? AddViewController, let task = sourceViewController.task {
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                //EDIT EXISTING TASK
-                if task.priority == 1 && selectedIndexPath.section == 0 {
-                    //TASK HAS BEEN DEMOTED
-                    
-                    //REMOVE FROM SECTION 0
-                    tasks[0].remove(at: selectedIndexPath.row)
-                    tableView.deleteRows(at: [selectedIndexPath], with: .fade)
-                    
-                    //ADD TO SECTION 1
-                    let newIndexPath = IndexPath(row: tasks[1].count, section: 1)
-                    tasks[1].append(task)
-                    tableView.insertRows(at: [newIndexPath], with: .automatic)
-                }
-                else if task.priority == 2 && selectedIndexPath.section == 1 {
-                    //TASK HAS BEEN PROMOTED
-                    
-                    //REMOVE FROM SECTION 1
-                    tasks[1].remove(at: selectedIndexPath.row)
-                    tableView.deleteRows(at: [selectedIndexPath], with: .fade)
-                    
-                    //ADD TO SECTION 0
-                    let newIndexPath = IndexPath(row: tasks[0].count, section: 0)
-                    tasks[0].append(task)
-                    tableView.insertRows(at: [newIndexPath], with: .automatic)
-                }
-                else {
-                    //EDITED TASK HAS SAME PRIORITY
-                    tasks[selectedIndexPath.section][selectedIndexPath.row] = task
-                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
-                }
-            }
-            else {
-                //ADD NEW TASK
-                let section = sections.count - task.priority
-                
-                let newIndexPath = IndexPath(row: tasks[section].count, section: section)
-                tasks[section].append(task)
-                
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-            
-            //UPDATE TASKS IN FIREBASE DATABASE
-            ref.child("Users/\(userID)/Tasks").setValue(getDictOfTasks())
-        }
     }
     
     func getDictOfTasks() -> [[String: Any]] {
@@ -246,33 +234,6 @@ class TaskTableViewController: UITableViewController {
         }
         
         return proposedDestinationIndexPath
-    }
-    
-    //SWITCHES FROM TASK LIST TO EITHER ADD TASK OR EDIT TASK
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        
-        switch(segue.identifier ?? "") {
-        case "AddItem":
-            os_log("Adding a new task", log: OSLog.default, type: .debug)
-        case "ShowDetail":
-            guard let taskDetailViewController = segue.destination as? AddViewController else {
-                fatalError("Unexpected destination: \(segue.destination)")
-            }
-            
-            guard let selectedTaskCell = sender as? TaskTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
-            }
-            
-            guard let indexPath = tableView.indexPath(for: selectedTaskCell) else {
-                fatalError("The selected cell is not being displayed by the table")
-            }
-            
-            let selectedTask = tasks[indexPath.section][indexPath.row]
-            taskDetailViewController.task = selectedTask
-        default:
-            fatalError("Unexpected segue identifier: \(segue.identifier)") 
-        }
     }
 
     //LOAD TASKS FROM FIREBASE

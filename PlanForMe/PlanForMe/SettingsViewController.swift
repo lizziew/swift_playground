@@ -114,4 +114,8 @@ class SettingsViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDe
             print ("Error signing out: %@", signOutError)
         }
     }
+    
+    @IBAction func showCalendarSettings(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "CalendarSettingsSegue", sender: self)
+    }
 }

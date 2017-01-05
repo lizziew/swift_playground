@@ -68,7 +68,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                     print("user already exists")
                 }
                 else{
-                    self.ref.child("Users").child(userID).setValue(["Email": userEmail, "Tasks": []])
+                    self.ref.child("Users").child(userID).setValue(["Email": userEmail, "Calendars": [], "Tasks": []])
                     print("adding new user")
                 }
             })
