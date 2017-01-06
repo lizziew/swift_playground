@@ -58,24 +58,12 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         let task = optTasks[indexPath.row]
         cell.textLabel?.text = task.name
         
-//        cell.layer.borderColor = task.color.cgColor
-//        cell.layer.borderWidth = 3
-        
-//        cell.layer.borderWidth = 1
-//        cell.layer.borderColor = UIColor.lightGray.cgColor
-//        cell.layer.masksToBounds = false
-//        cell.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
-//        cell.layer.shadowRadius = 0.4
-//        cell.layer.shadowOpacity = 1.0
-//        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        
         cell.contentView.backgroundColor = UIColor.clear
         
-        let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: 10, width: self.view.frame.size.width, height: getCellHeight(task) - 20))
+        let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: 10, width: self.view.frame.size.width, height: 70))
         
         whiteRoundedView.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1.0, 1.0, 1.0, 1.0])
         whiteRoundedView.layer.masksToBounds = false
-        //whiteRoundedView.layer.cornerRadius = 2.0
         whiteRoundedView.layer.shadowOffset = CGSize(width: -2, height: 2)
         whiteRoundedView.layer.shadowOpacity = 0.3
         
@@ -99,24 +87,24 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
-    func getCellHeight(_ task: Task) -> CGFloat {
-        if task.event.isAllDay {
-            return 90.0
-        }
-        
-        let interval = task.upperTime.timeIntervalSince(task.lowerTime)
-        let height = (CGFloat(interval) / 86400.0) * 1440.0
-        
-        if height < 90.0 {
-            return 90.0
-        }
-        else {
-            return height
-        }
-    }
-    
+//    func getCellHeight(_ task: Task) -> CGFloat {
+//        if task.event.isAllDay {
+//            return 90.0
+//        }
+//        
+//        let interval = task.upperTime.timeIntervalSince(task.lowerTime)
+//        let height = (CGFloat(interval) / 86400.0) * 1440.0
+//        
+//        if height < 90.0 {
+//            return 90.0
+//        }
+//        else {
+//            return height
+//        }
+//    }
+//    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getCellHeight(optTasks[indexPath.row])
+        return 90.0 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -130,7 +118,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     func displayTasks(_ tasks: [Task]?) {
         if tasks == nil {
             if overlapTasks.count == 0 {
-                showAlert("You have nothing planned for today! Add a task you want to do or enjoy your day off :)")
+                showAlert("You have nothing planned for today: add a task you want to do or enjoy your day off :)")
                 return
             }
             
@@ -154,7 +142,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func showAlert(_ msg: String) {
-        let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Heads up!", message: msg, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

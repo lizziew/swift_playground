@@ -183,7 +183,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eYH-sZ-Ivr">
-                                <rect key="frame" x="16" y="40" width="343" height="71"/>
+                                <rect key="frame" x="16" y="40" width="343" height="68"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="mFP-qq-tg3">
                                         <rect key="frame" x="151.5" y="0.0" width="40" height="40"/>
@@ -193,8 +193,8 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="You're not signed in" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oF-mW-TFh">
-                                        <rect key="frame" x="0.0" y="52" width="343" height="19"/>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="52" width="343" height="16"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -204,12 +204,11 @@
                                     <constraint firstItem="0oF-mW-TFh" firstAttribute="leading" secondItem="eYH-sZ-Ivr" secondAttribute="leading" id="mro-0S-Lkd"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dah-qT-T34">
-                                <rect key="frame" x="71" y="562" width="259" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dah-qT-T34">
+                                <rect key="frame" x="46" y="572" width="283" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Choose my calendars">
+                                <state key="normal" title="Choose my calendars     ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -217,7 +216,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="0Fb-d8-6rs">
-                                <rect key="frame" x="12" y="131" width="351" height="76"/>
+                                <rect key="frame" x="12" y="128" width="351" height="76"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tigerwithscale" translatesAutoresizingMaskIntoConstraints="NO" id="zee-SD-URr">
                                         <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
@@ -226,10 +225,9 @@
                                             <constraint firstAttribute="height" constant="76" id="uTH-6A-SbC"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KD-F1-Lan">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Tasks, tap Edit to sort events from your iOS calendar. Within each group, higher events have higher priority." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KD-F1-Lan">
                                         <rect key="frame" x="96" y="38" width="255" height="0.0"/>
-                                        <string key="text">In Tasks, tap Edit to sort events from your iOS calendar into groups Must do, Would like to do, and Don't want to do. You can also move events within each group: higher events have higher priority.</string>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="1.5" height="1.5"/>
@@ -240,11 +238,11 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="uW1-Bc-aZo">
-                                <rect key="frame" x="28" y="227" width="319" height="76"/>
+                                <rect key="frame" x="28" y="224" width="319" height="76"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Plan, get your optimal schedule based on how you sorted your events. Tap Import to import the schedule into your calendar!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yi4-6H-BIc">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Plan, get your optimal schedule based on how you sorted your events." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yi4-6H-BIc">
                                         <rect key="frame" x="0.0" y="38" width="223" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -258,7 +256,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kyt-ck-mIT">
-                                <rect key="frame" x="12" y="323" width="351" height="76"/>
+                                <rect key="frame" x="12" y="320" width="351" height="76"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tigerwithwrench" translatesAutoresizingMaskIntoConstraints="NO" id="cJ8-gK-wdP">
                                         <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
@@ -267,14 +265,20 @@
                                             <constraint firstAttribute="height" constant="76" id="jYn-vs-86e"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Settings, tap Choose my calendars to select which calendars you want to import events from. Sign in to save your settings!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x01-iC-8MO">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Settings, you can choose select which calendars you want to import events from. Sign in to save your settings." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x01-iC-8MO">
                                         <rect key="frame" x="96" y="38" width="255" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons from icons8 and Assembly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJM-DS-f8X">
+                                <rect key="frame" x="123.5" y="605" width="128.5" height="10"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -283,9 +287,15 @@
                             <constraint firstItem="kyt-ck-mIT" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leading" constant="12" id="9fD-xl-Phu"/>
                             <constraint firstItem="0Fb-d8-6rs" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leading" constant="12" id="EIr-PV-QMb"/>
                             <constraint firstItem="0Fb-d8-6rs" firstAttribute="centerX" secondItem="P88-zK-k7b" secondAttribute="centerX" id="K4m-fR-pOS"/>
+                            <constraint firstItem="Dah-qT-T34" firstAttribute="centerX" secondItem="P88-zK-k7b" secondAttribute="centerX" id="Pwh-tl-VI6"/>
                             <constraint firstItem="uW1-Bc-aZo" firstAttribute="top" secondItem="0Fb-d8-6rs" secondAttribute="bottom" constant="20" id="QnB-fX-prz"/>
                             <constraint firstItem="uW1-Bc-aZo" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leadingMargin" constant="12" id="ae5-HW-6wD"/>
+                            <constraint firstItem="Dah-qT-T34" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leadingMargin" constant="30" id="azn-To-VKA"/>
+                            <constraint firstItem="5IP-Sz-swA" firstAttribute="top" secondItem="DJM-DS-f8X" secondAttribute="bottom" constant="3" id="bkw-w6-SBL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Dah-qT-T34" secondAttribute="trailing" constant="30" id="bzX-Gf-DuV"/>
+                            <constraint firstItem="DJM-DS-f8X" firstAttribute="centerX" secondItem="P88-zK-k7b" secondAttribute="centerX" id="dLX-FL-shR"/>
                             <constraint firstAttribute="trailing" secondItem="kyt-ck-mIT" secondAttribute="trailing" constant="12" id="g4X-uB-EM6"/>
+                            <constraint firstItem="DJM-DS-f8X" firstAttribute="top" secondItem="Dah-qT-T34" secondAttribute="bottom" constant="3" id="sZb-BM-fEv"/>
                             <constraint firstItem="0Fb-d8-6rs" firstAttribute="top" secondItem="eYH-sZ-Ivr" secondAttribute="bottom" constant="20" id="tit-Xv-GH8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eYH-sZ-Ivr" secondAttribute="trailing" id="vuZ-bB-1jS"/>
                             <constraint firstItem="eYH-sZ-Ivr" firstAttribute="leading" secondItem="P88-zK-k7b" secondAttribute="leadingMargin" id="wBy-pq-3q2"/>
@@ -469,7 +479,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sQQ-wc-mqq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tasks" image="tasks" id="H9I-sb-BKm"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ygV-cw-Edp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ygV-cw-Edp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -487,7 +497,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dOD-wJ-wbE" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xoS-Bs-Roa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="xoS-Bs-Roa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -506,7 +516,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8sa-R0-QXI" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Plan" image="plan" id="Kw7-4g-Klq"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3eQ-l7-Ko8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="3eQ-l7-Ko8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
