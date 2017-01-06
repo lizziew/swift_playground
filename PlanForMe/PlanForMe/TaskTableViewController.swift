@@ -223,7 +223,7 @@ class TaskTableViewController: UITableViewController {
             cell.timeLabel.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
         }
         else {
-            cell.timeLabel.text = ""
+            cell.timeLabel.text = "All day"
         }
         
         cell.selectionStyle = .none

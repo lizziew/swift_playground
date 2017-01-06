@@ -32,6 +32,8 @@ class CalendarSettingsTableViewController: UITableViewController {
         //LOAD IN CALENDARS
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         checkCalendarAuthorizationStatus()
+        
+        tableView.separatorStyle = .none
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
@@ -67,12 +69,12 @@ class CalendarSettingsTableViewController: UITableViewController {
         //SET COLOR AND CHECKBOX
         if calendars[indexPath.row].visible {
             cell.backgroundColor = UIColor.green.withAlphaComponent(0.3)
-            cell.checkbox.setTitle("✅", for: .normal)
+            cell.checkbox.setImage(UIImage(named: "checked"), for: .normal)
             cell.checked = true
         }
         else {
             cell.backgroundColor = UIColor.red.withAlphaComponent(0.3)
-            cell.checkbox.setTitle("❌", for: .normal)
+            cell.checkbox.setImage(UIImage(named: "unchecked"), for: .normal)
             cell.checked = true
         }
         
@@ -84,14 +86,14 @@ class CalendarSettingsTableViewController: UITableViewController {
     }
     
     func toggleCalendar(_ cell: CalendarTableViewCell, _ cal: Cal) {
-        if cell.checkbox.titleLabel?.text == "✅" {
-            cell.checkbox.setTitle("❌", for: .normal)
+        if cell.checked {
+            cell.checkbox.setImage(UIImage(named: "unchecked"), for: .normal)
             cell.checked = false
             cell.backgroundColor = UIColor.red.withAlphaComponent(0.3)
             self.ref.child("Users/\(self.userID)/Calendars/").child(cal.ID).setValue(["Title": cal.title, "Visible": false])
         }
         else {
-            cell.checkbox.setTitle("✅", for: .normal)
+            cell.checkbox.setImage(UIImage(named: "checked"), for: .normal)
             cell.checked = true
             cell.backgroundColor = UIColor.green.withAlphaComponent(0.3)
             self.ref.child("Users/\(self.userID)/Calendars/").child(cal.ID).setValue(["Title": cal.title, "Visible": true])

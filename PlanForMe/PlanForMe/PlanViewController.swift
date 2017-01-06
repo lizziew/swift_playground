@@ -22,12 +22,22 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     var wouldLikeIndex = 2
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var importButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        
+        //FORMAT IMPORT CALENDARS BUTTON
+        importButton.backgroundColor = UIColor(red: 74.0/255.0, green: 139.0/255.0, blue: 244.0/255.0, alpha: 1.0)
+        importButton.layer.masksToBounds = false
+        importButton.layer.cornerRadius = 3
+        importButton.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        importButton.layer.shadowRadius = 0.4
+        importButton.layer.shadowOpacity = 1.0
+        importButton.layer.shadowColor = UIColor.lightGray.cgColor
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,41 +58,65 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         let task = optTasks[indexPath.row]
         cell.textLabel?.text = task.name
         
+//        cell.layer.borderColor = task.color.cgColor
+//        cell.layer.borderWidth = 3
+        
+//        cell.layer.borderWidth = 1
+//        cell.layer.borderColor = UIColor.lightGray.cgColor
+//        cell.layer.masksToBounds = false
+//        cell.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+//        cell.layer.shadowRadius = 0.4
+//        cell.layer.shadowOpacity = 1.0
+//        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        
+        cell.contentView.backgroundColor = UIColor.clear
+        
+        let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: 10, width: self.view.frame.size.width, height: getCellHeight(task) - 20))
+        
+        whiteRoundedView.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1.0, 1.0, 1.0, 1.0])
+        whiteRoundedView.layer.masksToBounds = false
+        //whiteRoundedView.layer.cornerRadius = 2.0
+        whiteRoundedView.layer.shadowOffset = CGSize(width: -2, height: 2)
+        whiteRoundedView.layer.shadowOpacity = 0.3
+        
+        whiteRoundedView.layer.shadowColor = task.color.darker(by: 30)?.cgColor
+        whiteRoundedView.layer.borderColor = UIColor.darkGray.cgColor
+        
+        cell.contentView.addSubview(whiteRoundedView)
+        cell.contentView.sendSubview(toBack: whiteRoundedView)
+        
+        cell.selectionStyle = .none
+        
         if task.event.isAllDay {
             cell.detailTextLabel?.text = "All day"
-            cell.layer.borderColor = UIColor.white.cgColor
-            cell.layer.borderWidth = 10
+            whiteRoundedView.layer.cornerRadius = 2.0
         }
         else {
             cell.detailTextLabel?.text = getDisplayDate(date: task.lowerTime) + " to " + getDisplayDate(date: task.upperTime)
-            cell.layer.cornerRadius = 20
-            cell.layer.borderColor = UIColor.white.cgColor
-            cell.layer.borderWidth = 10
+            whiteRoundedView.layer.cornerRadius = 20.0
         }
-        
-        cell.backgroundColor = task.color.withAlphaComponent(0.5)
-        
-        cell.selectionStyle = .none
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let task = optTasks[indexPath.row]
-        
+    func getCellHeight(_ task: Task) -> CGFloat {
         if task.event.isAllDay {
             return 90.0
         }
         
         let interval = task.upperTime.timeIntervalSince(task.lowerTime)
         let height = (CGFloat(interval) / 86400.0) * 1440.0
-
+        
         if height < 90.0 {
             return 90.0
         }
         else {
             return height
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getCellHeight(optTasks[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -296,6 +330,29 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     //CHECK IF 2 INTERVALS OVERLAP
     func overlap(_ t1: Interval, _ t2: Interval) -> Bool {
         return t1.finish > t2.start && t2.finish > t1.start
+    }
+}
+
+extension UIColor {
+    
+    func lighter(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: abs(percentage) )
+    }
+    
+    func darker(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: -1 * abs(percentage) )
+    }
+    
+    func adjust(by percentage:CGFloat=30.0) -> UIColor? {
+        var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
+        if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
+            return UIColor(red: min(r + percentage/100, 1.0),
+                           green: min(g + percentage/100, 1.0),
+                           blue: min(b + percentage/100, 1.0),
+                           alpha: a)
+        }else{
+            return nil
+        }
     }
 }
 
