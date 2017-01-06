@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDe
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var signInLabel: UILabel!
     @IBOutlet weak var profileStackView: UIStackView!
+    @IBOutlet weak var editCalendarsButton: UIButton!
     
     let signOutButton = UIButton()
     let signInButton = GIDSignInButton()
@@ -33,13 +34,29 @@ class SettingsViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDe
         profileImage.layer.cornerRadius = 10.0
         profileImage.clipsToBounds = true
         profileImage.layer.borderWidth = 3.0
-        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.borderColor = UIColor.darkGray.cgColor
         
         //FORMAT SIGN OUT BUTTON
-        signOutButton.setTitle("Sign out", for: .normal)
-        signOutButton.backgroundColor = UIColor.red
+        signOutButton.setTitle("     Sign out     ", for: .normal)
+        signOutButton.backgroundColor = UIColor(red: 221.0/255.0, green: 75.0/255.0, blue: 57.0/255.0, alpha: 1.0)
         signOutButton.setTitleColor(UIColor.white, for: .normal)
         signOutButton.addTarget(self, action: #selector(signOut(sender:)), for: .touchUpInside)
+        signOutButton.layer.masksToBounds = false
+        signOutButton.layer.cornerRadius = 3
+        signOutButton.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        signOutButton.layer.shadowRadius = 0.4
+        signOutButton.layer.shadowOpacity = 1.0
+        signOutButton.layer.shadowColor = UIColor.lightGray.cgColor
+        signOutButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        //FORMAT EDIT CALENDARS BUTTON
+        editCalendarsButton.backgroundColor = UIColor(red: 74.0/255.0, green: 139.0/255.0, blue: 244.0/255.0, alpha: 1.0)
+        editCalendarsButton.layer.masksToBounds = false
+        editCalendarsButton.layer.cornerRadius = 3
+        editCalendarsButton.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        editCalendarsButton.layer.shadowRadius = 0.4
+        editCalendarsButton.layer.shadowOpacity = 1.0
+        editCalendarsButton.layer.shadowColor = UIColor.lightGray.cgColor
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
