@@ -14,9 +14,10 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class CalendarSettingsTableViewController: UITableViewController {
-
+    //EVENTKIT
     let eventStore = EKEventStore()
     var calendars = [Cal]()
+    var planForMeCalID: String?
     
     //FIREBASE DATABASE
     var ref: FIRDatabaseReference!
@@ -151,11 +152,22 @@ class CalendarSettingsTableViewController: UITableViewController {
         let input = eventStore.calendars(for: EKEntityType.event)
         calendars.removeAll()
         
+        //CHECK PLANFORME CALENDAR
+        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("PlanForMeCalendar") {
+                let value = (snapshot.childSnapshot(forPath: "PlanForMeCalendar/").value as? NSDictionary)!
+                self.planForMeCalID = value["ID"] as! String
+            }
+        })
+        
         //RECONCILE iOS CALENDARS WITH FIREBASE CALENDARS
         self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.hasChild("Calendars"){
                 //FIREBASE HAS NO CALENDARS PROPERTY
                 for cal in input {
+                    if cal.calendarIdentifier == self.planForMeCalID {
+                        continue
+                    }
                     //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
                     self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                     self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
@@ -164,6 +176,9 @@ class CalendarSettingsTableViewController: UITableViewController {
             else {
                 //FIREBASE HAS CALENDARS PROPERTY
                 for cal in input {
+                    if cal.calendarIdentifier == self.planForMeCalID {
+                        continue
+                    }
                     if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
                         //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
                         let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!

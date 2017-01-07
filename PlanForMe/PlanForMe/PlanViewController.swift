@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import EventKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     var tasks = [[Task]]()
@@ -24,6 +28,13 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var importButton: UIButton!
     
+    //EVENTKIT
+    let eventStore = EKEventStore()
+    
+    //FIREBASE DATABASE
+    var ref: FIRDatabaseReference!
+    var userID = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -38,6 +49,10 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         importButton.layer.shadowRadius = 0.4
         importButton.layer.shadowOpacity = 1.0
         importButton.layer.shadowColor = UIColor.lightGray.cgColor
+        
+        //FIREBASE DATABASE SETUP
+        ref = FIRDatabase.database().reference()
+        userID = (FIRAuth.auth()?.currentUser?.uid)!
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,6 +62,105 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
             displayTasks(scheduleTasks())
         }
     }
+    
+    @IBAction func exportPlan(_ sender: UIButton) {
+        //CHECK IF USER ALREADY HAS A PLANFORME CALENDAR
+        var userDeletedPlanForMeCal = true
+        let cals = eventStore.calendars(for: EKEntityType.event)
+        for cal in cals {
+            if cal.title == "PlanForMe Calendar" {
+                userDeletedPlanForMeCal = false
+                break
+            }
+        }
+        
+        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            //USER DOES NOT HAVE A PLANFORME CALENDAR
+            if !snapshot.hasChild("PlanForMeCalendar") || userDeletedPlanForMeCal {
+                //CREATE A LOCAL PLANFORME CALENDAR
+                let newCalendar = EKCalendar(for: .event, eventStore: self.eventStore)
+                newCalendar.title = "PlanForMe Calendar"
+                let sourcesInEventStore = self.eventStore.sources
+
+                //CHECK FOR iCLOUD
+                for source in self.eventStore.sources {
+                    if source.sourceType ==  EKSourceType.calDAV && source.title == "iCloud" {
+                        newCalendar.source = source;
+                        break;
+                    }
+                }
+                
+                //THEN CHECK FOR LOCAL IF NO iCLOUD CALENDAR EXISTS
+                if newCalendar.source == nil {
+                    for source in self.eventStore.sources {
+                        if source.sourceType == EKSourceType.local {
+                            newCalendar.source = source;
+                            break;
+                        }
+                    }
+                }
+
+                do {
+                    //SAVE PLANFORME CALENDAR IDENTIFIER TO FIREBASE
+                    try self.eventStore.saveCalendar(newCalendar, commit: true)
+                    self.ref.child("Users/\(self.userID)/").child("PlanForMeCalendar").setValue(["ID": newCalendar.calendarIdentifier])
+                    self.exportPlanEvents()
+                } catch {
+                    //ERROR CREATING PLANFORME CALENDAR
+                    let alert = UIAlertController(title: "Calendar could not save", message: (error as NSError).localizedDescription, preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(OKAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else {
+                self.exportPlanEvents()
+            }
+        })
+    }
+    
+    func exportPlanEvents() {
+        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.hasChild("PlanForMeCalendar") {
+                fatalError("PlanForMe Calendar does not exist in Firebase")
+            }
+            else {
+                let value = (snapshot.childSnapshot(forPath: "PlanForMeCalendar/").value as? NSDictionary)!
+                let calID = value["ID"] as! String
+                
+                if let calendarForEvent = self.eventStore.calendar(withIdentifier: calID)
+                {
+                    for task in self.optTasks {
+                        let newEvent = EKEvent(eventStore: self.eventStore)
+                        
+                        newEvent.calendar = calendarForEvent
+                        newEvent.title = task.name
+                        newEvent.startDate = task.lowerTime
+                        newEvent.endDate = task.upperTime
+                        newEvent.availability = task.event.availability
+                        newEvent.location = task.event.location
+                        newEvent.isAllDay = task.event.isAllDay
+                        
+                        do {
+                            //SAVE EVENT
+                            try self.eventStore.save(newEvent, span: .thisEvent, commit: true)
+                            let alert = UIAlertController(title: "Planned!", message: "Your plan has been imported to your iOS calendar", preferredStyle: .alert)
+                            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(OKAction)
+                            self.present(alert, animated: true, completion: nil)
+                        } catch {
+                            //ERROR CREATING EVENT
+                            let alert = UIAlertController(title: "Event could not save", message: (error as NSError).localizedDescription, preferredStyle: .alert)
+                            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(OKAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return optTasks.count

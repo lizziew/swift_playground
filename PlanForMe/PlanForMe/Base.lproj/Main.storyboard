@@ -140,6 +140,9 @@
                                         <state key="normal" title="Import plan to my calendar">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="exportPlan:" destination="AEM-ua-w6q" eventType="touchUpInside" id="vkI-lZ-Tp3"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -186,7 +189,7 @@
                                 <rect key="frame" x="16" y="40" width="343" height="68"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="mFP-qq-tg3">
-                                        <rect key="frame" x="151.5" y="0.0" width="40" height="40"/>
+                                        <rect key="frame" x="152" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="WS5-Ed-PGN"/>
                                             <constraint firstAttribute="width" constant="40" id="z3f-iN-Ds5"/>
@@ -274,7 +277,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons from icons8 and Assembly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJM-DS-f8X">
-                                <rect key="frame" x="123.5" y="605" width="128.5" height="10"/>
+                                <rect key="frame" x="123" y="605" width="129" height="10"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
