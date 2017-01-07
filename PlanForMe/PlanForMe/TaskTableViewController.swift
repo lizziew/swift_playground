@@ -175,7 +175,7 @@ class TaskTableViewController: UITableViewController {
     //TURN DATE INTO STRING
     func getDisplayDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
+        formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
         formatter.timeZone = TimeZone.current

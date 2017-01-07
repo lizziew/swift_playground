@@ -65,9 +65,9 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         whiteRoundedView.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1.0, 1.0, 1.0, 1.0])
         whiteRoundedView.layer.masksToBounds = false
         whiteRoundedView.layer.shadowOffset = CGSize(width: -2, height: 2)
-        whiteRoundedView.layer.shadowOpacity = 0.3
+        whiteRoundedView.layer.shadowOpacity = 1.0 
         
-        whiteRoundedView.layer.shadowColor = task.color.darker(by: 30)?.cgColor
+        whiteRoundedView.layer.shadowColor = task.color.cgColor 
         whiteRoundedView.layer.borderColor = UIColor.darkGray.cgColor
         
         cell.contentView.addSubview(whiteRoundedView)
@@ -86,25 +86,9 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         
         return cell
     }
-    
-//    func getCellHeight(_ task: Task) -> CGFloat {
-//        if task.event.isAllDay {
-//            return 90.0
-//        }
-//        
-//        let interval = task.upperTime.timeIntervalSince(task.lowerTime)
-//        let height = (CGFloat(interval) / 86400.0) * 1440.0
-//        
-//        if height < 90.0 {
-//            return 90.0
-//        }
-//        else {
-//            return height
-//        }
-//    }
-//    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0 
+        return 90.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -150,7 +134,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     //TURN DATE INTO STRING
     func getDisplayDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
+        formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
         formatter.timeZone = TimeZone.current
@@ -320,27 +304,3 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         return t1.finish > t2.start && t2.finish > t1.start
     }
 }
-
-extension UIColor {
-    
-    func lighter(by percentage:CGFloat=30.0) -> UIColor? {
-        return self.adjust(by: abs(percentage) )
-    }
-    
-    func darker(by percentage:CGFloat=30.0) -> UIColor? {
-        return self.adjust(by: -1 * abs(percentage) )
-    }
-    
-    func adjust(by percentage:CGFloat=30.0) -> UIColor? {
-        var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
-        if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
-            return UIColor(red: min(r + percentage/100, 1.0),
-                           green: min(g + percentage/100, 1.0),
-                           blue: min(b + percentage/100, 1.0),
-                           alpha: a)
-        }else{
-            return nil
-        }
-    }
-}
-

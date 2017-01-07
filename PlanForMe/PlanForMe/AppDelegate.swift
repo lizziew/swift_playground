@@ -8,16 +8,24 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard : UIStoryboard?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FIRApp.configure()
+        
+        self.storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let user = FIRAuth.auth()?.currentUser
+        if user != nil {
+            self.window?.rootViewController = self.storyboard?.instantiateViewController(withIdentifier: "TasksViewController");
+        }
+        
         return true
     }
     
