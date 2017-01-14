@@ -22,19 +22,34 @@ class CalendarSettingsTableViewController: UITableViewController {
     //FIREBASE DATABASE
     var ref: FIRDatabaseReference!
     var userID = ""
+    var notLoggedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //FIREBASE DATABASE SETUP
         ref = FIRDatabase.database().reference()
-        userID = (FIRAuth.auth()?.currentUser?.uid)!
+        if (FIRAuth.auth()?.currentUser?.uid) != nil {
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
+        else {
+            notLoggedIn = true
+        }
         
         //LOAD IN CALENDARS
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         checkCalendarAuthorizationStatus()
         
         tableView.separatorStyle = .none
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if (FIRAuth.auth()?.currentUser?.uid) != nil {
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
+        else {
+            notLoggedIn = true
+        }
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
@@ -135,7 +150,7 @@ class CalendarSettingsTableViewController: UITableViewController {
     
     //NOTIFICATION FOR CALENDAR ACCESS
     func requestCalendarPermissionAlert() {
-        let alert = UIAlertController(title: "Alert", message: "PlanForMe needs access to your calendar in order to optimize your schedule. You can enable or disable access in Settings.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Heads up!", message: "PlanForMe needs access to your calendar in order to optimize your schedule. You can enable or disable access in Settings.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: goToSettings))
         self.present(alert, animated: true, completion: nil)
     }
@@ -148,6 +163,13 @@ class CalendarSettingsTableViewController: UITableViewController {
     
     //LOAD TODAY'S EVENTS FROM CALENDAR
     func loadCalendars() {
+        if notLoggedIn {
+            let alert = UIAlertController(title: "Nothing to see here", message: "Sign in to choose visible calendars and save your preferences.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         print("LOADING IN CALENDARS")
         let input = eventStore.calendars(for: EKEntityType.event)
         calendars.removeAll()

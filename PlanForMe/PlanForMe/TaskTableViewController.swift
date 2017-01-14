@@ -29,6 +29,7 @@ class TaskTableViewController: UITableViewController {
     //FIREBASE AUTH
     var userEmail = ""
     var userID = ""
+    var notLoggedIn = false 
     
     //CALENDAR
     let eventStore = EKEventStore()
@@ -44,12 +45,36 @@ class TaskTableViewController: UITableViewController {
         
         //FIREBASE DATABASE SETUP
         ref = FIRDatabase.database().reference()
-        userEmail = (FIRAuth.auth()?.currentUser?.email)!
-        userID = (FIRAuth.auth()?.currentUser?.uid)!
+
+        //FIREBASE AUTH
+        if (FIRAuth.auth()?.currentUser?.uid) != nil {
+            notLoggedIn = true
+        }
+        else if (FIRAuth.auth()?.currentUser?.isAnonymous)!{
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
+        else {
+            userEmail = (FIRAuth.auth()?.currentUser?.email)!
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
         
         //LOAD IN EVENTS FROM CALENDARS
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         checkCalendarAuthorizationStatus()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //FIREBASE AUTH
+        if (FIRAuth.auth()?.currentUser?.uid) == nil {
+            notLoggedIn = true
+        }
+        else if (FIRAuth.auth()?.currentUser?.isAnonymous)!{
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
+        else {
+            userEmail = (FIRAuth.auth()?.currentUser?.email)!
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+        }
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
@@ -104,88 +129,105 @@ class TaskTableViewController: UITableViewController {
     
     //LOAD TODAY'S EVENTS FROM CALENDAR
     func loadCalendars() {
-        print("LOADING IN CALENDARS")
         raw_calendars = eventStore.calendars(for: EKEntityType.event)
         calendars.removeAll()
-
-        //CHECK PLANFORME CALENDAR
-        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild("PlanForMeCalendar") {
-                let value = (snapshot.childSnapshot(forPath: "PlanForMeCalendar/").value as? NSDictionary)!
-                self.planForMeCalID = value["ID"] as! String
-            }
-        })
-        
-        //RECONCILE iOS CALENDARS WITH FIREBASE CALENDARS
-        self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
-            if !snapshot.hasChild("Calendars"){
-                 //FIREBASE HAS NO CALENDARS PROPERTY
-                for cal in self.raw_calendars {
-                    if cal.calendarIdentifier == self.planForMeCalID {
-                        continue
-                    }
-                    //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
+        //ANONYMOUS USER --
+        if notLoggedIn {
+            print("LOADING ANON USER CALENDARS")
+            for cal in self.raw_calendars {
+                if cal.title != "PlanForMe Calendar" {
                     self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
-                    self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                 }
             }
-            else {
-                //FIREBASE HAS CALENDARS PROPERTY 
-                for cal in self.raw_calendars {
-                    if cal.calendarIdentifier == self.planForMeCalID {
-                        continue
-                    }
-                    
-                    if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
-                        //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
-                        let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!
-                        self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
-                        self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": value["Title"] as! String, "Visible": value["Visible"] as! Bool])
-                    }
-                    else {
-                        //CALENDAR NOT IN FIREBASE -> ADD IN CALENDARS ARRAY AS VISIBLE, ADD TO FIREBASE AS VISIBLE
+            print("CALENDARS AFTER UPDATING")
+            print(self.calendars)
+            loadEvents()
+        }
+        else {
+            print("LOADING LOGGED IN USER CALENDARS")
+            //CHECK PLANFORME CALENDAR
+            self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                if snapshot.hasChild("PlanForMeCalendar") {
+                    let value = (snapshot.childSnapshot(forPath: "PlanForMeCalendar/").value as? NSDictionary)!
+                    self.planForMeCalID = value["ID"] as! String
+                }
+            })
+            
+            //RECONCILE iOS CALENDARS WITH FIREBASE CALENDARS
+            self.ref.child("Users/\(userID)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                if !snapshot.hasChild("Calendars"){
+                    //FIREBASE HAS NO CALENDARS PROPERTY
+                    for cal in self.raw_calendars {
+                        if cal.calendarIdentifier == self.planForMeCalID {
+                            continue
+                        }
+                        //ADD EACH CALENDAR TO CALENDARS ARRAY AND TO FIREBASE AS VISIBLE
                         self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
                         self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                     }
                 }
-            }
-            
-            print("CALENDARS AFTER UPDATING")
-            print(self.calendars)
-            
-            self.tasks = [[], [], [], []]
-            
-            //LOAD IN TODAY'S EVENTS FROM VISIBLE CALENDARS IN CALENDARS ARRAY
-            let startDate = Calendar.current.startOfDay(for: Date())
-            var components = DateComponents()
-            components.day = 1
-            components.second = -1
-            let endDate = Calendar.current.date(byAdding: components, to: startDate)!
-            
-            for cal in self.calendars {
-                if cal.visible {
-                    let raw_cal = self.raw_calendars.first(where: {$0.calendarIdentifier == cal.ID})!
-                    let eventsPredicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [raw_cal])
-                    let events = self.eventStore.events(matching: eventsPredicate).sorted(){
-                        (e1: EKEvent, e2: EKEvent) -> Bool in
-                        return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
-                    }
-                    
-                    for event in events {
-                        if event.isAllDay {
-                            self.tasks[self.allDayIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
+                else {
+                    //FIREBASE HAS CALENDARS PROPERTY
+                    for cal in self.raw_calendars {
+                        if cal.calendarIdentifier == self.planForMeCalID {
+                            continue
+                        }
+                        
+                        if snapshot.hasChild("Calendars/\(cal.calendarIdentifier)/") {
+                            //CALENDAR IS IN FIREBASE -> ADD TO CALENDARS ARRAY
+                            let value = (snapshot.childSnapshot(forPath: "Calendars/\(cal.calendarIdentifier)/").value as? NSDictionary)!
+                            self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: value["Visible"] as! Bool))
+                            self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": value["Title"] as! String, "Visible": value["Visible"] as! Bool])
                         }
                         else {
-                            self.tasks[self.wouldLikeIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
+                            //CALENDAR NOT IN FIREBASE -> ADD IN CALENDARS ARRAY AS VISIBLE, ADD TO FIREBASE AS VISIBLE
+                            self.calendars.append(Cal(title: cal.title, ID: cal.calendarIdentifier, visible: true))
+                            self.ref.child("Users/\(self.userID)/Calendars/").child(cal.calendarIdentifier).setValue(["Title": cal.title, "Visible": true])
                         }
                     }
                 }
+                
+                print("CALENDARS AFTER UPDATING")
+                print(self.calendars)
+                
+                self.loadEvents()
+            })
+        }
+    }
+    
+    func loadEvents() {
+        self.tasks = [[], [], [], []]
+        
+        //LOAD IN TODAY'S EVENTS FROM VISIBLE CALENDARS IN CALENDARS ARRAY
+        let startDate = Calendar.current.startOfDay(for: Date())
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        let endDate = Calendar.current.date(byAdding: components, to: startDate)!
+        
+        for cal in self.calendars {
+            if cal.visible {
+                let raw_cal = self.raw_calendars.first(where: {$0.calendarIdentifier == cal.ID})!
+                let eventsPredicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [raw_cal])
+                let events = self.eventStore.events(matching: eventsPredicate).sorted(){
+                    (e1: EKEvent, e2: EKEvent) -> Bool in
+                    return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
+                }
+                
+                for event in events {
+                    if event.isAllDay {
+                        self.tasks[self.allDayIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
+                    }
+                    else {
+                        self.tasks[self.wouldLikeIndex].append(Task(name: event.title, calendarID: cal.ID, lowerTime: event.startDate, upperTime: event.endDate, event: event, color: UIColor(cgColor: raw_cal.cgColor)))
+                    }
+                }
             }
-            
-            print(self.tasks)
-            
-            self.tableView.reloadData()
-        })
+        }
+        
+        print(self.tasks)
+        
+        self.tableView.reloadData()
     }
     
     //TURN DATE INTO STRING

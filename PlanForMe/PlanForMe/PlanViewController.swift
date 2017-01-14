@@ -34,6 +34,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     //FIREBASE DATABASE
     var ref: FIRDatabaseReference!
     var userID = ""
+    var notLoggedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,13 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         
         //FIREBASE DATABASE SETUP
         ref = FIRDatabase.database().reference()
-        userID = (FIRAuth.auth()?.currentUser?.uid)!
+        if (FIRAuth.auth()?.currentUser?.uid) != nil {
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+            notLoggedIn = false
+        }
+        else {
+            notLoggedIn = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,9 +68,33 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
             tasks = taskTableViewController.tasks
             displayTasks(scheduleTasks())
         }
+        
+        if (FIRAuth.auth()?.currentUser?.uid) != nil {
+            userID = (FIRAuth.auth()?.currentUser?.uid)!
+            notLoggedIn = false
+        }
+        else {
+            notLoggedIn = true
+        }
     }
     
     @IBAction func exportPlan(_ sender: UIButton) {
+        if optTasks.count == 0 {
+            let alert = UIAlertController(title: "No tasks to import", message: "You have nothing planned for today. Add a task or enjoy your day off!", preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
+            return 
+        }
+        
+        if notLoggedIn {
+            let alert = UIAlertController(title: "Heads up!", message: "Sign in to your account in Settings to export your plan to your calendar.", preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         //CHECK IF USER ALREADY HAS A PLANFORME CALENDAR
         var userDeletedPlanForMeCal = true
         let cals = eventStore.calendars(for: EKEntityType.event)
@@ -80,7 +111,6 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
                 //CREATE A LOCAL PLANFORME CALENDAR
                 let newCalendar = EKCalendar(for: .event, eventStore: self.eventStore)
                 newCalendar.title = "PlanForMe Calendar"
-                let sourcesInEventStore = self.eventStore.sources
 
                 //CHECK FOR iCLOUD
                 for source in self.eventStore.sources {
@@ -216,7 +246,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
     func displayTasks(_ tasks: [Task]?) {
         if tasks == nil {
             if overlapTasks.count == 0 {
-                showAlert("You have nothing planned for today: add a task you want to do or enjoy your day off :)")
+                showAlert("You have nothing planned for today. Add a task or enjoy your day off!")
                 return
             }
             
