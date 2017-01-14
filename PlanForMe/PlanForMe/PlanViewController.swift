@@ -209,7 +209,7 @@ class PlanViewController : UIViewController, UITableViewDelegate, UITableViewDat
         whiteRoundedView.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1.0, 1.0, 1.0, 1.0])
         whiteRoundedView.layer.masksToBounds = false
         whiteRoundedView.layer.shadowOffset = CGSize(width: -2, height: 2)
-        whiteRoundedView.layer.shadowOpacity = 1.0 
+        whiteRoundedView.layer.shadowOpacity = 0.5
         
         whiteRoundedView.layer.shadowColor = task.color.cgColor 
         whiteRoundedView.layer.borderColor = UIColor.darkGray.cgColor
